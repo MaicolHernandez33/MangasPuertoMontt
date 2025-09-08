@@ -1,0 +1,173 @@
+/* ====== RESET BÁSICO ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url("../img/fondo1.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: #f0f0f0;
+  line-height: 1.6;
+}
+/* ====== NAVBAR ====== */
+header {
+  background: salmon;   
+  color: #fff;           
+  padding: 10px 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  height: 40px;
+}
+
+.logo h1 {
+  font-size: 1.5rem;
+  color: #fff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.menu li a:hover {
+  color: #ffe600;
+  text-shadow: 0 0 8px #ffe600;
+}
+
+.carrito a {
+  text-decoration: none;
+  font-size: 1.2rem;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.carrito a:hover {
+  color: #00ffcc;
+  text-shadow: 0 0 6px #00ffcc;
+}
+
+/* ====== CONTENIDO PRINCIPAL ====== */
+main {
+  padding: 20px;
+  min-height: 70vh;
+}
+
+/* ====== FOOTER ====== */
+footer {
+  background: salmon;   
+  color: #fff;           /* texto */
+  text-align: center;
+  padding: 20px 10px;
+  border-top: 2px solid #800000; /* rojo más oscuro como detalle */
+}
+
+footer p {
+  margin: 5px 0;
+}
+
+footer a {
+  color: #fff;           
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+footer a:hover {
+  color: #ffcccc;        /* Al pasar mouse */
+}
+
+
+.banner {
+  position: relative;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.banner-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.banner-texto {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  background: rgba(0,0,0,0.5);
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.seccion-productos {
+  margin: 40px 20px;
+}
+
+.seccion-productos h2 {
+  margin-bottom: 20px;
+  color: #ff0044;
+}
+
+.grid-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.producto {
+  background: #222;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  color: #fff;
+}
+
+.producto img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.producto h3 {
+  margin: 10px 0;
+}
+
+.producto button {
+  background: #ff0044;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.producto button:hover {
+  background: #ff6600;
+}
