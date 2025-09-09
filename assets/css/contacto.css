@@ -1,0 +1,108 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Container */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header */
+.header {
+  background-color: #6b46c1;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.header .nav a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.header .nav a:hover {
+  text-decoration: underline;
+}
+
+/* Logo sección */
+.logo-section {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.logo-section img {
+  max-width: 300px;
+  margin-bottom: 15px;
+}
+
+/* Formulario */
+.form-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.form-card {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.form-card h2 {
+  color: #6b46c1;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-card label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-card input,
+.form-card textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.form-card button {
+  width: 100%;
+  padding: 12px;
+  background-color: #6b46c1;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-card button:hover {
+  background-color: #54309c;
+}
+
+/* Footer */
+.footer {
+  background-color: #4c1d95;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}

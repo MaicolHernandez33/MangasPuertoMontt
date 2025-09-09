@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registro de Usuario</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/registro.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+<header>
+  <nav class="navbar">
+    <!-- Logo -->
+    <div class="logo">
+      <img src="assets/img/LogoTienda.png" alt="Logo Tienda">
+      <h1>Tienda Mangas PuertoMontt</h1>
+    </div>
+
+    <!-- Menú -->
+    <ul class="menu">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="productos.html">Productos</a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+
+    <div class="acciones">
+      <a href="carrito.html" class="nav-link">
+        🛒 Carrito
+      </a>
+      <a href="login.html" class="nav-link">
+        🔑 Iniciar Sesión
+      </a>
+      <a href="registro.html" class="nav-link">
+        ✍️ Registrarse
+      </a>
+    </div>
+</header>
+
+    <!-- Registro de Usuario -->
+    <div class="container">
+        <h2>Registro de usuario</h2>
+        <form id="registroForm">
+            <label for="nombre">NOMBRE COMPLETO</label>
+            <input type="text" id="nombre" name="nombre" required />
+
+            <label for="correo">CORREO</label>
+            <input type="email" id="correo" name="correo" required />
+
+            <label for="correo2">CONFIRMAR CORREO</label>
+            <input type="email" id="correo2" name="correo2" required />
+
+            <label for="contrasena">CONTRASEÑA</label>
+            <input type="password" id="contrasena" name="contrasena" required />
+
+            <label for="contrasena2">CONFIRMAR CONTRASEÑA</label>
+            <input type="password" id="contrasena2" name="contrasena2" required />
+
+            <label for="telefono">TELÉFONO (opcional)</label>
+            <input type="tel" id="telefono" name="telefono" />
+
+            <label for="region">-- Seleccione la región --</label>
+            <select id="region" name="region" required>
+                <option value="">-- Seleccione la región --</option>
+                <option value="metropolitana">Región Metropolitana de Santiago</option>
+                <option value="araucania">Región de la Araucanía</option>
+                <option value="nuble">Región de Ñuble</option>
+            </select>
+
+            <label for="comuna">-- Seleccione la comuna --</label>
+            <select id="comuna" name="comuna" required>
+                <option value="">-- Seleccione la comuna --</option>
+            </select>
+
+            <button type="submit">REGISTRAR</button>
+        </form>
+    </div>
+
+      <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Tienda Mangas PuertoMontt - Todos los derechos reservados</p>
+    <p>Síguenos en: <a href="#">Instagram</a> | <a href="#">Facebook</a></p>
+  </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
