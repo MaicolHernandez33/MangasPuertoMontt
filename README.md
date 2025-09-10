@@ -49,34 +49,6 @@ Este proyecto consiste en una tienda online donde los usuarios pueden explorar, 
 
 ---
 
-## 📂 Estructura del proyecto
-
-MANGASPUERTOMONTT
-│
-├── admin
-│ ├── admin.html
-│ ├── productos-admin.html
-│ └── usuarios-admin.html
-│
-├── assets
-│ ├── css # Hojas de estilo
-│ ├── img # Imágenes
-│ └── js # Scripts JavaScript
-│
-├── blog-detalle.html
-├── blogs.html
-├── carrito.html
-├── contacto.html
-├── index.html
-├── login.html
-├── nosotros.html
-├── producto-berserk.html
-├── producto-vagabond.html
-├── productos.html
-├── registro.html
-└── README.md
-
-
 ## 👤 Autor
 
 Desarrollado por **Maicol Hernández**  
