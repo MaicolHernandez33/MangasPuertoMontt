@@ -50,3 +50,15 @@
 #btn-checkout:hover {
   background: #ff6600;
 }
+
+.btn-eliminar {
+  background: #444;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn-eliminar:hover {
+  background: #666;
+}

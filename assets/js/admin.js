@@ -1,4 +1,4 @@
-// Manejo de navegación del menú lateral
+
 const links = document.querySelectorAll(".sidebar a");
 const contenido = document.getElementById("contenido");
 
@@ -6,7 +6,7 @@ links.forEach(link => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
 
-    // Quitar 'active' de todos
+    
     links.forEach(l => l.classList.remove("active"));
     link.classList.add("active");
 

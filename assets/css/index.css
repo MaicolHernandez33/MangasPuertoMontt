@@ -1,4 +1,4 @@
-/* ====== BANNER ====== */
+/* BANNER  */
 .banner {
   position: relative;
   text-align: center;
@@ -22,7 +22,7 @@
   border-radius: 8px;
 }
 
-/* ====== SECCIONES DE PRODUCTOS ====== */
+/* SECCIONES DE PRODUCTOS  */
 .seccion-productos {
   margin: 40px 20px;
 }
@@ -73,7 +73,7 @@
 
 /* ====== Ajustes para centrar imágenes ====== */
 
-/* Centrar cualquier imagen que no sea 100% de ancho */
+
 .seccion-productos img,
 .seccion-inicio img,
 main img {
@@ -82,7 +82,7 @@ main img {
   margin-right: auto;
 }
 
-/* Opcional: centrar textos también */
+
 .seccion-productos,
 .seccion-inicio {
   text-align: center;

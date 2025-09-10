@@ -19,40 +19,43 @@
       </ul>
     </aside>
 
-    <!-- Contenido principal -->
-    <main class="main-content">
-      <h1>Mantenedor de Usuarios</h1>
+<main class="admin-content">
+  <h1>Mantenedor de Usuarios</h1>
 
-      <form id="form-usuario">
-        <label>RUT:</label>
-        <input type="text" id="rut" required>
+  <!-- Formulario -->
+  <form id="form-usuario" class="form-admin">
+    <label for="rut">RUT:</label>
+    <input type="text" id="rut" name="rut" required placeholder="19011022-K">
 
-        <label>Nombre:</label>
-        <input type="text" id="nombre" required>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required placeholder="Juan">
 
-        <label>Apellido:</label>
-        <input type="text" id="apellido" required>
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" name="apellido" required placeholder="Pérez">
 
-        <label>Correo:</label>
-        <input type="email" id="correo" required>
+    <label for="correo">Correo:</label>
+    <input type="email" id="correo" name="correo" required placeholder="juan@duoc.cl">
 
-        <button type="submit">Guardar</button>
-      </form>
+    <button type="submit" class="btn btn-primary">Agregar Usuario</button>
+  </form>
 
-      <table>
-        <thead>
-          <tr>
-            <th>RUT</th><th>Nombre</th><th>Apellido</th><th>Correo</th><th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>19011022K</td><td>Juan</td><td>Pérez</td><td>juan@duoc.cl</td>
-            <td><button>Editar</button> <button>Eliminar</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </main>
+  <!-- Tabla -->
+  <h2>Usuarios Registrados</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>RUT</th><th>Nombre</th><th>Apellido</th><th>Correo</th><th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="usuariosBody"></tbody>
+  </table>
+</main>
+
+
+<script src="../assets/js/admin-usuarios.js"></script>
+
+
+
   </div>
 </body>
 </html>

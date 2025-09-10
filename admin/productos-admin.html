@@ -20,39 +20,96 @@
     </aside>
 
     <!-- Contenido principal -->
-    <main class="main-content">
-      <h1>Mantenedor de Productos</h1>
+<main class="admin-content">
+  <h1>Mantenedor de Productos</h1>
 
-      <form id="form-producto">
-        <label>Código:</label>
-        <input type="text" id="codigo" required>
 
-        <label>Nombre:</label>
-        <input type="text" id="nombre" required>
+  <form id="form-producto" class="form-admin">
+    <label for="codigo">Código:</label>
+    <input type="text" id="codigo" placeholder="P006">
 
-        <label>Precio:</label>
-        <input type="number" id="precio" required>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" placeholder="Título del manga">
 
-        <label>Stock:</label>
-        <input type="number" id="stock" required>
+    <label for="precio">Precio:</label>
+    <input type="number" id="precio" placeholder="19990">
 
-        <button type="submit">Guardar</button>
-      </form>
+    <label for="stock">Stock:</label>
+    <input type="number" id="stock" placeholder="10">
 
-      <table>
-        <thead>
-          <tr>
-            <th>Código</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>P001</td><td>Berserk Maximum</td><td>$25.000</td><td>10</td>
-            <td><button>Editar</button> <button>Eliminar</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </main>
+    <button type="submit" class="btn btn-primary">Agregar Producto</button>
+  </form>
+
+  <h2>Productos</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="productosBody">
+     
+      <tr>
+        <td>P001</td>
+        <td>Berserk Maximum Vol. 1</td>
+        <td>$25.000</td>
+        <td>10</td>
+        <td>
+          <button class="btn btn-primary btn-edit" disabled>Editar</button>
+          <button class="btn btn-danger btn-del">Eliminar</button>
+        </td>
+      </tr>
+      <tr>
+        <td>P002</td>
+        <td>Monster Vol. 1</td>
+        <td>$19.990</td>
+        <td>8</td>
+        <td>
+          <button class="btn btn-primary btn-edit" disabled>Editar</button>
+          <button class="btn btn-danger btn-del">Eliminar</button>
+        </td>
+      </tr>
+      <tr>
+        <td>P003</td>
+        <td>Vagabond Vol. 1</td>
+        <td>$21.990</td>
+        <td>5</td>
+        <td>
+          <button class="btn btn-primary btn-edit" disabled>Editar</button>
+          <button class="btn btn-danger btn-del">Eliminar</button>
+        </td>
+      </tr>
+      <tr>
+        <td>P004</td>
+        <td>One Piece Vol. 1</td>
+        <td>$9.990</td>
+        <td>20</td>
+        <td>
+          <button class="btn btn-primary btn-edit" disabled>Editar</button>
+          <button class="btn btn-danger btn-del">Eliminar</button>
+        </td>
+      </tr>
+      <tr>
+        <td>P005</td>
+        <td>Chainsaw Man Vol. 1</td>
+        <td>$10.990</td>
+        <td>15</td>
+        <td>
+          <button class="btn btn-primary btn-edit" disabled>Editar</button>
+          <button class="btn btn-danger btn-del">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</main>
+
+
+<script src="../assets/js/admin-productos.js"></script>
+
   </div>
 </body>
 </html>

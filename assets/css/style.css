@@ -1,4 +1,4 @@
-/* ====== RESET BÁSICO ====== */
+/* RESET BÁSICO */
 * {
   margin: 0;
   padding: 0;
@@ -13,7 +13,7 @@ body {
   line-height: 1.6;
 }
 
-/* ====== NAVBAR ====== */
+/*NAV  */
 header {
   background: salmon;   
   color: #fff;           
@@ -61,11 +61,11 @@ header {
   text-shadow: 0 0 8px #ffe600;
 }
 
-/* === Acciones (Carrito, Login, Registro) === */
+
 .acciones {
   display: flex;
   align-items: center;
-  gap: 20px; /* espacio entre enlaces */
+  gap: 20px; 
 }
 
 .acciones a {
@@ -84,13 +84,13 @@ header {
   text-shadow: 0 0 8px #ffe600;
 }
 
-/* ====== CONTENIDO PRINCIPAL ====== */
+
 main {
   padding: 20px;
   min-height: 70vh;
 }
 
-/* ====== FOOTER ====== */
+
 footer {
   background: salmon;   
   color: #fff;           
