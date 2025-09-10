@@ -12,30 +12,23 @@
   <!-- NAVBAR -->
 <header>
   <nav class="navbar">
-    <!-- Logo -->
     <div class="logo">
       <img src="assets/img/LogoTienda.png" alt="Logo Tienda">
       <h1>Tienda Mangas PuertoMontt</h1>
     </div>
 
-    <!-- Menú -->
     <ul class="menu">
       <li><a href="index.html">Inicio</a></li>
       <li><a href="productos.html">Productos</a></li>
+      <li><a href="blogs.html">Novedades</a></li>
       <li><a href="nosotros.html">Nosotros</a></li>
       <li><a href="contacto.html">Contacto</a></li>
     </ul>
 
     <div class="acciones">
-      <a href="carrito.html" class="nav-link">
-        🛒 Carrito
-      </a>
-      <a href="login.html" class="nav-link">
-        🔑 Iniciar Sesión
-      </a>
-      <a href="registro.html" class="nav-link">
-        ✍️ Registrarse
-      </a>
+      <a href="carrito.html" class="nav-link">🛒 Carrito</a>
+      <a href="login.html" class="nav-link">🔑 Iniciar Sesión</a>
+      <a href="registro.html" class="nav-link">✍️ Registrarse</a>
     </div>
 </header>
 
@@ -61,29 +54,32 @@
             <label for="telefono">TELÉFONO (opcional)</label>
             <input type="tel" id="telefono" name="telefono" />
 
-            <label for="region">-- Seleccione la región --</label>
+            <label for="region">REGIÓN</label>
             <select id="region" name="region" required>
                 <option value="">-- Seleccione la región --</option>
-                <option value="metropolitana">Región Metropolitana de Santiago</option>
-                <option value="araucania">Región de la Araucanía</option>
-                <option value="nuble">Región de Ñuble</option>
+                <option value="loslagos">Región de Los Lagos</option>
             </select>
 
-            <label for="comuna">-- Seleccione la comuna --</label>
+            <label for="comuna">COMUNA</label>
             <select id="comuna" name="comuna" required>
                 <option value="">-- Seleccione la comuna --</option>
+                <option value="puerto-montt">Puerto Montt</option>
+                <option value="osorno">Osorno</option>
+                <option value="castro">Castro</option>
+                <option value="ancud">Ancud</option>
             </select>
 
             <button type="submit">REGISTRAR</button>
         </form>
     </div>
 
-      <!-- FOOTER -->
+  <!-- FOOTER -->
   <footer>
     <p>&copy; 2025 Tienda Mangas PuertoMontt - Todos los derechos reservados</p>
     <p>Síguenos en: <a href="#">Instagram</a> | <a href="#">Facebook</a></p>
   </footer>
 
-    <script src="script.js"></script>
+  <!-- Scripts -->
+  <script src="assets/js/validaciones.js"></script>
 </body>
 </html>

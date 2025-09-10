@@ -67,4 +67,23 @@
 
 .producto button:hover {
   background: #ff6600;
+  
+  
+}
+
+/* ====== Ajustes para centrar imágenes ====== */
+
+/* Centrar cualquier imagen que no sea 100% de ancho */
+.seccion-productos img,
+.seccion-inicio img,
+main img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Opcional: centrar textos también */
+.seccion-productos,
+.seccion-inicio {
+  text-align: center;
 }

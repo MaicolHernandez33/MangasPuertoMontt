@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contacto - MangaStore</title>
+  <title>Contacto - Tienda Mangas PuertoMontt</title>
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="stylesheet" href="./assets/css/contacto.css">
 </head>
@@ -12,62 +12,67 @@
   <!-- NAVBAR -->
 <header>
   <nav class="navbar">
-    <!-- Logo -->
     <div class="logo">
       <img src="assets/img/LogoTienda.png" alt="Logo Tienda">
       <h1>Tienda Mangas PuertoMontt</h1>
     </div>
 
-    <!-- Menú -->
     <ul class="menu">
       <li><a href="index.html">Inicio</a></li>
       <li><a href="productos.html">Productos</a></li>
+      <li><a href="blogs.html">Novedades</a></li>
       <li><a href="nosotros.html">Nosotros</a></li>
       <li><a href="contacto.html">Contacto</a></li>
     </ul>
 
     <div class="acciones">
-      <a href="carrito.html" class="nav-link">
-        🛒 Carrito
-      </a>
-      <a href="login.html" class="nav-link">
-        🔑 Iniciar Sesión
-      </a>
-      <a href="registro.html" class="nav-link">
-        ✍️ Registrarse
-      </a>
+      <a href="carrito.html" class="nav-link">🛒 Carrito</a>
+      <a href="login.html" class="nav-link">🔑 Iniciar Sesión</a>
+      <a href="registro.html" class="nav-link">✍️ Registrarse</a>
     </div>
+  </nav>
 </header>
 
-  <!-- Imagen / logo empresa -->
-  <section class="logo-section">
-    <img src="https://via.placeholder.com/300x150" alt="Logo empresa">
-    <h1>Nombre de la Empresa</h1>
-  </section>
-
   <!-- Formulario de contacto -->
-  <section class="form-section">
-    <div class="container form-card">
-      <h2>Formulario de Contacto</h2>
-      <form action="#" method="POST">
-        <label for="nombre">Nombre completo</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo">
+  <main class="auth-wrap">
+    <section class="auth-card">
+      <header class="auth-head">
+        <img src="assets/img/LogoTienda.png" alt="Logo Tienda">
+        <h2>Contáctanos</h2>
+      </header>
 
-        <label for="correo">Correo</label>
-        <input type="email" id="correo" name="correo" placeholder="Tu correo electrónico">
+      <div class="auth-body">
+        <form id="form-contacto" novalidate>
+          <div class="form-control">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" name="nombre" maxlength="100" required placeholder="Tu nombre completo">
+          </div>
 
-        <label for="mensaje">Contenido</label>
-        <textarea id="mensaje" name="mensaje" rows="5" placeholder="Escribe tu mensaje aquí"></textarea>
+          <div class="form-control">
+            <label for="correo">Correo</label>
+            <input type="email" id="correo" name="correo" maxlength="100" required placeholder="Tu correo electrónico">
+            <small class="hint">Solo se aceptan @duoc.cl, @profesor.duoc.cl o @gmail.com</small>
+          </div>
 
-        <button type="submit">Enviar mensaje</button>
-      </form>
-    </div>
-  </section>
+          <div class="form-control">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" rows="5" maxlength="500" required placeholder="Escribe tu mensaje aquí"></textarea>
+            <small class="hint">Máx. 500 caracteres</small>
+          </div>
+
+          <button type="submit" class="btn-primary">Enviar mensaje</button>
+        </form>
+      </div>
+    </section>
+  </main>
 
   <!-- FOOTER -->
   <footer>
     <p>&copy; 2025 Tienda Mangas PuertoMontt - Todos los derechos reservados</p>
     <p>Síguenos en: <a href="#">Instagram</a> | <a href="#">Facebook</a></p>
   </footer>
+
+  <!-- JS -->
+  <script src="assets/js/validaciones.js"></script>
 </body>
 </html>

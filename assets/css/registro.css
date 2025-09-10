@@ -1,26 +1,31 @@
 /* ====== REGISTRO DE USUARIO ====== */
+body {
+  background-color: #0e1a2a; /* mismo fondo del login */
+  font-family: Arial, sans-serif;
+  color: #e9eef6;
+}
+
 .container {
-  max-width: 500px;
-  margin: 50px auto;
-  background-color: cadetblue;
-  padding: 20px 30px;
-  border-radius: 6px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  max-width: 400px;
+  margin: 60px auto;
+  background-color: #14243b; /* tarjeta oscura como login */
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
 }
 
 h2 {
-  background-color: burlywood;
-  padding: 10px;
   text-align: center;
   margin-bottom: 20px;
-  border-radius: 4px;
+  color: #ffe600; /* mismo color destacado */
 }
 
 label {
   display: block;
-  margin-top: 10px;
+  margin-top: 12px;
   font-weight: bold;
   font-size: 14px;
+  color: #cbd5e1;
 }
 
 input[type="text"],
@@ -29,26 +34,45 @@ input[type="password"],
 input[type="tel"],
 select {
   width: 100%;
-  padding: 8px 10px;
-  margin-top: 5px;
-  border: 1px solid #999;
-  border-radius: 4px;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border: 1px solid #334155;
+  border-radius: 8px;
   font-size: 14px;
+  background-color: #0d1a2c;
+  color: #f1f5f9;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #ffe600;
+  box-shadow: 0 0 0 2px rgba(255,230,0,0.3);
 }
 
 button {
   width: 100%;
   margin-top: 25px;
-  padding: 10px;
-  background-color: burlywood;
+  padding: 12px;
+  background-color: #ffe600;
   border: none;
-  border-radius: 4px;
-  color: white;
+  border-radius: 8px;
+  color: #0e1a2a;
   font-weight: bold;
   font-size: 16px;
   cursor: pointer;
+  transition: background-color .2s ease, transform .1s ease;
 }
 
 button:hover {
-  background-color: coral;
+  background-color: #ffd42a;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.error {
+  color: #ff5b5b;
+  font-size: 13px;
+  margin-top: 5px;
 }

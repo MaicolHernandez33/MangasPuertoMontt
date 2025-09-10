@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo - Tienda Mangas PuertoMontt</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/productos.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="assets/img/LogoTienda.png" alt="Logo Tienda">
+        <h1>Tienda Mangas PuertoMontt</h1>
+      </div>
+      <ul class="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="productos.html" class="active">Productos</a></li>
+        <li><a href="blogs.html">Novedades</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+      <div class="acciones">
+        <a href="carrito.html">🛒 Carrito</a>
+        <a href="login.html">🔑 Iniciar Sesión</a>
+        <a href="registro.html">✍️ Registrarse</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- CATÁLOGO -->
+  <main class="catalogo">
+    <h2>Catálogo de Productos</h2>
+
+    <!-- Filtro -->
+    <div class="filtros">
+      <label for="filtro">Filtrar por:</label>
+      <select id="filtro">
+        <option value="todos">Todos</option>
+        <option value="manga">Mangas</option>
+        <option value="comic">Cómics</option>
+      </select>
+    </div>
+
+<!-- Grid de productos -->
+<div class="grid-productos" id="productosGrid">
+  <!-- Mangas -->
+  <div class="producto" data-categoria="manga">
+    <img src="assets/img/productos/tomo1berserk.jpg" alt="Berserk Maximum Vol. 1">
+    <h3>Berserk Maximum Vol. 1</h3>
+    <p>$25.000</p>
+    <button class="add-to-cart"
+            data-nombre="Berserk Maximum Vol. 1"
+            data-precio="25000">Añadir al carrito</button>
+    <a href="producto-berserk.html" class="btn-detalle">Ver detalle</a>
+  </div>
+
+  <div class="producto" data-categoria="manga">
+    <img src="assets/img/productos/tomo1Moster.jpg" alt="Monster Vol. 1">
+    <h3>Monster Vol. 1</h3>
+    <p>$19.990</p>
+    <button class="add-to-cart"
+            data-nombre="Monster Vol. 1"
+            data-precio="19990">Añadir al carrito</button>
+  </div>
+
+  <div class="producto" data-categoria="manga">
+    <img src="assets/img/berserk2.jpg" alt="Vagabond Vol. 1"
+         onerror="this.src='assets/img/LogoTienda.png'">
+    <h3>Vagabond Vol. 1</h3>
+    <p>$21.990</p>
+    <button class="add-to-cart"
+            data-nombre="Vagabond Vol. 1"
+            data-precio="21990">Añadir al carrito</button>
+    <a href="producto-vagabond.html" class="btn-detalle">Ver detalle</a>
+  </div>
+
+  <div class="producto" data-categoria="manga">
+    <img src="assets/img/LogoTienda.png" alt="One Piece Vol. 1">
+    <h3>One Piece Vol. 1</h3>
+    <p>$9.990</p>
+    <button class="add-to-cart"
+            data-nombre="One Piece Vol. 1"
+            data-precio="9990">Añadir al carrito</button>
+  </div>
+
+  <div class="producto" data-categoria="manga">
+    <img src="assets/img/LogoTienda.png" alt="Chainsaw Man Vol. 1">
+    <h3>Chainsaw Man Vol. 1</h3>
+    <p>$10.990</p>
+    <button class="add-to-cart"
+            data-nombre="Chainsaw Man Vol. 1"
+            data-precio="10990">Añadir al carrito</button>
+  </div>
+
+  <!-- Cómics -->
+  <div class="producto" data-categoria="comic">
+    <img src="assets/img/batman.jpg" alt="Batman: Año Uno"
+         onerror="this.src='assets/img/LogoTienda.png'">
+    <h3>Batman: Año Uno</h3>
+    <p>$15.000</p>
+    <button class="add-to-cart"
+            data-nombre="Batman: Año Uno"
+            data-precio="15000">Añadir al carrito</button>
+  </div>
+
+  <div class="producto" data-categoria="comic">
+    <img src="assets/img/spiderman.jpg" alt="Spider-Man: Homecoming"
+         onerror="this.src='assets/img/LogoTienda.png'">
+    <h3>Spider-Man: Homecoming</h3>
+    <p>$14.000</p>
+    <button class="add-to-cart"
+            data-nombre="Spider-Man: Homecoming"
+            data-precio="14000">Añadir al carrito</button>
+  </div>
+
+  <div class="producto" data-categoria="comic">
+    <img src="assets/img/LogoTienda.png" alt="The Sandman: Preludios y Nocturnos">
+    <h3>The Sandman Vol. 1</h3>
+    <p>$18.990</p>
+    <button class="add-to-cart"
+            data-nombre="The Sandman Vol. 1"
+            data-precio="18990">Añadir al carrito</button>
+  </div>
+</div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Tienda Mangas PuertoMontt - Todos los derechos reservados</p>
+    <p>Síguenos en: <a href="#">Instagram</a> | <a href="#">Facebook</a></p>
+  </footer>
+
+  <script src="assets/js/productos.js"></script>
+</body>
+</html>
