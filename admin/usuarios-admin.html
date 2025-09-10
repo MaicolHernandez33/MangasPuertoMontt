@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mantenedor de Usuarios</title>
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body>
+  <div class="admin-container">
+
+    <!-- Menú lateral -->
+    <aside class="sidebar">
+      <h2>Admin Panel</h2>
+      <ul>
+        <li><a href="productos-admin.html">Productos</a></li>
+        <li><a href="usuarios-admin.html" class="active">Usuarios</a></li>
+        <li><a href="admin.html">← Volver al Panel</a></li>
+      </ul>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+      <h1>Mantenedor de Usuarios</h1>
+
+      <form id="form-usuario">
+        <label>RUT:</label>
+        <input type="text" id="rut" required>
+
+        <label>Nombre:</label>
+        <input type="text" id="nombre" required>
+
+        <label>Apellido:</label>
+        <input type="text" id="apellido" required>
+
+        <label>Correo:</label>
+        <input type="email" id="correo" required>
+
+        <button type="submit">Guardar</button>
+      </form>
+
+      <table>
+        <thead>
+          <tr>
+            <th>RUT</th><th>Nombre</th><th>Apellido</th><th>Correo</th><th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>19011022K</td><td>Juan</td><td>Pérez</td><td>juan@duoc.cl</td>
+            <td><button>Editar</button> <button>Eliminar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</body>
+</html>

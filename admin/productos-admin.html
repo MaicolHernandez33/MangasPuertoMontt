@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mantenedor de Productos</title>
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body>
+  <div class="admin-container">
+
+    <!-- Menú lateral -->
+    <aside class="sidebar">
+      <h2>Admin Panel</h2>
+      <ul>
+        <li><a href="productos-admin.html" class="active">Productos</a></li>
+        <li><a href="usuarios-admin.html">Usuarios</a></li>
+        <li><a href="admin.html">← Volver al Panel</a></li>
+      </ul>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+      <h1>Mantenedor de Productos</h1>
+
+      <form id="form-producto">
+        <label>Código:</label>
+        <input type="text" id="codigo" required>
+
+        <label>Nombre:</label>
+        <input type="text" id="nombre" required>
+
+        <label>Precio:</label>
+        <input type="number" id="precio" required>
+
+        <label>Stock:</label>
+        <input type="number" id="stock" required>
+
+        <button type="submit">Guardar</button>
+      </form>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>P001</td><td>Berserk Maximum</td><td>$25.000</td><td>10</td>
+            <td><button>Editar</button> <button>Eliminar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</body>
+</html>

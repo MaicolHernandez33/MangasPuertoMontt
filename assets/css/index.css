@@ -87,3 +87,23 @@ main img {
 .seccion-inicio {
   text-align: center;
 }
+
+/* Botón base */
+.producto .btn-detalle {
+  display: inline-block;
+  background: #ff0044;        
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  margin-left: 6px;        
+  text-decoration: none;   
+  transition: background 0.3s;
+}
+
+/* Hover */
+.producto .btn-detalle:hover {
+  background: #777;
+}
