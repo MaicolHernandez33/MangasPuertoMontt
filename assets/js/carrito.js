@@ -1,11 +1,11 @@
-// Carrito mínimo para EP1 (tabla + total + pagar)
+// Carrito 
 (function () {
   const KEY = 'carrito';
 
   const get = () => JSON.parse(localStorage.getItem(KEY) || '[]');
   const set = (data) => localStorage.setItem(KEY, JSON.stringify(data));
 
-  // ----- Agregar desde catálogo o detalle -----
+  // Agregar desde catálogo o detalle 
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('.add-to-cart');
     if (!btn) return;
@@ -22,13 +22,13 @@
     alert(`🛒 "${nombre}" agregado al carrito.`);
   });
 
-  // ----- Render en carrito.html (usa tu tabla e IDs reales) -----
+  
   document.addEventListener('DOMContentLoaded', () => {
     const tbody = document.querySelector('#tabla-carrito tbody');
     const totalEl = document.getElementById('total');
     const btnCheckout = document.getElementById('btn-checkout');
 
-    // Si no existen esos nodos, no estamos en carrito.html
+    
     if (!tbody || !totalEl || !btnCheckout) return;
 
     const money = (n) => n.toLocaleString();
@@ -64,7 +64,7 @@
       totalEl.textContent = money(total);
     }
 
-    // Eliminar ítem (acción mínima)
+    // Eliminar ítem 
     document.addEventListener('click', (e) => {
       const del = e.target.closest('.btn-eliminar');
       if (!del) return;
@@ -76,7 +76,7 @@
       render();
     });
 
-    // Pagar (simulado)
+    // Pagar 
     btnCheckout.addEventListener('click', () => {
       const cart = get();
       if (cart.length === 0) {

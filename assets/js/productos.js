@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// --- Añadir al carrito (mínimo para EP1) ---
+// Añadir al carrito 
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('.add-to-cart');
   if (!btn) return;

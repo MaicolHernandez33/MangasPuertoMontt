@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// ===== VALIDACIÓN CONTACTO =====
+// VALIDACIÓN CONTACTO 
 document.addEventListener('DOMContentLoaded', () => {
   const formContacto = document.querySelector('#form-contacto');
 
@@ -157,8 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!ok) {
         e.preventDefault();
       } else {
-        e.preventDefault(); // evitar envío real en EP1
-        alert('✅ Mensaje enviado con éxito (simulado)');
+        e.preventDefault(); 
+        alert(' Mensaje enviado con éxito (simulado)');
         formContacto.reset();
       }
     });
