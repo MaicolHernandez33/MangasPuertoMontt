@@ -15,13 +15,13 @@ En esta segunda entrega, la tienda fue **migrada a React** siguiendo la **metodo
 
 ## 🌐 Enlaces del proyecto
 
-- 📁 **Repositorio GitHub**: [https://github.com/MaicolHernandez33/MangasPuertoMontt.git]  
+- 📁 **Repositorio GitHub**: [https://github.com/MaicolHernandez33/MangasPuertoMontt.git](https://github.com/MaicolHernandez33/MangasPuertoMontt.git)
 
 ---
 
 ## ⚙️ Tecnologías utilizadas
 
-- ⚛️ **Framework**: React 
+- ⚛️ **Framework**: React + Vite  
 - 🎨 **Estilos**: Bootstrap 5 + CSS propio  
 - 🧩 **Arquitectura**: Atomic Design (átomos, moléculas, organismos, plantillas, páginas)  
 - 💾 **Simulación de BD**: Archivos JavaScript (`/datos`) con operaciones CRUD  
