@@ -1,0 +1,62 @@
+# 📚 MangasPuertoMontt - Tienda Online de Mangas y Cómics (EVA 2)
+
+¡Bienvenido/a a **MangasPuertoMontt** versión **EVA 2** 🚀  
+En esta segunda entrega, la tienda fue **migrada a React** siguiendo la **metodología Atomic Design**, incorporando **Bootstrap** para el diseño responsivo y pruebas unitarias con **Jasmine + Karma**.  
+
+---
+
+## 👨‍💻 Integrante del proyecto
+
+| Nombre           | Rol / Responsabilidad principal                                     |
+|------------------|---------------------------------------------------------------------|
+| Maicol Hernández | Desarrollo completo (Migración a React, Atomic Design, Testing)     |
+
+---
+
+## 🌐 Enlaces del proyecto
+
+- 📁 **Repositorio GitHub**: [https://github.com/MaicolHernandez33/MangasPuertoMontt.git]  
+
+---
+
+## ⚙️ Tecnologías utilizadas
+
+- ⚛️ **Framework**: React 
+- 🎨 **Estilos**: Bootstrap 5 + CSS propio  
+- 🧩 **Arquitectura**: Atomic Design (átomos, moléculas, organismos, plantillas, páginas)  
+- 💾 **Simulación de BD**: Archivos JavaScript (`/datos`) con operaciones CRUD  
+- 🛠️ **Testing**: Jasmine + Karma (pruebas unitarias de componentes)  
+- 📦 **Control de versiones**: GitHub  
+
+---
+
+## 📌 Funcionalidades principales
+
+- **Migración a React**:
+  - Cada vista de la EVA1 convertida en **componentes reutilizables**.  
+  - División en **átomos, moléculas, organismos, plantillas y páginas**.  
+
+- **Nuevas vistas agregadas**:
+  - **Categorías** → productos filtrados por tipo (Mangas, Cómics, Ofertas).  
+  - **Checkout / Compra** → formulario con dirección, envío y pago.  
+  - **Compra exitosa / Compra fallida** → mensajes según resultado.  
+  - **Panel de administración** → administración de usuarios y productos.  
+
+- **Interactividad mejorada**:
+  - Manejo de **estado** con Hooks (`useState`, `useEffect`).  
+  - **Persistencia** con LocalStorage para carrito y usuarios.  
+  - **Filtros de búsqueda** y validaciones de formularios.  
+
+- **Pruebas unitarias**:
+  - Verificación de renderizado correcto de componentes.  
+  - Validación de `props` recibidas.  
+  - Cambios de estado (formularios, carrito).  
+  - Simulación de eventos de usuario (clicks, inputs).  
+
+---
+
+## 👤 Autor
+
+Desarrollado por **Maicol Hernández**  
+Estudiante DUOC UC - Ingeniería en Informática  
+Asignatura: **Desarrollo Fullstack II**  
