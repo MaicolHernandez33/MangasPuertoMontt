@@ -1,35 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import DisenoBase from "./componentes/plantillas/DisenoBase";
+import Inicio from "./componentes/paginas/Inicio";
+import Productos from "./componentes/paginas/Productos";
+import Registro from "./componentes/paginas/Registro";
+import Login from "./componentes/paginas/Login";
+import AdminProductos from "./componentes/paginas/admin/AdminProductos";
+import Contacto from "./componentes/paginas/Contacto";
+import Carrito from "./componentes/paginas/Carrito";
+import Novedades from "./componentes/paginas/Novedades";
+import Nosotros from "./componentes/paginas/Nosotros";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [pagina, setPagina] = useState("inicio");
+
+  const cambiarPagina = (nueva) => setPagina(nueva);
+
+  const mostrarPagina = () => {
+    switch (pagina) {
+      case "productos":
+        return <Productos />;
+      case "registro":
+        return <Registro />;
+      case "login":
+        return <Login />;
+      case "admin":
+        return <AdminProductos />;
+      case "contacto":
+        return <Contacto />;
+      case "carrito":
+        return <Carrito />;
+      case "novedades":
+        return <Novedades />;
+      case "nosotros":
+        return <Nosotros />;
+      default:
+        return <Inicio />;
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <DisenoBase cambiarPagina={cambiarPagina}>
+      {mostrarPagina()}
+    </DisenoBase>
+  );
 }
 
-export default App
+export default App; 
