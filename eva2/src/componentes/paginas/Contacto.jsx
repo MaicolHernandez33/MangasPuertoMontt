@@ -47,7 +47,7 @@ export default function Contacto() {
       <section className="auth-card">
         <header className="auth-head">
           <img src="/img/LogoTienda.png" alt="Logo Tienda" />
-          <Titulo texto="📞 Contáctanos" />
+          <Titulo texto="Contáctanos" />
         </header>
 
         <div className="auth-body">

@@ -4,49 +4,53 @@ import Titulo from "../atomos/Titulo";
 
 export default function Productos() {
   const [productos, setProductos] = useState([]);
+  const [filtroCategoria, setFiltroCategoria] = useState("todos");
+  const [orden, setOrden] = useState("ninguno");
 
+  // 🔹 Cargar productos desde localStorage
   useEffect(() => {
-    // Cargar productos desde localStorage
-    const productosGuardados = JSON.parse(localStorage.getItem("productos"));
-
-    // Si hay productos guardados, usarlos
-    if (productosGuardados && productosGuardados.length > 0) {
-      setProductos(productosGuardados);
-    } 
-    // Si no hay, usar productos por defecto
-    else {
-      const productosPorDefecto = [
-        {
-          id: 1,
-          nombre: "Berserk Maximum Vol. 1",
-          precio: 23990,
-          imagen: "/img/productos/tomo1berserk.jpg",
-        },
-        {
-          id: 2,
-          nombre: "Monster Vol. 1",
-          precio: 19990,
-          imagen: "/img/productos/tomo1Monster.jpg",
-        },
-        {
-          id: 3,
-          nombre: "Attack on Titan Vol. 1",
-          precio: 24990,
-          imagen: "/img/productos/tomo1SNK.jpeg",
-        },
-      ];
-
-      setProductos(productosPorDefecto);
-      localStorage.setItem("productos", JSON.stringify(productosPorDefecto));
-    }
+    const guardados = JSON.parse(localStorage.getItem("productos")) || [];
+    setProductos(guardados);
   }, []);
+
+  // 🔹 Filtrar y ordenar los productos antes de mostrarlos
+  const productosFiltrados = productos
+    .filter((p) => {
+      if (filtroCategoria === "todos") return true;
+      return p.tipo === filtroCategoria;
+    })
+    .sort((a, b) => {
+      if (orden === "asc") return a.precio - b.precio;
+      if (orden === "desc") return b.precio - a.precio;
+      return 0;
+    });
 
   return (
     <section className="productos">
       <Titulo texto="📚 Catálogo de Productos" />
+
+      {/* === FILTROS === */}
+      <div className="filtros">
+        <select
+          value={filtroCategoria}
+          onChange={(e) => setFiltroCategoria(e.target.value)}
+        >
+          <option value="todos">Todos</option>
+          <option value="manga">Mangas</option>
+          <option value="comic">Cómics</option>
+        </select>
+
+        <select value={orden} onChange={(e) => setOrden(e.target.value)}>
+          <option value="ninguno">Ordenar por</option>
+          <option value="asc">Precio: menor a mayor</option>
+          <option value="desc">Precio: mayor a menor</option>
+        </select>
+      </div>
+
+      {/* === PRODUCTOS === */}
       <div className="grilla-productos">
-        {productos.length > 0 ? (
-          productos.map((p) => (
+        {productosFiltrados.length > 0 ? (
+          productosFiltrados.map((p) => (
             <TarjetaProducto key={p.id} producto={p} />
           ))
         ) : (

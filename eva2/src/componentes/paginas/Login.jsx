@@ -1,52 +1,53 @@
-import Titulo from "../atomos/Titulo";
-import CampoTexto from "../atomos/CampoTexto";
-import Boton from "../atomos/Boton";
-import { useState } from "react";
+import React, { useState } from 'react';
+import FormularioBase from '../organismos/FormularioBase'; // Importamos el formulario base
+import Titulo from '../atomos/Titulo'; // Importamos el componente de Titulo
 
-export default function Login() {
+export default function Login({ cambiarPagina }) {
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
 
-  const iniciarSesion = () => {
-    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+  const iniciarSesion = (e) => {
+    e.preventDefault();
+    const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
     const usuarioValido = usuarios.find(
       (u) => u.correo === correo && u.password === password
     );
 
     if (usuarioValido) {
+      localStorage.setItem('usuarioActivo', JSON.stringify(usuarioValido));
       if (
         usuarioValido.correo === "admin@tienda.cl" &&
         usuarioValido.password === "admin123"
       ) {
         alert("👑 Bienvenido Administrador");
-        window.location.href = "/admin"; // redirige al panel admin
+        cambiarPagina("admin");
       } else {
         alert(`Bienvenido/a, ${usuarioValido.nombre}`);
-        window.location.href = "/"; // redirige al inicio
+        cambiarPagina("inicio");
       }
     } else {
       alert("❌ Correo o contraseña incorrectos.");
     }
-  }; // 🔹 OJO: esta llave cierra bien la función iniciarSesion
+  };
 
-  // 🔹 Aquí sí empieza el return principal del componente
+  // Definimos los campos del formulario de login
+  const camposLogin = [
+    { tipo: 'email', placeholder: 'Correo electrónico', valor: correo, onChange: setCorreo, maxlength: 100, requerido: true },
+    { tipo: 'password', placeholder: 'Contraseña', valor: password, onChange: setPassword, maxlength: 20, requerido: true }
+  ];
+
   return (
-    <section className="inicio">
-      <Titulo texto="🔑 Iniciar Sesión" />
-      <CampoTexto
-        tipo="email"
-        placeholder="Correo electrónico"
-        valor={correo}
-        onChange={setCorreo}
-      />
-      <CampoTexto
-        tipo="password"
-        placeholder="Contraseña"
-        valor={password}
-        onChange={setPassword}
-      />
-      <br />
-      <Boton texto="Iniciar Sesión" onClick={iniciarSesion} />
-    </section>
+    <FormularioBase
+      tipo="login"
+      onSubmit={iniciarSesion}
+      campos={camposLogin}
+      titulo="🔑 Iniciar Sesión"
+      botonTexto="Iniciar Sesión"
+    >
+      {/* Enlace a registro */}
+      <div style={{ marginTop: '20px' }}>
+        <p>¿No tienes cuenta? <button onClick={() => cambiarPagina("registro")} style={{ color: "#ff5050", textDecoration: "underline" }}>¡Registrate aquí!</button></p>
+      </div>
+    </FormularioBase>
   );
 }
