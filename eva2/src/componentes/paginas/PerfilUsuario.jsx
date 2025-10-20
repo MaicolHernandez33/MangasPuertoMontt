@@ -71,7 +71,7 @@ export default function PerfilUsuario({ cambiarPagina }) {
                   <ul>
                     {compra.items.map((item) => (
                       <li key={item.id}>
-                        {item.nombre} - ${item.precio.toLocaleString("es-CL")}
+                        {item.nombre}  ${item.precio.toLocaleString("es-CL")}
                       </li>
                     ))}
                   </ul>

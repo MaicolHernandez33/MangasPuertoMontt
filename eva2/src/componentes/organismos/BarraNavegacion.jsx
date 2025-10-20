@@ -78,7 +78,7 @@ export default function BarraNavegacion({ cambiarPagina }) {
           ) : (
             <>
               <button onClick={irAMiCuenta}>
-                {usuario.rol === "admin" ? "👑Admin" : "👤Perfil"}
+                {usuario.rol === "admin" ? "👑" : "👤"}
               </button>
               <button onClick={cerrarSesion}>🚪</button>
             </>

@@ -25,27 +25,55 @@ export default function AdminUsuarios() {
     }
   }, []);
 
-  // 🔹 Crear un nuevo usuario manualmente (sin romper los actuales)
-  const crearUsuario = () => {
-    if (!nombre || !correo || !password) {
-      alert("⚠️ Completa nombre, correo y contraseña.");
+    const crearUsuario = () => {
+    // Quitar espacios en blanco accidentales
+    const nombreLimpio = nombre.trim();
+    const correoLimpio = correo.trim();
+    const passwordLimpio = password.trim();
+
+    // 1️⃣ Validar campos vacíos
+    if (!nombreLimpio || !correoLimpio || !passwordLimpio) {
+      alert("⚠️ Completa todos los campos antes de continuar.");
       return;
     }
 
-    // Evitar duplicados
-    const existe = usuarios.some((u) => u.correo === correo);
+    // 2️⃣ Validar formato de correo permitido
+    const dominioValido = /@(duoc\.cl|profesor\.duoc\.cl|gmail\.com)$/i;
+    if (!dominioValido.test(correoLimpio)) {
+      alert(
+        "⚠️ Solo se permiten correos que terminen en:\n@duoc.cl, @profesor.duoc.cl o @gmail.com"
+      );
+      return;
+    }
+
+    // 3️⃣ Evitar duplicados
+    const existe = usuarios.some(
+      (u) => u.correo.toLowerCase() === correoLimpio.toLowerCase()
+    );
     if (existe) {
-      alert("⚠️ Este correo ya está registrado.");
+      alert("⚠️ Este correo ya está registrado en el sistema.");
       return;
     }
 
-    const nuevoUsuario = { nombre, correo, password, rol };
+    // 4️⃣ Validar longitud mínima de contraseña
+    if (passwordLimpio.length < 6) {
+      alert("🔒 La contraseña debe tener al menos 6 caracteres.");
+      return;
+    }
+
+    // ✅ Crear usuario si todo está correcto
+    const nuevoUsuario = {
+      nombre: nombreLimpio,
+      correo: correoLimpio,
+      password: passwordLimpio,
+      rol,
+    };
 
     const nuevosUsuarios = [...usuarios, nuevoUsuario];
     setUsuarios(nuevosUsuarios);
     localStorage.setItem("usuarios", JSON.stringify(nuevosUsuarios));
 
-    alert(`✅ Usuario ${nombre} creado correctamente.`);
+    alert(`✅ Usuario ${nombreLimpio} creado correctamente.`);
 
     // Limpiar campos
     setNombre("");

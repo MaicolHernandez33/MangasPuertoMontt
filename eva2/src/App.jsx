@@ -1,6 +1,13 @@
 import { useState } from "react";
 import DisenoBase from "./componentes/plantillas/DisenoBase";
 
+// Importar los estilos globales (rutas correctas)
+import "./assets/css/estiloBase.css";
+import "./assets/css/layout.css";
+import "./assets/css/components.css";
+import "./assets/css/admin.css";
+
+//  Páginas
 import Inicio from "./componentes/paginas/Inicio";
 import Productos from "./componentes/paginas/Productos";
 import Registro from "./componentes/paginas/Registro";
