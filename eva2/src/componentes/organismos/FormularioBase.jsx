@@ -1,35 +1,49 @@
-import React from 'react';
-import CampoTexto from '../atomos/CampoTexto';  // Asegúrate de importar el componente de campo de texto
-import Boton from '../atomos/Boton';  // Asegúrate de importar el botón
+import React from "react";
+import CampoTexto from "../atomos/CampoTexto";
+import Boton from "../atomos/Boton";
+import Titulo from "../atomos/Titulo";
 
-export default function FormularioBase({ tipo, onSubmit, campos, titulo, botonTexto }) {
+export default function FormularioBase({
+  tipo,
+  onSubmit,
+  campos,
+  titulo,
+  botonTexto,
+  children,
+}) {
   return (
-    <section className="auth-wrap">
-      <div className="auth-card">
-        {/* Título del formulario */}
+    <main className="auth-wrap">
+      <section className="auth-card">
         <header className="auth-head">
-          <h2>{titulo}</h2>
+          <img src="/img/LogoTienda.png" alt="Logo Tienda" />
+          <Titulo texto={titulo} />
         </header>
 
-        {/* Cuerpo del formulario */}
-        <form onSubmit={onSubmit} id={tipo}>
-          {campos.map((campo, index) => (
-            <div className="form-control" key={index}>
+        <div className="auth-body">
+          <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                onSubmit(e);
+              }}
+          > 
+            {campos.map((campo, index) => (
               <CampoTexto
+                key={index}
                 tipo={campo.tipo}
                 placeholder={campo.placeholder}
                 valor={campo.valor}
                 onChange={campo.onChange}
-                maxlength={campo.maxlength}
                 requerido={campo.requerido}
               />
-            </div>
-          ))}
+            ))}
+            <button type="submit" className="boton">
+              {botonTexto}
+            </button>
+          </form>
 
-          {/* Botón de submit */}
-          <Boton texto={botonTexto} />
-        </form>
-      </div>
-    </section>
+          {children}
+        </div>
+      </section>
+    </main>
   );
 }

@@ -4,58 +4,62 @@ import Boton from "../atomos/Boton";
 
 export default function Carrito() {
   const [carrito, setCarrito] = useState([]);
+  const [claveCarrito, setClaveCarrito] = useState("carrito_anonimo");
 
-  // 🔹 Cargar el carrito guardado cuando la página se abre
   useEffect(() => {
-    const carritoGuardado = JSON.parse(localStorage.getItem("carrito")) || [];
-    setCarrito(carritoGuardado);
+    const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
+    const clave = usuarioActivo ? `carrito_${usuarioActivo.correo}` : "carrito_anonimo";
+    setClaveCarrito(clave);
+    const guardado = JSON.parse(localStorage.getItem(clave)) || [];
+    setCarrito(guardado);
   }, []);
 
-  // 🔹 Guardar el carrito cada vez que se modifique
   useEffect(() => {
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-  }, [carrito]);
+    localStorage.setItem(claveCarrito, JSON.stringify(carrito));
+  }, [carrito, claveCarrito]);
 
-  // 🔹 Eliminar un producto individual
   const eliminarItem = (id) => {
-    const nuevoCarrito = carrito.filter((item) => item.id !== id);
-    setCarrito(nuevoCarrito);
+    setCarrito(carrito.filter((i) => i.id !== id));
   };
 
-  // 🔹 Vaciar todo el carrito
   const vaciarCarrito = () => {
     if (confirm("¿Vaciar todo el carrito?")) {
       setCarrito([]);
-      localStorage.removeItem("carrito");
+      localStorage.setItem(claveCarrito, "[]");
     }
   };
 
-  // 🔹 Calcular el total
-  const total = carrito.reduce((acc, item) => acc + item.precio, 0);
+  const total = carrito.reduce((acc, item) => acc + item.precio * (item.cantidad || 1), 0);
 
-  // ✅ Nueva función: pagar compra (guardar boleta)
   const pagarCompra = () => {
-    if (carrito.length === 0) {
-      alert("Tu carrito está vacío.");
-      return;
-    }
+    if (carrito.length === 0) return alert("Tu carrito está vacío.");
+
+    const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
+    if (!usuarioActivo) return alert("⚠️ Debes iniciar sesión para pagar.");
 
     const compra = {
-      fecha: new Date(),
+      id: Date.now(),
+      usuario: usuarioActivo.nombre,
+      correo: usuarioActivo.correo,
+      fecha: new Date().toLocaleString(),
       items: carrito,
-      total: total,
+      total,
     };
 
-    // Guardar los datos de la compra para mostrar luego en ConfirmacionCompra.jsx
-    localStorage.setItem("ultimaCompra", JSON.stringify(compra));
+    // Guardar historial personal
+    const claveCompras = `compras_${usuarioActivo.correo}`;
+    const historial = JSON.parse(localStorage.getItem(claveCompras)) || [];
+    historial.push(compra);
+    localStorage.setItem(claveCompras, JSON.stringify(historial));
 
-    // Limpiar carrito
-    localStorage.removeItem("carrito");
-    setCarrito([]);
+    // Guardar en pedidos globales
+    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+    pedidos.push(compra);
+    localStorage.setItem("pedidos", JSON.stringify(pedidos));
 
-    // Confirmar y redirigir
     alert("✅ Compra realizada correctamente.");
-    window.location.href = "/confirmacion";
+    setCarrito([]);
+    localStorage.setItem(claveCarrito, "[]");
   };
 
   return (
@@ -72,7 +76,9 @@ export default function Carrito() {
                 <img src={item.imagen} alt={item.nombre} />
                 <div className="info">
                   <h4>{item.nombre}</h4>
-                  <p>${item.precio.toLocaleString("es-CL")}</p>
+                  <p>
+                    ${item.precio.toLocaleString("es-CL")} × {item.cantidad || 1}
+                  </p>
                   <Boton texto="Eliminar" onClick={() => eliminarItem(item.id)} />
                 </div>
               </article>

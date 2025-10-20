@@ -5,8 +5,8 @@ import TarjetaProducto from "../moleculas/TarjetaProducto";
 export default function Inicio() {
   const banners = [
     { id: 1, imagen: "/img/fondo10.jpg", texto: "Novedades en Mangas 2025" },
-    { id: 2, imagen: "/img/fondo10.jpg", texto: "Descuentos especiales en BoxSets" },
-    { id: 3, imagen: "/img/fondo10.jpg", texto: "¡Colecciona tus series favoritas!" },
+    { id: 2, imagen: "/img/productos/dbzbox.png", texto: "Descuentos especiales en BoxSets" },
+    { id: 3, imagen: "/img/productos/imgcarrusel.jpg", texto: "¡Colecciona tus series favoritas!" },
   ];
 
   const [bannerActual, setBannerActual] = useState(0);
@@ -44,7 +44,7 @@ export default function Inicio() {
     <section className="inicio">
       {/* === BIENVENIDA === */}
       <div className="hero-bienvenida">
-        <h1>✨ Bienvenido a Tienda Mangas PuertoMontt</h1>
+        <h1>Bienvenido a Tienda Mangas PuertoMontt</h1>
         <p>
           Tu lugar favorito para encontrar <b>mangas, cómics, figuras</b> y mucho más.  
           Disfruta nuestras novedades y colecciones exclusivas del 2025.
@@ -79,7 +79,7 @@ export default function Inicio() {
 
       {/* === MANGAS RECOMENDADOS === */}
       <div className="recomendados">
-        <Titulo texto="📚 Mangas Recomendados" />
+        <Titulo texto="Mangas Recomendados" />
         {mangas.length > 0 ? (
           <div className="grilla-productos">
             {mangas.map((p) => (
@@ -93,7 +93,7 @@ export default function Inicio() {
 
       {/* === CÓMICS RECOMENDADOS === */}
       <div className="recomendados">
-        <Titulo texto="🦸‍♂️ Cómics Recomendados" />
+        <Titulo texto="Cómics Recomendados" />
         {comics.length > 0 ? (
           <div className="grilla-productos">
             {comics.map((p) => (

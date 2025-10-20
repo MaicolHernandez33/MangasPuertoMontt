@@ -1,7 +1,10 @@
+
+@import url('https://fonts.googleapis.com/css2?family=BBH+Sans+Hegarty&display=swap');
+ 
 /* === BASE GENERAL === */
 body {
   margin: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: #fff;
   background-image: url("/img/FondoPaginas.jpg");
   background-size: cover;
@@ -25,6 +28,7 @@ body {
   background-color: rgba(0, 0, 0, 0.9);
   padding: 15px 30px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  
 }
 
 .logo {
@@ -297,20 +301,19 @@ main.contenido {
   background-color: #ff5050;
   color: #fff;
 }
-
+ 
 /* === CONTACTO Y FORMULARIOS === */
 .auth-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 140px 20px 100px;
-  min-height: 100vh;
-  box-sizing: border-box;
-}
-
+  min-height: 100vh; /* 🔹 ocupa toda la altura visible */
+  padding: 0;
+  margin: 0;
+} 
 .auth-card {
   background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 16px;
+  border-radius: 15px;
   padding: 40px 50px;
   text-align: center;
   max-width: 480px;
@@ -644,3 +647,815 @@ textarea.campo-texto {
   background-color: #ff7878;
 }
 
+/* Tipografía para todo el cuerpo de la página */
+body {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  color: #fff;
+}
+
+/* Tipografía para los títulos */
+.titulo, h1, h2, h3 {
+  font-family:"BBH Sans Hegarty", sans-serif;
+  font-weight: 600; /* Puedes ajustar el grosor del texto si lo deseas */
+}
+
+/* Estilo del Navbar */
+.navbar {
+  font-family:"BBH Sans Hegarty", sans-serif;
+  font-weight: 800;
+  color: white;
+}
+  
+.navbar .logo h1 {
+  font-family: "BBH Sans Hegarty", sans-serif;
+  font-weight: 600; /* Títulos del navbar con una tipografía más fuerte */
+} 
+ 
+/* Otros estilos para diferentes elementos */
+.boton {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 500;
+}
+
+/* Puedes personalizar más elementos aquí si lo necesitas */
+/* Estilo para la clase de título */
+.titulo {
+  font-family:"BBH Sans Hegarty", sans-serif;
+  font-weight: 600;
+  font-size: 2rem; 
+}
+
+/* === Botón de enlace secundario (como 'Regístrate aquí') === */
+.boton-secundario {
+  background-color: rgba(255, 80, 80, 0.8); /* mismo color que iniciar sesión pero más suave */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.boton-secundario:hover {
+  background-color: #ff5050;
+  transform: scale(1.05);
+}
+
+.boton-secundario:active {
+  transform: scale(0.98);
+}
+
+/* === Centrado de los campos dentro del formulario === */
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 🔹 centra todo el contenido */
+  justify-content: center;
+}
+
+/* === FORMULARIO CONTACTO CENTRADO === */
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* === CONTENEDOR DE CADA CAMPO === */
+.form-control {
+  width: 100%;
+  max-width: 420px; /* 🔹 mismo límite que los inputs */
+  margin: 10px auto;
+  text-align: left;
+}
+
+/* === LABEL === */
+.form-control label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #fff;
+  text-align: left;
+}
+
+/* === INPUTS Y TEXTAREA (idénticos) === */
+.campo-texto {
+  display: block;
+  width: 100%;
+  height: 46px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.campo-texto:focus {
+  outline: none;
+  border-color: #ff5050;
+  background-color: rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0 8px rgba(255, 80, 80, 0.4);
+}
+
+/* === TEXTAREA (misma estética que los inputs) === */
+.form-control textarea.campo-texto {
+  height: 120px;
+  resize: none;
+}
+
+/* === HINT (texto en rojo debajo) === */
+.form-control .hint {
+  display: block;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #ff5050;
+  margin-top: 3px;
+}
+
+/* === BOTÓN CENTRADO === */
+.boton {
+  display: block;
+  margin: 20px auto 0;
+  width: 200px;
+  text-align: center;
+}
+
+/* === CARRITO === */
+.carrito {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 90vh;
+  padding: 40px 20px;
+}
+
+.lista-carrito {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+  max-width: 700px;
+  margin-top: 30px;
+}
+
+.tarjeta-carrito {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.75);
+  border-radius: 12px;
+  padding: 15px 20px;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarjeta-carrito:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(255, 80, 80, 0.4);
+}
+
+.tarjeta-carrito img {
+  width: 100px;
+  height: 130px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.tarjeta-carrito .info {
+  flex: 1;
+  text-align: left;
+}
+
+.tarjeta-carrito h4 {
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.tarjeta-carrito p {
+  color: #ff5050;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* === MEJORAS VISUALES EN EL RESUMEN DEL CARRITO === */
+.resumen-carrito {
+  background: rgba(255, 80, 80, 0.15); /* 🔴 leve tono rojizo */
+  border: 2px solid rgba(255, 80, 80, 0.4);
+  padding: 25px 30px;
+  border-radius: 15px;
+  margin: 40px auto 20px auto;
+  text-align: center;
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 0 0 25px rgba(255, 80, 80, 0.3);
+  transition: all 0.3s ease;
+}
+
+.resumen-carrito:hover {
+  box-shadow: 0 0 35px rgba(255, 80, 80, 0.5);
+}
+
+.resumen-carrito h3 {
+  color: #ffffff;
+  font-size: 1.4rem;
+  margin-bottom: 25px;
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+}
+
+/* 🔹 Centrar y mejorar botones */
+.resumen-carrito .boton {
+  margin: 10px;
+  width: 180px;
+  font-size: 1rem;
+  border-radius: 10px;
+}
+
+*/
+.acciones-carrito {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.resumen-carrito .boton {
+  width: 200px;
+  text-align: center;
+  margin: 10px 0;
+}
+ 
+
+.resumen-carrito,
+.tarjeta-carrito {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ADMIN*/
+.admin-panel {
+  display: flex;
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: white;
+}
+
+.admin-menu {
+  width: 230px;
+  background-color: rgba(0, 0, 0, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 15px;
+  gap: 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.admin-menu h2 {
+  color: #ff5050;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.admin-menu button {
+  background: none;
+  border: 2px solid #ff5050;
+  color: white;
+  font-size: 1rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.admin-menu button:hover {
+  background-color: #ff5050;
+  transform: scale(1.05);
+}
+
+.admin-contenido {
+  flex: 1;
+  padding: 40px;
+  text-align: center;
+  background-image: url("/img/FondoPaginas.jpg");
+  background-size: cover;
+  background-position: center;
+  backdrop-filter: blur(4px);
+}
+
+
+/* === PANEL ADMIN - INICIO === */
+.admin-inicio {
+  text-align: center;
+  padding: 60px 20px;
+  color: #fff;
+}
+
+.admin-bienvenida {
+  font-size: 1.2rem;
+  color: #e0e0e0;
+  margin-bottom: 40px;
+}
+
+.admin-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+.card-resumen {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 80, 80, 0.3);
+  border-radius: 12px;
+  padding: 25px 20px;
+  box-shadow: 0 0 10px rgba(255, 80, 80, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 300px;
+}
+
+.card-resumen:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(255, 80, 80, 0.5);
+}
+
+.card-resumen h3 {
+  color: #ff5050;
+  margin-bottom: 10px;
+}
+/* === ADMIN PRODUCTOS === */
+.admin-productos {
+  text-align: center;
+  padding: 50px 20px;
+  color: white;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.formulario-admin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.grid-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-top: 25px;
+}
+
+.tarjeta-producto {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(255, 80, 80, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.tarjeta-producto:hover {
+  transform: scale(1.03);
+}
+
+.tarjeta-producto img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.acciones-admin {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* === ADMIN USUARIOS === */
+.admin-usuarios {
+  text-align: center;
+  padding: 50px 20px;
+  color: white;
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+  margin-top: 25px;
+}
+
+.tabla-usuarios {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(255, 80, 80, 0.3);
+}
+
+.tabla-usuarios thead {
+  background-color: rgba(255, 80, 80, 0.8);
+  color: white;
+  font-weight: bold;
+}
+
+.tabla-usuarios th,
+.tabla-usuarios td {
+  padding: 12px 10px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tabla-usuarios tr:hover {
+  background-color: rgba(255, 80, 80, 0.15);
+  transition: 0.3s ease;
+}
+
+.tabla-usuarios td:last-child {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tabla-usuarios button {
+  font-size: 0.9rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+/* === ADMIN PEDIDOS === */
+.admin-pedidos {
+  text-align: center;
+  padding: 50px 20px;
+  color: white;
+}
+
+.tabla-pedidos {
+  width: 100%;
+  max-width: 950px;
+  margin: 25px auto;
+  border-collapse: collapse;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(255, 80, 80, 0.3);
+}
+
+.tabla-pedidos thead {
+  background-color: rgba(255, 80, 80, 0.8);
+  color: white;
+}
+
+.tabla-pedidos th,
+.tabla-pedidos td {
+  padding: 12px 10px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tabla-pedidos tr:hover {
+  background-color: rgba(255, 80, 80, 0.15);
+  transition: 0.3s ease;
+}
+
+.tabla-pedidos details {
+  text-align: left;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: #fff;
+}
+
+.tabla-pedidos summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: #ff5050;
+}
+
+.tabla-pedidos ul {
+  padding-left: 20px;
+  margin: 8px 0;
+  font-size: 0.9rem;
+  list-style-type: "📘 ";
+}
+
+.acciones-pedidos {
+  margin-top: 30px;
+}
+
+/* === ADMIN PEDIDOS === */
+.admin-pedidos {
+  text-align: center;
+  padding: 50px 20px;
+  color: white;
+}
+
+.tabla-pedidos {
+  width: 100%;
+  max-width: 1000px;
+  margin: 25px auto;
+  border-collapse: collapse;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(255, 80, 80, 0.3);
+}
+
+.tabla-pedidos thead {
+  background-color: rgba(255, 80, 80, 0.8);
+  color: white;
+}
+
+.tabla-pedidos th,
+.tabla-pedidos td {
+  padding: 12px 10px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tabla-pedidos tr:hover {
+  background-color: rgba(255, 80, 80, 0.15);
+  transition: 0.3s ease;
+}
+
+.tabla-pedidos details {
+  text-align: left;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: #fff;
+}
+
+.tabla-pedidos summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: #ff5050;
+}
+
+.tabla-pedidos ul {
+  padding-left: 20px;
+  margin: 8px 0;
+  font-size: 0.9rem;
+  list-style-type: "📘 ";
+}
+
+.acciones-pedidos {
+  margin-top: 30px;
+}
+
+/* === PERFIL ADMIN === */
+.admin-perfil {
+  text-align: center;
+  padding: 60px 20px;
+  color: #fff;
+}
+
+.perfil-card {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 12px;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  margin: 30px auto;
+  box-shadow: 0 0 20px rgba(255, 80, 80, 0.3);
+}
+
+.perfil-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #ff5050;
+  margin-bottom: 15px;
+}
+
+/* === REPORTES ADMIN === */
+.admin-reportes {
+  text-align: center;
+  padding: 50px 20px;
+  color: white;
+}
+
+.reporte-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.reporte-card {
+  background: rgba(0, 0, 0, 0.75);
+  border-radius: 10px;
+  padding: 25px;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 80, 80, 0.3);
+  transition: all 0.3s ease;
+}
+
+.reporte-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(255, 80, 80, 0.5);
+}
+
+.reporte-card h3 {
+  margin-bottom: 10px;
+  color: #ff5050;
+}
+
+.reporte-card p {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.reporte-card.total {
+  background: rgba(255, 80, 80, 0.2);
+  border: 2px solid rgba(255, 80, 80, 0.5);
+}
+
+/* === PANEL ADMIN PRINCIPAL === */
+.admin-panel {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(20,20,20,0.9));
+  color: #fff;
+}
+
+/* === MENÚ LATERAL === */
+.admin-menu {
+  width: 230px;
+  background: rgba(0, 0, 0, 0.9);
+  border-right: 2px solid rgba(255, 80, 80, 0.4);
+  padding: 30px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.admin-menu h2 {
+  text-align: center;
+  color: #ff5050;
+  margin-bottom: 20px;
+}
+
+.admin-menu button {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.admin-menu button:hover {
+  background-color: #ff5050;
+  border-color: #ff5050;
+  transform: scale(1.05);
+}
+
+.admin-menu .cerrar-sesion {
+  background-color: rgba(255, 80, 80, 0.2);
+  border-color: rgba(255, 80, 80, 0.5);
+  margin-top: 10px; /* antes era "auto" */
+}
+
+.admin-menu .cerrar-sesion:hover {
+  background-color: #ff5050;
+}
+
+
+/* === CONTENIDO DEL ADMIN === */
+.admin-contenido {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === TABLAS Y TARJETAS === */
+.admin-contenido table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgba(0, 0, 0, 0.6);
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255, 80, 80, 0.3);
+}
+
+.admin-contenido th {
+  background-color: rgba(255, 80, 80, 0.8);
+  color: #fff;
+  padding: 10px;
+}
+
+.admin-contenido td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-contenido tr:hover {
+  background-color: rgba(255, 80, 80, 0.1);
+  transition: 0.3s;
+}
+
+.admin-contenido h3 {
+  margin-top: 25px;
+  color: #ff5050;
+}
+
+.perfil-usuario {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px 20px;
+  color: #fff;
+}
+
+.perfil-contenedor {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.perfil-datos p {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.perfil-compras {
+  margin-top: 30px;
+}
+
+.compra-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.compra-item ul {
+  list-style: none;
+  padding-left: 10px;
+}
+
+.compra-item li {
+  margin: 4px 0;
+}
+
+.panel { 
+  background: rgba(0,0,0,0.6); 
+  padding: 20px; 
+  border-radius: 12px; 
+  margin-top: 25px; 
+}
+.bars { display: flex; flex-direction: column; gap: 14px; }
+.bar-item { }
+.bar-label { display:flex; justify-content:space-between; margin-bottom:6px; color:#fff; font-weight:600; }
+.bar-track { background: rgba(255,255,255,0.15); height: 10px; border-radius: 8px; overflow: hidden; }
+.bar-fill { height: 10px; background: #ff5050; }

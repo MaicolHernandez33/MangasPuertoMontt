@@ -33,12 +33,12 @@ export default function Contacto() {
     }
 
     if (form.mensaje.length > 500) {
-      setError("⚠️ El mensaje no puede superar los 500 caracteres.");
+      setError(" El mensaje no puede superar los 500 caracteres.");
       return;
     }
 
     // Si todo está bien
-    setExito("✅ Mensaje enviado correctamente. ¡Gracias por contactarnos!");
+    setExito(" Mensaje enviado correctamente. ¡Gracias por contactarnos!");
     setForm({ nombre: "", correo: "", mensaje: "" });
   };
 
@@ -79,7 +79,7 @@ export default function Contacto() {
                 className="campo-texto"
               />
               <small className="hint">
-                Solo se aceptan correos @duoc.cl, @profesor.duoc.cl o @gmail.com
+                Solo correos como: @duoc.cl, @profesor.duoc.cl o @gmail.com
               </small>
             </div>
 

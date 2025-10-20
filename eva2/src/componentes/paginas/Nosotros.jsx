@@ -5,7 +5,7 @@ export default function Nosotros() {
     <section className="nosotros">
       {/* Introducción */}
       <section className="intro">
-        <Titulo texto="👥 Sobre Nosotros" />
+        <Titulo texto="Sobre Nosotros" />
         <p>
           En <strong>Tienda Mangas PuertoMontt</strong>, somos un equipo apasionado por el mundo
           del manga, los cómics y la cultura otaku. Nacimos con la idea de acercar las mejores
@@ -49,7 +49,7 @@ export default function Nosotros() {
           Si te apasionan los mangas y los cómics, no dudes en visitarnos. Estamos ubicados en Puerto Montt, con
           productos nuevos y exclusivos para ti.
         </p>
-        <a href="/contacto" className="btn-contacto">
+        <a href="./Contacto" className="btn-contacto">
           Contáctanos
         </a>
       </section>

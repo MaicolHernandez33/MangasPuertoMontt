@@ -7,18 +7,13 @@ export default function Productos() {
   const [filtroCategoria, setFiltroCategoria] = useState("todos");
   const [orden, setOrden] = useState("ninguno");
 
-  // 🔹 Cargar productos desde localStorage
   useEffect(() => {
     const guardados = JSON.parse(localStorage.getItem("productos")) || [];
-    setProductos(guardados);
+    setProductos(guardados.filter((p) => p.activo !== false));
   }, []);
 
-  // 🔹 Filtrar y ordenar los productos antes de mostrarlos
   const productosFiltrados = productos
-    .filter((p) => {
-      if (filtroCategoria === "todos") return true;
-      return p.tipo === filtroCategoria;
-    })
+    .filter((p) => (filtroCategoria === "todos" ? true : p.categoria === filtroCategoria))
     .sort((a, b) => {
       if (orden === "asc") return a.precio - b.precio;
       if (orden === "desc") return b.precio - a.precio;
@@ -27,17 +22,15 @@ export default function Productos() {
 
   return (
     <section className="productos">
-      <Titulo texto="📚 Catálogo de Productos" />
+      <Titulo texto="Catálogo de Productos" />
 
-      {/* === FILTROS === */}
       <div className="filtros">
-        <select
-          value={filtroCategoria}
-          onChange={(e) => setFiltroCategoria(e.target.value)}
-        >
+        <select value={filtroCategoria} onChange={(e) => setFiltroCategoria(e.target.value)}>
           <option value="todos">Todos</option>
           <option value="manga">Mangas</option>
           <option value="comic">Cómics</option>
+          <option value="figura">Figuras</option>
+          <option value="otro">Otros</option>
         </select>
 
         <select value={orden} onChange={(e) => setOrden(e.target.value)}>
@@ -47,12 +40,9 @@ export default function Productos() {
         </select>
       </div>
 
-      {/* === PRODUCTOS === */}
       <div className="grilla-productos">
         {productosFiltrados.length > 0 ? (
-          productosFiltrados.map((p) => (
-            <TarjetaProducto key={p.id} producto={p} />
-          ))
+          productosFiltrados.map((p) => <TarjetaProducto key={p.id} producto={p} />)
         ) : (
           <p>No hay productos disponibles.</p>
         )}
