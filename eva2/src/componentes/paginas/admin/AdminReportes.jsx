@@ -58,7 +58,7 @@ export default function AdminReportes() {
     return arr.slice(0, 3);
   }, [pedidos]);
 
-  // Escala simple para “gráfico” de barras con CSS (sin librerías)
+
   const maxCantidad = Math.max(1, ...top3.map((t) => t.cantidad));
 
   return (

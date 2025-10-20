@@ -31,13 +31,13 @@ export default function AdminUsuarios() {
     const correoLimpio = correo.trim();
     const passwordLimpio = password.trim();
 
-    // 1️⃣ Validar campos vacíos
+    // Validar campos vacíos
     if (!nombreLimpio || !correoLimpio || !passwordLimpio) {
       alert("⚠️ Completa todos los campos antes de continuar.");
       return;
     }
 
-    // 2️⃣ Validar formato de correo permitido
+    //  Validar formato de correo permitido
     const dominioValido = /@(duoc\.cl|profesor\.duoc\.cl|gmail\.com)$/i;
     if (!dominioValido.test(correoLimpio)) {
       alert(
@@ -46,7 +46,7 @@ export default function AdminUsuarios() {
       return;
     }
 
-    // 3️⃣ Evitar duplicados
+    // Evitar duplicados
     const existe = usuarios.some(
       (u) => u.correo.toLowerCase() === correoLimpio.toLowerCase()
     );
@@ -55,13 +55,13 @@ export default function AdminUsuarios() {
       return;
     }
 
-    // 4️⃣ Validar longitud mínima de contraseña
+    // Validar longitud mínima de contraseña
     if (passwordLimpio.length < 6) {
       alert("🔒 La contraseña debe tener al menos 6 caracteres.");
       return;
     }
 
-    // ✅ Crear usuario si todo está correcto
+    // Crear usuario si todo está correcto
     const nuevoUsuario = {
       nombre: nombreLimpio,
       correo: correoLimpio,
@@ -92,7 +92,7 @@ export default function AdminUsuarios() {
     }
   };
 
-  // 🔹 Promover usuario a administrador
+  // Promover usuario a administrador
   const promoverAdmin = (correo) => {
     const nuevosUsuarios = usuarios.map((u) =>
       u.correo === correo ? { ...u, rol: "admin" } : u
@@ -102,7 +102,7 @@ export default function AdminUsuarios() {
     alert("👑 Usuario promovido a administrador.");
   };
 
-  // 🔹 Degradar administrador a usuario normal
+  // Degradar administrador a usuario normal
   const degradarUsuario = (correo) => {
     if (correo === "admin@tienda.cl") {
       alert("⚠️ No se puede degradar al administrador principal.");

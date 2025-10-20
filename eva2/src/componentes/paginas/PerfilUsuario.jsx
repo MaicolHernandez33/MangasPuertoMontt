@@ -7,7 +7,7 @@ export default function PerfilUsuario({ cambiarPagina }) {
   const [compras, setCompras] = useState([]);
 
   useEffect(() => {
-    // 🔹 Cargar usuario activo
+    //Cargar usuario activo
     const activo = JSON.parse(localStorage.getItem("usuarioActivo"));
     if (!activo) {
       alert("⚠️ Debes iniciar sesión para acceder al perfil.");
@@ -17,17 +17,17 @@ export default function PerfilUsuario({ cambiarPagina }) {
 
     setUsuario(activo);
 
-    // 🔹 Cargar historial de compras (por correo)
+    //Cargar historial de compras (por correo)
     const key = `compras_${activo.correo}`;
     const historial = JSON.parse(localStorage.getItem(key)) || [];
     setCompras(historial);
   }, [cambiarPagina]);
 
-  // 🔹 Cerrar sesión
+  // Cerrar sesión
   const cerrarSesion = () => {
     if (confirm("¿Deseas cerrar sesión?")) {
       localStorage.removeItem("usuarioActivo");
-      window.dispatchEvent(new Event("storage")); // 👈 Actualiza Navbar
+      window.dispatchEvent(new Event("storage"));
       alert("👋 Sesión cerrada correctamente.");
       cambiarPagina?.("inicio");
     }

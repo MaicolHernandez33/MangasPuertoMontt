@@ -4,13 +4,13 @@ export default function BarraNavegacion({ cambiarPagina }) {
   const [menuActivo, setMenuActivo] = useState(false);
   const [usuario, setUsuario] = useState(null);
 
-  // 🔹 Función para cargar el usuario desde localStorage
+  // Función para cargar el usuario desde localStorage
   const cargarUsuario = () => {
     const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
     setUsuario(usuarioActivo || null);
   };
 
-  // 🔹 Se ejecuta al montar y cada vez que cambia el localStorage
+  // Se ejecuta al montar y cada vez que cambia el localStorage
   useEffect(() => {
     cargarUsuario();
 

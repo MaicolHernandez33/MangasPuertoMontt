@@ -11,39 +11,39 @@ export default function Registro({ cambiarPagina }) {
   const registrarUsuario = (e) => {
     e.preventDefault();
 
-    // 🔹 Limpiar espacios
+    // Limpiar espacios
     const nombreTrim = nombre.trim();
     const correoTrim = correo.trim().toLowerCase();
     const passTrim = password.trim();
     const confirmarTrim = confirmar.trim();
 
-    // 🔹 Validaciones básicas
+    // Validaciones básicas
     if (!nombreTrim || !correoTrim || !passTrim || !confirmarTrim) {
       alert("⚠️ Por favor completa todos los campos obligatorios.");
       return;
     }
 
-    // 🔹 Validar formato de correo permitido
+    // Validar formato de correo permitido
     const dominioPermitido = /@(?:duoc\.cl|profesor\.duoc\.cl|gmail\.com)$/i.test(correoTrim);
     if (!dominioPermitido) {
       alert("⚠️ Solo se permiten correos @duoc.cl, @profesor.duoc.cl o @gmail.com");
       return;
     }
 
-    // 🔹 Validar fuerza de contraseña
+    // Validar fuerza de contraseña
     const okPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/.test(passTrim);
     if (!okPass) {
       alert("⚠️ La contraseña debe tener al menos 6 caracteres, con mayúscula, minúscula y número.");
       return;
     }
 
-    // 🔹 Confirmar contraseñas
+    // Confirmar contraseñas
     if (passTrim !== confirmarTrim) {
       alert("❌ Las contraseñas no coinciden.");
       return;
     }
 
-    // ✅ Crear nuevo usuario
+    // Crear nuevo usuario
     const nuevoUsuario = {
       nombre: nombreTrim,
       correo: correoTrim,
@@ -54,7 +54,7 @@ export default function Registro({ cambiarPagina }) {
 
     const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 
-    // 🔹 Verificar duplicado
+    // Verificar duplicado
     const existe = usuarios.some((u) => u.correo === correoTrim);
     if (existe) {
       alert("⚠️ Este correo ya está registrado. Intenta con otro.");
@@ -63,7 +63,7 @@ export default function Registro({ cambiarPagina }) {
 
     usuarios.push(nuevoUsuario);
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
-    window.dispatchEvent(new Event("storage")); // 🔄 Actualiza navbar
+    window.dispatchEvent(new Event("storage")); // Actualiza navbar
 
     alert("✅ Registro exitoso. ¡Ya puedes iniciar sesión!");
     setNombre("");

@@ -9,7 +9,7 @@ export default function Login({ cambiarPagina }) {
     e.preventDefault();
     const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 
-    // 🔹 Caso especial: Admin por defecto
+    // Caso especial: Admin por defecto
     if (correo === "admin@tienda.cl" && password === "admin123") {
       const adminUser = {
         nombre: "Administrador",
@@ -31,7 +31,7 @@ export default function Login({ cambiarPagina }) {
       return;
     }
 
-    // 🔹 Buscar usuario válido
+    // Buscar usuario válido
     const usuarioValido = usuarios.find(
       (u) => u.correo === correo.trim().toLowerCase() && u.password === password
     );
@@ -40,7 +40,7 @@ export default function Login({ cambiarPagina }) {
       localStorage.setItem("usuarioActivo", JSON.stringify(usuarioValido));
       window.dispatchEvent(new Event("storage"));
 
-      // 🔹 Merge de carrito anónimo con carrito del usuario
+      // Merge de carrito anónimo con carrito del usuario
       const anon = JSON.parse(localStorage.getItem("carrito_anonimo") || "[]");
       const keyUser = `carrito_${usuarioValido.correo}`;
       const curr = JSON.parse(localStorage.getItem(keyUser) || "[]");
@@ -61,7 +61,7 @@ export default function Login({ cambiarPagina }) {
     }
   };
 
-  // 🔧 Función para combinar carritos
+  // Función para combinar carritos
   const mergeCarritos = (a, b) => {
     const mapa = new Map();
     for (const it of [...a, ...b]) {

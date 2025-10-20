@@ -114,7 +114,7 @@
 /* === CONTENIDO GENERAL === */
 main.contenido {
   flex: 1;
-  padding: 120px 40px 100px 40px; /* IMPORTANTE para que el navbar no tape el contenido */
+  padding: 120px 40px 100px 40px;
   text-align: center;
 }
 

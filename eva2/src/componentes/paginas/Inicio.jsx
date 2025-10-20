@@ -13,7 +13,7 @@ export default function Inicio() {
   const [mangas, setMangas] = useState([]);
   const [comics, setComics] = useState([]);
 
-  // 🔹 Cambio automático de banner
+  // Cambio automático de banner
   useEffect(() => {
     const intervalo = setInterval(() => {
       setBannerActual((prev) => (prev + 1) % banners.length);
@@ -21,7 +21,7 @@ export default function Inicio() {
     return () => clearInterval(intervalo);
   }, []);
 
-  // 🔹 Cargar productos guardados y separarlos
+  // Cargar productos guardados y separarlos
   useEffect(() => {
     const guardados = JSON.parse(localStorage.getItem("productos")) || [];
 

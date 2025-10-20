@@ -1,7 +1,7 @@
 import { useState } from "react";
 import DisenoBase from "./componentes/plantillas/DisenoBase";
 
-// Importar los estilos globales (rutas correctas)
+// Importar los estilos globales
 import "./assets/css/estiloBase.css";
 import "./assets/css/layout.css";
 import "./assets/css/components.css";
