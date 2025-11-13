@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=BBH+Sans+Hegarty&display=swap');
+
+/* === BASE GENERAL === */
+body {
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #fff;
+  background-image: url("/img/FondoPaginas.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* === TITULOS Y TEXTOS === */
+.titulo, h1, h2, h3 {
+  font-family: "BBH Sans Hegarty", sans-serif;
+  font-weight: 600;
+}
+
+.titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.inicio h2 {
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 15px;
+}
+
+.inicio p {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+}
+
+/* === BOTONES === */
+.boton {
+  background-color: #ff5050;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s;
+}
+
+.boton:hover {
+  background-color: #ff7878;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255, 80, 80, 0.6);
+}
+
+.boton:active {
+  transform: scale(0.98);
+}
+
+/* === BOTÓN SECUNDARIO === */
+.boton-secundario {
+  background-color: rgba(255, 80, 80, 0.8);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.boton-secundario:hover {
+  background-color: #ff5050;
+  transform: scale(1.05);
+}
+
+.boton-secundario:active {
+  transform: scale(0.98);
+}
+
+/* === CAMPOS DE TEXTO === */
+.campo-texto {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 1rem;
+  margin: 8px 0;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.campo-texto::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.campo-texto:focus {
+  outline: none;
+  border-color: #ff5050;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 8px rgba(255, 80, 80, 0.6);
+}
+
+/* === FORMULARIOS === */
+.auth-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+.auth-card {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  padding: 40px 50px;
+  text-align: center;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+}
+
+.auth-head img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.auth-head h2 {
+  font-size: 1.8rem;
+  color: #fff;
+  margin: 10px 0 25px;
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-control {
+  width: 100%;
+  max-width: 420px;
+  margin: 10px auto;
+  text-align: left;
+  margin-bottom: 18px;
+}
+
+.form-control label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  color: #fff;
+  text-align: left;
+}
+
+textarea.campo-texto {
+  resize: none;
+  min-height: 120px;
+  height: 120px;
+}
+
+.hint {
+  display: block;
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  color: #ff8c8c;
+}
+
+.btn-primary {
+  background-color: #ff5050;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #ff7878;
+  transform: scale(1.05);
+}
+
+/* === ANIMACIONES === */
+@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
