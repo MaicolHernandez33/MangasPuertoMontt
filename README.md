@@ -24,7 +24,7 @@ En esta segunda entrega, la tienda fue **migrada a React** siguiendo la **metodo
 - ⚛️ **Framework**: React + Vite  
 - 🎨 **Estilos**: Bootstrap 5 + CSS propio  
 - 🧩 **Arquitectura**: Atomic Design (átomos, moléculas, organismos, plantillas, páginas)  
-- 💾 **Simulación de BD**: Archivos JavaScript (`/datos`) con operaciones CRUD  
+- 💾 **Simulación de BD**: LocalStorage del navegador como sistema de persistencia temporal
 - 🛠️ **Testing**: Jasmine + Karma (pruebas unitarias de componentes)  
 - 📦 **Control de versiones**: GitHub  
 
@@ -48,10 +48,11 @@ En esta segunda entrega, la tienda fue **migrada a React** siguiendo la **metodo
   - **Filtros de búsqueda** y validaciones de formularios.  
 
 - **Pruebas unitarias**:
-  - Verificación de renderizado correcto de componentes.  
-  - Validación de `props` recibidas.  
-  - Cambios de estado (formularios, carrito).  
-  - Simulación de eventos de usuario (clicks, inputs).  
+  - Se validó el correcto funcionamiento de los componentes
+  - Validación de props recibidas.
+  - Cambios de estado (formularios, carrito).
+  - Simulación de eventos de usuario (clicks, inputs).
+  - Se utilizo Jasmine + Karma.
 
 ---
 
