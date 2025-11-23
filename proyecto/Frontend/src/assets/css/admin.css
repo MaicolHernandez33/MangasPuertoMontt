@@ -1,16 +1,51 @@
-/* === ADMIN PANEL === */
+/* === ADMIN PANEL - VERSIÓN FINAL === */
 .admin-panel {
   display: flex;
   min-height: 100vh;
-  background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(20,20,20,0.9));
-  color: #fff;
+  position: relative;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
+/* Botón hamburguesa - Solo visible en móviles */
+.menu-hamburguesa {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1001;
+  background: #333;
+  color: rgb(109, 115, 168);
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Overlay para móviles */
+.menu-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
+/* Menú lateral */
 .admin-menu {
-  width: 230px;
+  width: 250px;
   background: rgba(0, 0, 0, 0.9);
   border-right: 2px solid rgba(255, 80, 80, 0.4);
+  color: rgb(97, 91, 134);
   padding: 30px 15px;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 999;
+  transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -21,17 +56,22 @@
   text-align: center;
   color: #ff5050;
   margin-bottom: 20px;
+  font-size: 1.2rem;
 }
 
 .admin-menu button {
+  display: block;
+  width: 100%;
   background: none;
   border: 1px solid rgba(255, 255, 255, 0.3);
   color: #fff;
-  padding: 10px;
+  padding: 12px;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 0.95rem;
+  text-align: left;
+  margin: 0;
 }
 
 .admin-menu button:hover {
@@ -50,27 +90,30 @@
   background-color: #ff5050;
 }
 
+/* Contenido principal */
 .admin-contenido {
   flex: 1;
-  padding: 40px;
+  margin-left: 250px;
+  padding: 30px;
+  background: rgba(89, 114, 149, 0.95);
+  backdrop-filter: blur(10px);
+  min-height: 100vh;
+  border-radius: 20px 0 0 20px;
+  box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   overflow-y: auto;
-  background-image: url("/img/FondoPaginas.jpg");
-  background-size: cover;
-  background-position: center;
-  backdrop-filter: blur(4px);
-  animation: fadeIn 0.5s ease;
 }
 
 /* === PANEL ADMIN - INICIO === */
 .admin-inicio {
   text-align: center;
   padding: 60px 20px;
-  color: #fff;
+  color: #333;
 }
 
 .admin-bienvenida {
   font-size: 1.2rem;
-  color: #e0e0e0;
+  color: #666;
   margin-bottom: 40px;
 }
 
@@ -83,13 +126,14 @@
 }
 
 .card-resumen {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(255, 80, 80, 0.3);
   border-radius: 12px;
   padding: 25px 20px;
   box-shadow: 0 0 10px rgba(255, 80, 80, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   max-width: 300px;
+  color: #333;
 }
 
 .card-resumen:hover {
@@ -106,7 +150,7 @@
 .admin-productos {
   text-align: center;
   padding: 50px 20px;
-  color: white;
+  color: #333;
 }
 
 .admin-header {
@@ -142,7 +186,7 @@
 .admin-usuarios {
   text-align: center;
   padding: 50px 20px;
-  color: white;
+  color: #333;
 }
 
 .tabla-contenedor {
@@ -155,10 +199,11 @@
   max-width: 900px;
   margin: 0 auto;
   border-collapse: collapse;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 0 15px rgba(255, 80, 80, 0.3);
+  color: #333;
 }
 
 .tabla-usuarios thead {
@@ -171,7 +216,7 @@
 .tabla-usuarios td {
   padding: 12px 10px;
   text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .tabla-usuarios tr:hover {
@@ -195,7 +240,7 @@
 .admin-pedidos {
   text-align: center;
   padding: 50px 20px;
-  color: white;
+  color: #333;
 }
 
 .tabla-pedidos {
@@ -203,10 +248,11 @@
   max-width: 1000px;
   margin: 25px auto;
   border-collapse: collapse;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 0 15px rgba(255, 80, 80, 0.3);
+  color: #333;
 }
 
 .tabla-pedidos thead {
@@ -218,7 +264,7 @@
 .tabla-pedidos td {
   padding: 12px 10px;
   text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .tabla-pedidos tr:hover {
@@ -228,10 +274,10 @@
 
 .tabla-pedidos details {
   text-align: left;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.05);
   border-radius: 6px;
   padding: 6px 10px;
-  color: #fff;
+  color: #333;
 }
 
 .tabla-pedidos summary {
@@ -255,17 +301,18 @@
 .admin-perfil {
   text-align: center;
   padding: 60px 20px;
-  color: #fff;
+  color: #333;
 }
 
 .perfil-card {
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
   padding: 30px;
   width: 100%;
   max-width: 400px;
   margin: 30px auto;
   box-shadow: 0 0 20px rgba(255, 80, 80, 0.3);
+  color: #333;
 }
 
 .perfil-avatar {
@@ -280,7 +327,7 @@
 .admin-reportes {
   text-align: center;
   padding: 50px 20px;
-  color: white;
+  color: #333;
 }
 
 .reporte-grid {
@@ -291,10 +338,10 @@
 }
 
 .reporte-card {
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   padding: 25px;
-  color: #fff;
+  color: #333;
   box-shadow: 0 0 15px rgba(255, 80, 80, 0.3);
   transition: all 0.3s ease;
 }
@@ -319,96 +366,6 @@
   border: 2px solid rgba(255, 80, 80, 0.5);
 }
 
-/* Admin Panel Responsive */
-.admin-panel {
-  display: flex;
-  min-height: 100vh;
-  position: relative;
-}
-
-/* Botón hamburguesa - Solo visible en móviles */
-.menu-hamburguesa {
-  display: none;
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  z-index: 1001;
-  background: #333;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-/* Overlay para móviles */
-.menu-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 998;
-}
-
-/* Menú lateral */
-.admin-menu {
-  width: 250px;
-  background: #2c3e50;
-  color: white;
-  padding: 20px;
-  position: fixed;
-  height: 100vh;
-  overflow-y: auto;
-  z-index: 999;
-  transition: transform 0.3s ease;
-}
-
-.admin-menu h2 {
-  margin-bottom: 20px;
-  text-align: center;
-  font-size: 1.2rem;
-}
-
-.admin-menu button {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  background: #34495e;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-align: left;
-  transition: background 0.3s;
-}
-
-.admin-menu button:hover {
-  background: #1abc9c;
-}
-
-.cerrar-sesion {
-  background: #e74c3c !important;
-  margin-top: 20px !important;
-}
-
-.cerrar-sesion:hover {
-  background: #c0392b !important;
-}
-
-/* Contenido principal */
-.admin-contenido {
-  flex: 1;
-  margin-left: 250px;
-  padding: 20px;
-  background: #ecf0f1;
-  min-height: 100vh;
-}
-
 /* Responsive para móviles */
 @media (max-width: 768px) {
   .menu-hamburguesa {
@@ -421,6 +378,7 @@
   
   .admin-menu {
     transform: translateX(-100%);
+    width: 280px;
   }
   
   .admin-menu.abierto {
@@ -430,16 +388,41 @@
   .admin-contenido {
     margin-left: 0;
     width: 100%;
+    border-radius: 0;
+    padding: 20px 15px;
+  }
+  
+  /* Ajustes de texto para móviles */
+  .admin-inicio,
+  .admin-productos,
+  .admin-usuarios,
+  .admin-pedidos,
+  .admin-perfil,
+  .admin-reportes {
+    padding: 30px 15px;
   }
 }
 
 /* Para tablets */
 @media (max-width: 1024px) {
   .admin-menu {
-    width: 200px;
+    width: 220px;
   }
   
   .admin-contenido {
-    margin-left: 200px;
+    margin-left: 220px;
+    padding: 25px;
+  }
+}
+
+/* Animación de fade in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

@@ -71,7 +71,7 @@ export default function BarraNavegacion({ cambiarPagina }) {
           ) : (
             <>
               <li><button onClick={() => navegar(usuario.rol === "admin" ? "admin" : "perfil")}>
-                {usuario.rol === "admin" ? "👑 Panel Admin" : "👤 Mi Perfil"}
+                {usuario.rol === "admin" ? "👑" : "👤"} {/* SOLO ICONO */}
               </button></li>
               <li><button onClick={cerrarSesion}>🚪 </button></li>
             </>
