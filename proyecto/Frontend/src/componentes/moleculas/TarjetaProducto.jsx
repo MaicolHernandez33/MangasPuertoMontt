@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Boton from "../atomos/Boton";
-import { API_BASE_URL } from "../config"; 
+import { API_BASE_URL } from "../../config"; 
 
 export default function TarjetaProducto({ producto }) {
   const [verDetalle, setVerDetalle] = useState(false);
