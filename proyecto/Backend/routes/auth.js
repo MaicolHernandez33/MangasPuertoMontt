@@ -73,9 +73,8 @@ router.post('/login', async (req, res) => {
 
     const usuario = result.rows[0];
 
-    // ✅ CAMBIO TEMPORAL - Comparar texto plano
-    const passwordValido = password === usuario.password;
-    // ❌ QUITAR: const passwordValido = await bcrypt.compare(password, usuario.password);
+    // ✅ COMPARACIÓN CORRECTA CON BCRYPT
+    const passwordValido = await bcrypt.compare(password, usuario.password);
     
     if (!passwordValido) {
       return res.status(400).json({ error: 'Credenciales incorrectas' });

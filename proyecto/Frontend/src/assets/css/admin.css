@@ -319,3 +319,127 @@
   border: 2px solid rgba(255, 80, 80, 0.5);
 }
 
+/* Admin Panel Responsive */
+.admin-panel {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Botón hamburguesa - Solo visible en móviles */
+.menu-hamburguesa {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1001;
+  background: #333;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Overlay para móviles */
+.menu-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
+/* Menú lateral */
+.admin-menu {
+  width: 250px;
+  background: #2c3e50;
+  color: white;
+  padding: 20px;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 999;
+  transition: transform 0.3s ease;
+}
+
+.admin-menu h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.admin-menu button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  background: #34495e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.3s;
+}
+
+.admin-menu button:hover {
+  background: #1abc9c;
+}
+
+.cerrar-sesion {
+  background: #e74c3c !important;
+  margin-top: 20px !important;
+}
+
+.cerrar-sesion:hover {
+  background: #c0392b !important;
+}
+
+/* Contenido principal */
+.admin-contenido {
+  flex: 1;
+  margin-left: 250px;
+  padding: 20px;
+  background: #ecf0f1;
+  min-height: 100vh;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .menu-hamburguesa {
+    display: block;
+  }
+  
+  .menu-overlay {
+    display: block;
+  }
+  
+  .admin-menu {
+    transform: translateX(-100%);
+  }
+  
+  .admin-menu.abierto {
+    transform: translateX(0);
+  }
+  
+  .admin-contenido {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* Para tablets */
+@media (max-width: 1024px) {
+  .admin-menu {
+    width: 200px;
+  }
+  
+  .admin-contenido {
+    margin-left: 200px;
+  }
+}

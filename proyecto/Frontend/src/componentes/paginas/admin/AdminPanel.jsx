@@ -8,6 +8,7 @@ import AdminReportes from "./AdminReportes";
 export default function AdminPanel({ cambiarPagina }) {
   const [seccion, setSeccion] = useState("perfil");
   const [verificado, setVerificado] = useState(false);
+  const [menuAbierto, setMenuAbierto] = useState(false);
 
   useEffect(() => {
     const raw = localStorage.getItem("usuarioActivo");
@@ -35,6 +36,11 @@ export default function AdminPanel({ cambiarPagina }) {
     setVerificado(true);
   }, [cambiarPagina]);
 
+  const cambiarSeccion = (nuevaSeccion) => {
+    setSeccion(nuevaSeccion);
+    setMenuAbierto(false); // Cerrar menú en móvil al seleccionar
+  };
+
   if (!verificado) {
     return (
       <div style={{ color: "#fff", textAlign: "center", marginTop: "100px" }}>
@@ -45,13 +51,29 @@ export default function AdminPanel({ cambiarPagina }) {
 
   return (
     <div className="admin-panel">
-      <aside className="admin-menu">
+      {/* Botón hamburguesa para móviles */}
+      <button 
+        className="menu-hamburguesa"
+        onClick={() => setMenuAbierto(!menuAbierto)}
+      >
+        ☰
+      </button>
+
+      {/* Overlay para cerrar menú en móvil */}
+      {menuAbierto && (
+        <div 
+          className="menu-overlay"
+          onClick={() => setMenuAbierto(false)}
+        ></div>
+      )}
+
+      <aside className={`admin-menu ${menuAbierto ? 'abierto' : ''}`}>
         <h2>👑 Panel Admin</h2>
-        <button onClick={() => setSeccion("perfil")}>👤 Perfil</button>
-        <button onClick={() => setSeccion("productos")}>📦 Productos</button>
-        <button onClick={() => setSeccion("usuarios")}>👥 Usuarios</button>
-        <button onClick={() => setSeccion("pedidos")}>🧾 Pedidos</button>
-        <button onClick={() => setSeccion("reportes")}>📊 Reportes</button>
+        <button onClick={() => cambiarSeccion("perfil")}>👤 Perfil</button>
+        <button onClick={() => cambiarSeccion("productos")}>📦 Productos</button>
+        <button onClick={() => cambiarSeccion("usuarios")}>👥 Usuarios</button>
+        <button onClick={() => cambiarSeccion("pedidos")}>🧾 Pedidos</button>
+        <button onClick={() => cambiarSeccion("reportes")}>📊 Reportes</button>
 
         <button
           className="cerrar-sesion"
