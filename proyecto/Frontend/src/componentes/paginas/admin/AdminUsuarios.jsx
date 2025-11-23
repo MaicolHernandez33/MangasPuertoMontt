@@ -4,162 +4,312 @@ import Boton from "../../atomos/Boton";
 
 export default function AdminUsuarios() {
   const [usuarios, setUsuarios] = useState([]);
+  const [cargando, setCargando] = useState(false);
+  const [error, setError] = useState(null);
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [nuevoUsuario, setNuevoUsuario] = useState({
+    nombre: "",
+    correo: "",
+    celular: "",
+    password: "",
+    rol: "usuario"
+  });
 
-  // Campos del formulario para crear usuario
-  const [nombre, setNombre] = useState("");
-  const [correo, setCorreo] = useState("");
-  const [password, setPassword] = useState("");
-  const [rol, setRol] = useState("usuario");
-
-  // 🔹 Cargar usuarios guardados al iniciar
-  useEffect(() => {
-    const guardados = localStorage.getItem("usuarios");
-    if (guardados) {
-      try {
-        const usuariosGuardados = JSON.parse(guardados);
-        setUsuarios(usuariosGuardados);
-      } catch (e) {
-        console.warn("⚠️ Error al leer usuarios del localStorage:", e);
-        setUsuarios([]);
+  // ✅ Cargar usuarios desde la API
+  const cargarUsuarios = async () => {
+    setCargando(true);
+    setError(null);
+    try {
+      const response = await fetch('http://localhost:5000/api/admin/usuarios');
+      
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
       }
+      
+      const data = await response.json();
+      setUsuarios(data.usuarios || data || []);
+    } catch (error) {
+      console.error("Error cargando usuarios:", error);
+      setError(`Error al cargar usuarios: ${error.message}`);
+    } finally {
+      setCargando(false);
     }
+  };
+
+  useEffect(() => {
+    cargarUsuarios();
   }, []);
 
-    const crearUsuario = () => {
-    // Quitar espacios en blanco accidentales
-    const nombreLimpio = nombre.trim();
-    const correoLimpio = correo.trim();
-    const passwordLimpio = password.trim();
-
-    // Validar campos vacíos
-    if (!nombreLimpio || !correoLimpio || !passwordLimpio) {
-      alert("⚠️ Completa todos los campos antes de continuar.");
-      return;
-    }
-
-    //  Validar formato de correo permitido
-    const dominioValido = /@(duoc\.cl|profesor\.duoc\.cl|gmail\.com)$/i;
-    if (!dominioValido.test(correoLimpio)) {
-      alert(
-        "⚠️ Solo se permiten correos que terminen en:\n@duoc.cl, @profesor.duoc.cl o @gmail.com"
-      );
-      return;
-    }
-
-    // Evitar duplicados
-    const existe = usuarios.some(
-      (u) => u.correo.toLowerCase() === correoLimpio.toLowerCase()
-    );
-    if (existe) {
-      alert("⚠️ Este correo ya está registrado en el sistema.");
-      return;
-    }
-
-    // Validar longitud mínima de contraseña
-    if (passwordLimpio.length < 6) {
-      alert("🔒 La contraseña debe tener al menos 6 caracteres.");
-      return;
-    }
-
-    // Crear usuario si todo está correcto
-    const nuevoUsuario = {
-      nombre: nombreLimpio,
-      correo: correoLimpio,
-      password: passwordLimpio,
-      rol,
-    };
-
-    const nuevosUsuarios = [...usuarios, nuevoUsuario];
-    setUsuarios(nuevosUsuarios);
-    localStorage.setItem("usuarios", JSON.stringify(nuevosUsuarios));
-
-    alert(`✅ Usuario ${nombreLimpio} creado correctamente.`);
-
-    // Limpiar campos
-    setNombre("");
-    setCorreo("");
-    setPassword("");
-    setRol("usuario");
+  // ✅ Manejar cambios en el formulario
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNuevoUsuario(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  // 🔹 Eliminar usuario
-  const eliminarUsuario = (correo) => {
-    if (confirm("¿Seguro que deseas eliminar este usuario?")) {
-      const nuevosUsuarios = usuarios.filter((u) => u.correo !== correo);
-      setUsuarios(nuevosUsuarios);
-      localStorage.setItem("usuarios", JSON.stringify(nuevosUsuarios));
+  // ✅ Agregar nuevo usuario
+  const agregarUsuario = async (e) => {
+    e.preventDefault();
+    
+    // Validaciones básicas
+    if (!nuevoUsuario.nombre || !nuevoUsuario.correo || !nuevoUsuario.password) {
+      alert("⚠️ Por favor complete todos los campos obligatorios (Nombre, Correo y Contraseña)");
+      return;
+    }
+
+    setCargando(true);
+    setError(null);
+    
+    try {
+      const response = await fetch('http://localhost:5000/api/admin/usuarios', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(nuevoUsuario)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Error ${response.status}`);
+      }
+
+      const usuarioCreado = await response.json();
+      
+      alert("✅ Usuario creado exitosamente!");
+      
+      // Limpiar formulario y cerrar
+      setNuevoUsuario({
+        nombre: "",
+        correo: "",
+        celular: "",
+        password: "",
+        rol: "usuario"
+      });
+      setMostrarFormulario(false);
+      
+      // Recargar lista de usuarios
+      await cargarUsuarios();
+      
+    } catch (error) {
+      setError(`Error al crear usuario: ${error.message}`);
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  // ✅ Función genérica para modificar usuario
+  const modificarUsuario = async (usuarioId, datos, accion) => {
+    if (!confirm(`¿Seguro que deseas ${accion} este usuario?`)) return;
+
+    setCargando(true);
+    setError(null);
+    try {
+      const response = await fetch(`http://localhost:5000/api/admin/usuarios/${usuarioId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datos)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Error ${response.status}`);
+      }
+
+      alert(`✅ Usuario ${accion} correctamente.`);
+      await cargarUsuarios(); // Recargar lista
+    } catch (error) {
+      setError(`Error al ${accion} usuario: ${error.message}`);
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  // ✅ Eliminar usuario
+  const eliminarUsuario = async (usuarioId, usuarioCorreo) => {
+    if (usuarioCorreo === "admin@tienda.cl") {
+      alert("⚠️ No se puede eliminar al administrador principal.");
+      return;
+    }
+
+    if (!confirm("¿Seguro que deseas ELIMINAR permanentemente este usuario?")) return;
+
+    setCargando(true);
+    setError(null);
+    try {
+      const response = await fetch(`http://localhost:5000/api/admin/usuarios/${usuarioId}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Error ${response.status}`);
+      }
+
       alert("🗑️ Usuario eliminado correctamente.");
+      await cargarUsuarios(); // Recargar lista
+    } catch (error) {
+      setError(`Error al eliminar usuario: ${error.message}`);
+    } finally {
+      setCargando(false);
     }
   };
 
-  // Promover usuario a administrador
-  const promoverAdmin = (correo) => {
-    const nuevosUsuarios = usuarios.map((u) =>
-      u.correo === correo ? { ...u, rol: "admin" } : u
-    );
-    setUsuarios(nuevosUsuarios);
-    localStorage.setItem("usuarios", JSON.stringify(nuevosUsuarios));
-    alert("👑 Usuario promovido a administrador.");
+  // ✅ Promover usuario a administrador
+  const promoverAdmin = (usuarioId, usuarioCorreo) => {
+    if (usuarioCorreo === "admin@tienda.cl") {
+      alert("⚠️ Este usuario ya es administrador principal.");
+      return;
+    }
+    modificarUsuario(usuarioId, { rol: 'admin' }, 'promover a administrador');
   };
 
-  // Degradar administrador a usuario normal
-  const degradarUsuario = (correo) => {
-    if (correo === "admin@tienda.cl") {
+  // ✅ Degradar administrador a usuario normal
+  const degradarUsuario = (usuarioId, usuarioCorreo) => {
+    if (usuarioCorreo === "admin@tienda.cl") {
       alert("⚠️ No se puede degradar al administrador principal.");
       return;
     }
-    const nuevosUsuarios = usuarios.map((u) =>
-      u.correo === correo ? { ...u, rol: "usuario" } : u
-    );
-    setUsuarios(nuevosUsuarios);
-    localStorage.setItem("usuarios", JSON.stringify(nuevosUsuarios));
-    alert("⬇️ Administrador degradado a usuario.");
+    modificarUsuario(usuarioId, { rol: 'usuario' }, 'degradar a usuario');
   };
 
   return (
     <section className="admin-usuarios">
       <Titulo texto="👥 Administración de Usuarios" />
 
-      {/* === NUEVO FORMULARIO PARA CREAR USUARIO === */}
-      <div className="panel" style={{ marginBottom: "25px" }}>
-        <h3>➕ Crear nuevo usuario</h3>
-        <div className="formulario-admin">
-          <input
-            type="text"
-            className="campo-texto"
-            placeholder="Nombre completo"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-          />
-          <input
-            type="email"
-            className="campo-texto"
-            placeholder="Correo electrónico"
-            value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
-          />
-          <input
-            type="password"
-            className="campo-texto"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <select
-            className="campo-texto"
-            value={rol}
-            onChange={(e) => setRol(e.target.value)}
-          >
-            <option value="usuario">Usuario</option>
-            <option value="admin">Administrador</option>
-          </select>
-          <Boton texto="Crear usuario" onClick={crearUsuario} />
-        </div>
+      {/* Botón para agregar usuario */}
+      <div style={{ marginBottom: "20px" }}>
+        <Boton 
+          texto="➕ Agregar Usuario" 
+          onClick={() => setMostrarFormulario(true)}
+          disabled={cargando}
+        />
       </div>
 
+      {/* Formulario para agregar usuario */}
+      {mostrarFormulario && (
+        <div className="panel" style={{ 
+          marginBottom: "25px", 
+          background: "#1e1e1e", 
+          padding: "20px",
+          border: "1px solid #444",
+          borderRadius: "8px"
+        }}>
+          <h3>➕ Agregar Nuevo Usuario</h3>
+          <form onSubmit={agregarUsuario}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px", marginBottom: "15px" }}>
+              <div>
+                <label style={{ display: "block", marginBottom: "5px" }}>
+                  Nombre completo *
+                </label>
+                <input
+                  type="text"
+                  name="nombre"
+                  value={nuevoUsuario.nombre}
+                  onChange={handleInputChange}
+                  required
+                  style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #444" }}
+                />
+              </div>
+              
+              <div>
+                <label style={{ display: "block", marginBottom: "5px" }}>
+                  Correo electrónico *
+                </label>
+                <input
+                  type="email"
+                  name="correo"
+                  value={nuevoUsuario.correo}
+                  onChange={handleInputChange}
+                  required
+                  style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #444" }}
+                />
+              </div>
+              
+              <div>
+                <label style={{ display: "block", marginBottom: "5px" }}>
+                  Celular
+                </label>
+                <input
+                  type="tel"
+                  name="celular"
+                  value={nuevoUsuario.celular}
+                  onChange={handleInputChange}
+                  style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #444" }}
+                />
+              </div>
+              
+              <div>
+                <label style={{ display: "block", marginBottom: "5px" }}>
+                  Contraseña *
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  value={nuevoUsuario.password}
+                  onChange={handleInputChange}
+                  required
+                  style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #444" }}
+                />
+              </div>
+              
+              <div>
+                <label style={{ display: "block", marginBottom: "5px" }}>
+                  Rol
+                </label>
+                <select
+                  name="rol"
+                  value={nuevoUsuario.rol}
+                  onChange={handleInputChange}
+                  style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #444" }}
+                >
+                  <option value="usuario">👤 Usuario</option>
+                  <option value="admin">👑 Administrador</option>
+                </select>
+              </div>
+            </div>
+            
+            <div style={{ display: "flex", gap: "10px" }}>
+              <Boton 
+                type="submit"
+                texto={cargando ? "Creando..." : "✅ Crear Usuario"}
+                disabled={cargando}
+                pequeno
+              />
+              <Boton 
+                type="button"
+                texto="❌ Cancelar"
+                onClick={() => setMostrarFormulario(false)}
+                disabled={cargando}
+                pequeno
+              />
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Mensajes de error */}
+      {error && (
+        <div style={{ 
+          background: "#ff4444", 
+          color: "white", 
+          padding: "10px", 
+          marginBottom: "15px",
+          borderRadius: "5px" 
+        }}>
+          {error}
+        </div>
+      )}
+
       {/* === TABLA DE USUARIOS === */}
-      {usuarios.length === 0 ? (
-        <p>No hay usuarios registrados.</p>
+      {cargando ? (
+        <p>🔄 Cargando usuarios...</p>
+      ) : usuarios.length === 0 ? (
+        <p>📭 No hay usuarios registrados.</p>
       ) : (
         <div className="tabla-contenedor">
           <table className="tabla-usuarios">
@@ -168,32 +318,51 @@ export default function AdminUsuarios() {
                 <th>#</th>
                 <th>Nombre</th>
                 <th>Correo</th>
+                <th>Celular</th>
                 <th>Rol</th>
+                <th>Registro</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {usuarios.map((u, index) => (
-                <tr key={index}>
+              {usuarios.map((usuario, index) => (
+                <tr key={usuario.id || index}>
                   <td>{index + 1}</td>
-                  <td>{u.nombre}</td>
-                  <td>{u.correo}</td>
-                  <td>{u.rol === "admin" ? "👑 Admin" : "👤 Usuario"}</td>
-                  <td style={{ display: "flex", gap: "8px" }}>
-                    {u.rol === "admin" ? (
+                  <td>{usuario.nombre || "Sin nombre"}</td>
+                  <td>{usuario.correo || "Sin correo"}</td>
+                  <td>{usuario.celular || "No registrado"}</td>
+                  <td>
+                    <span className={`rol-badge ${usuario.rol}`}>
+                      {usuario.rol === "admin" ? "👑 Admin" : "👤 Usuario"}
+                    </span>
+                  </td>
+                  <td>
+                    {usuario.creado_en ? 
+                      new Date(usuario.creado_en).toLocaleDateString("es-CL") : 
+                      "N/A"
+                    }
+                  </td>
+                  <td style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                    {usuario.rol === "admin" ? (
                       <Boton
-                        texto="Degradar"
-                        onClick={() => degradarUsuario(u.correo)}
+                        texto="⬇️ Degradar"
+                        onClick={() => degradarUsuario(usuario.id, usuario.correo)}
+                        disabled={cargando || usuario.correo === "admin@tienda.cl"}
+                        pequeno
                       />
                     ) : (
                       <Boton
-                        texto="Promover"
-                        onClick={() => promoverAdmin(u.correo)}
+                        texto="👑 Promover"
+                        onClick={() => promoverAdmin(usuario.id, usuario.correo)}
+                        disabled={cargando}
+                        pequeno
                       />
                     )}
                     <Boton
-                      texto="Eliminar"
-                      onClick={() => eliminarUsuario(u.correo)}
+                      texto="🗑️ Eliminar"
+                      onClick={() => eliminarUsuario(usuario.id, usuario.correo)}
+                      disabled={cargando || usuario.correo === "admin@tienda.cl"}
+                      pequeno
                     />
                   </td>
                 </tr>
@@ -204,4 +373,4 @@ export default function AdminUsuarios() {
       )}
     </section>
   );
-} 
+}

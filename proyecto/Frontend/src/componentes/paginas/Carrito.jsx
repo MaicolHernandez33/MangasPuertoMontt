@@ -4,62 +4,136 @@ import Boton from "../atomos/Boton";
 
 export default function Carrito() {
   const [carrito, setCarrito] = useState([]);
-  const [claveCarrito, setClaveCarrito] = useState("carrito_anonimo");
+  const [cargando, setCargando] = useState(false);
 
-  useEffect(() => {
+  // Obtener carrito desde la BD
+  const obtenerCarrito = async () => {
     const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
-    const clave = usuarioActivo ? `carrito_${usuarioActivo.correo}` : "carrito_anonimo";
-    setClaveCarrito(clave);
-    const guardado = JSON.parse(localStorage.getItem(clave)) || [];
-    setCarrito(guardado);
-  }, []);
+    
+    if (!usuarioActivo) {
+      // Usuario no logueado - usar carrito local
+      const carritoLocal = JSON.parse(localStorage.getItem("carrito_anonimo") || "[]");
+      setCarrito(carritoLocal);
+      return;
+    }
 
-  useEffect(() => {
-    localStorage.setItem(claveCarrito, JSON.stringify(carrito));
-  }, [carrito, claveCarrito]);
-
-  const eliminarItem = (id) => {
-    setCarrito(carrito.filter((i) => i.id !== id));
-  };
-
-  const vaciarCarrito = () => {
-    if (confirm("¿Vaciar todo el carrito?")) {
-      setCarrito([]);
-      localStorage.setItem(claveCarrito, "[]");
+    try {
+      const response = await fetch('http://localhost:5000/api/carrito', {
+        headers: {
+          'usuario-id': usuarioActivo.id.toString()
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setCarrito(data.items || []);
+      }
+    } catch (error) {
+      console.error("Error obteniendo carrito:", error);
     }
   };
 
-  const total = carrito.reduce((acc, item) => acc + item.precio * (item.cantidad || 1), 0);
+  useEffect(() => {
+    obtenerCarrito();
+  }, []);
 
-  const pagarCompra = () => {
+  //  Eliminar item del carrito
+  const eliminarItem = async (itemId) => {
+    setCargando(true);
+    
+    const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
+    
+    if (!usuarioActivo) {
+      // Usuario no logueado - eliminar del localStorage
+      const nuevoCarrito = carrito.filter((item) => item.item_id !== itemId);
+      setCarrito(nuevoCarrito);
+      localStorage.setItem("carrito_anonimo", JSON.stringify(nuevoCarrito));
+      setCargando(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/carrito/${itemId}`, {
+        method: 'DELETE',
+        headers: {
+          'usuario-id': usuarioActivo.id.toString()
+        }
+      });
+
+      if (response.ok) {
+        await obtenerCarrito(); // Recargar carrito
+      }
+    } catch (error) {
+      console.error("Error eliminando item:", error);
+      alert("❌ Error al eliminar el producto");
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  const vaciarCarrito = async () => {
+    if (!confirm("¿Vaciar todo el carrito?")) return;
+    
+    const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
+    
+    if (!usuarioActivo) {
+      // Usuario no logueado - vaciar localStorage
+      setCarrito([]);
+      localStorage.setItem("carrito_anonimo", "[]");
+      return;
+    }
+
+    try {
+      // Eliminar cada item individualmente 
+      for (const item of carrito) {
+        await fetch(`http://localhost:5000/api/carrito/${item.item_id}`, {
+          method: 'DELETE',
+          headers: {
+            'usuario-id': usuarioActivo.id.toString()
+          }
+        });
+      }
+      
+      await obtenerCarrito(); // Recargar carrito vacío
+      alert(" Carrito vaciado");
+    } catch (error) {
+      console.error("Error vaciando carrito:", error);
+      alert("❌ Error al vaciar el carrito");
+    }
+  };
+
+  const total = carrito.reduce((acc, item) => acc + (parseFloat(item.precio) * (item.cantidad || 1)), 0);
+
+  // Pagar compra - Crear pedido en BD
+  const pagarCompra = async () => {
     if (carrito.length === 0) return alert("Tu carrito está vacío.");
 
     const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
     if (!usuarioActivo) return alert("⚠️ Debes iniciar sesión para pagar.");
 
-    const compra = {
-      id: Date.now(),
-      usuario: usuarioActivo.nombre,
-      correo: usuarioActivo.correo,
-      fecha: new Date().toLocaleString(),
-      items: carrito,
-      total,
-    };
+    setCargando(true);
 
-    // Guardar historial personal
-    const claveCompras = `compras_${usuarioActivo.correo}`;
-    const historial = JSON.parse(localStorage.getItem(claveCompras)) || [];
-    historial.push(compra);
-    localStorage.setItem(claveCompras, JSON.stringify(historial));
+    try {
+      const response = await fetch('http://localhost:5000/api/pedidos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'usuario-id': usuarioActivo.id.toString()
+        }
+      });
 
-    // Guardar en pedidos globales
-    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
-    pedidos.push(compra);
-    localStorage.setItem("pedidos", JSON.stringify(pedidos));
-
-    alert("✅ Compra realizada correctamente.");
-    setCarrito([]);
-    localStorage.setItem(claveCarrito, "[]");
+      if (response.ok) {
+        alert("✅ Compra realizada correctamente.");
+        await obtenerCarrito(); // Recargar carrito vacío
+      } else {
+        const error = await response.json();
+        throw new Error(error.error);
+      }
+    } catch (error) {
+      alert(`❌ Error al procesar la compra: ${error.message}`);
+    } finally {
+      setCargando(false);
+    }
   };
 
   return (
@@ -72,14 +146,19 @@ export default function Carrito() {
         <>
           <div className="lista-carrito">
             {carrito.map((item) => (
-              <article key={item.id} className="tarjeta-carrito">
+              <article key={item.item_id} className="tarjeta-carrito">
                 <img src={item.imagen} alt={item.nombre} />
                 <div className="info">
                   <h4>{item.nombre}</h4>
                   <p>
-                    ${item.precio.toLocaleString("es-CL")} × {item.cantidad || 1}
+                    ${parseFloat(item.precio).toLocaleString("es-CL")} × {item.cantidad || 1}
                   </p>
-                  <Boton texto="Eliminar" onClick={() => eliminarItem(item.id)} />
+                  <p><strong>Subtotal: ${(parseFloat(item.precio) * (item.cantidad || 1)).toLocaleString("es-CL")}</strong></p>
+                  <Boton 
+                    texto={cargando ? "Eliminando..." : "Eliminar"} 
+                    onClick={() => eliminarItem(item.item_id)} 
+                    disabled={cargando}
+                  />
                 </div>
               </article>
             ))}
@@ -87,8 +166,8 @@ export default function Carrito() {
 
           <div className="resumen-carrito">
             <h3>Total: ${total.toLocaleString("es-CL")}</h3>
-            <Boton texto="Vaciar carrito" onClick={vaciarCarrito} />
-            <Boton texto="Pagar" onClick={pagarCompra} />
+            <Boton texto="Vaciar carrito" onClick={vaciarCarrito} disabled={cargando} />
+            <Boton texto={cargando ? "Procesando..." : "Pagar"} onClick={pagarCompra} disabled={cargando} />
           </div>
         </>
       )}

@@ -3,49 +3,102 @@ import Boton from "../atomos/Boton";
 
 export default function TarjetaProducto({ producto }) {
   const [verDetalle, setVerDetalle] = useState(false);
+  const [cargando, setCargando] = useState(false);
 
-  const agregarAlCarrito = () => {
+  const agregarAlCarrito = async () => {
+    setCargando(true);
+    
     try {
       const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
-      const claveCarrito = usuarioActivo ? `carrito_${usuarioActivo.correo}` : "carrito_anonimo";
-      const carritoGuardado = JSON.parse(localStorage.getItem(claveCarrito)) || [];
+      
+      if (usuarioActivo) {
+        const response = await fetch('http://localhost:5000/api/carrito', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'usuario-id': usuarioActivo.id.toString()
+          },
+          body: JSON.stringify({
+            producto_id: producto.id,
+            cantidad: 1
+          })
+        });
 
-      const existente = carritoGuardado.find((item) => item.id === producto.id);
-      if (existente) existente.cantidad = (existente.cantidad || 1) + 1;
-      else carritoGuardado.push({ ...producto, cantidad: 1 });
-
-      localStorage.setItem(claveCarrito, JSON.stringify(carritoGuardado));
-      alert(`✅ ${producto.nombre} agregado al carrito`);
-    } catch (err) {
-      alert("❌ Error al agregar al carrito.");
+        if (response.ok) {
+          alert(`✅ ${producto.nombre} agregado al carrito`);
+        } else {
+          const error = await response.json();
+          throw new Error(error.error);
+        }
+      } else {
+        const carritoAnonimo = JSON.parse(localStorage.getItem("carrito_anonimo") || "[]");
+        const existente = carritoAnonimo.find((item) => item.id === producto.id);
+        if (existente) {
+          existente.cantidad = (existente.cantidad || 1) + 1;
+        } else {
+          carritoAnonimo.push({ ...producto, cantidad: 1 });
+        }
+        localStorage.setItem("carrito_anonimo", JSON.stringify(carritoAnonimo));
+        alert(`✅ ${producto.nombre} agregado al carrito`);
+      }
+    } catch (error) {
+      alert(`❌ Error: ${error.message}`);
+    } finally {
+      setCargando(false);
     }
   };
+
+  // ✅ Calcular precio con descuento
+  const tieneDescuento = producto.descuento && producto.descuento > 0;
+  const precioFinal = tieneDescuento 
+    ? producto.precio * (1 - producto.descuento / 100) 
+    : producto.precio;
 
   return (
     <>
       <article className="tarjeta-producto">
+        {tieneDescuento && <span className="badge-descuento">-{producto.descuento}%</span>}
         <img src={producto.imagen} alt={producto.nombre} />
         <h3>{producto.nombre}</h3>
-        <p className="precio">${producto.precio.toLocaleString("es-CL")}</p>
+        <p className="precio">
+          {tieneDescuento && <span className="precio-original">${parseFloat(producto.precio).toLocaleString("es-CL")}</span>}
+          ${precioFinal.toLocaleString("es-CL")}
+        </p>
         <p>🏷️ {producto.categoria}</p>
+        {producto.autor && <p>✍️ {producto.autor}</p>}
         <p className="descripcion">
-          {producto.descripcion.length > 80 ? producto.descripcion.substring(0, 80) + "..." : producto.descripcion}
+          {producto.descripcion?.length > 80 
+            ? producto.descripcion.substring(0, 80) + "..." 
+            : producto.descripcion}
         </p>
 
-        <Boton texto="🛒 Agregar al carrito" onClick={agregarAlCarrito} />
+        <Boton 
+          texto={cargando ? "🔄 Agregando..." : "🛒 Agregar al carrito"} 
+          onClick={agregarAlCarrito} 
+          disabled={cargando}
+        />
         <Boton texto="🔍 Ver Detalles" onClick={() => setVerDetalle(true)} />
       </article>
 
       {verDetalle && (
         <div className="modal">
           <div className="modal-contenido">
+            {tieneDescuento && <span className="badge-descuento">-{producto.descuento}%</span>}
             <h2>{producto.nombre}</h2>
             <img src={producto.imagen} alt={producto.nombre} style={{ width: "250px", borderRadius: "10px" }} />
             <p><strong>Categoría:</strong> {producto.categoria}</p>
-            <p><strong>Precio:</strong> ${producto.precio.toLocaleString("es-CL")}</p>
+            <p><strong>Precio:</strong> 
+              {tieneDescuento && <span className="precio-original">${parseFloat(producto.precio).toLocaleString("es-CL")}</span>}
+              ${precioFinal.toLocaleString("es-CL")}
+            </p>
             <p><strong>Stock:</strong> {producto.stock}</p>
+            {producto.autor && <p><strong>Autor:</strong> {producto.autor}</p>}
             <p>{producto.descripcion}</p>
-            <Boton texto="🛒 Agregar al carrito" onClick={agregarAlCarrito} />
+            <Boton 
+              texto={cargando ? "🔄 Agregando..." : "🛒 Agregar al carrito"} 
+              onClick={agregarAlCarrito} 
+              disabled={cargando}
+            />
             <Boton texto="❌ Cerrar" onClick={() => setVerDetalle(false)} />
           </div>
         </div>

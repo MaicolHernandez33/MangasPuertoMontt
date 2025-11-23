@@ -1,20 +1,40 @@
 import { useEffect, useMemo, useState } from "react";
 import Titulo from "../../atomos/Titulo";
 
-/**
- * Convenciones de storage:
- * - productos: [{id, nombre, precio, imagen, tipo, descripcion, stock, stockCritico, activo}]
- * - pedidos:   [{id, usuario, correo, fecha, items:[{id, nombre, precio, cantidad}], total}]
- */
 export default function AdminReportes() {
   const [usuarios, setUsuarios] = useState([]);
   const [productos, setProductos] = useState([]);
   const [pedidos, setPedidos] = useState([]);
+  const [cargando, setCargando] = useState(true);
 
+  // ✅ Cargar datos desde la API
   useEffect(() => {
-    setUsuarios(JSON.parse(localStorage.getItem("usuarios")) || []);
-    setProductos(JSON.parse(localStorage.getItem("productos")) || []);
-    setPedidos(JSON.parse(localStorage.getItem("pedidos")) || []);
+    const cargarDatos = async () => {
+      try {
+        // Cargar usuarios
+        const usuariosResponse = await fetch('http://localhost:5000/api/admin/usuarios');
+        const usuariosData = await usuariosResponse.json();
+        setUsuarios(usuariosData.usuarios || []);
+
+        // Cargar productos
+        const productosResponse = await fetch('http://localhost:5000/api/productos');
+        const productosData = await productosResponse.json();
+        setProductos(productosData.productos || []);
+
+        // Cargar pedidos
+        const pedidosResponse = await fetch('http://localhost:5000/api/admin/pedidos');
+        const pedidosData = await pedidosResponse.json();
+        setPedidos(pedidosData.pedidos || []);
+
+      } catch (error) {
+        console.error("Error cargando datos para reportes:", error);
+        alert("❌ Error al cargar los datos para reportes");
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    cargarDatos();
   }, []);
 
   // Totales básicos
@@ -22,44 +42,51 @@ export default function AdminReportes() {
   const totalProductos = productos.length;
   const totalPedidos = pedidos.length;
   const totalVentas = useMemo(
-    () => pedidos.reduce((acc, p) => acc + (p.total || 0), 0),
+    () => pedidos.reduce((acc, p) => acc + parseFloat(p.total || 0), 0),
     [pedidos]
   );
 
-  // Stock crítico / inactivos
+  // Stock crítico (productos con stock bajo)
   const criticos = useMemo(
-    () =>
-      productos.filter(
-        (p) =>
-          (typeof p.stock === "number" &&
-            typeof p.stockCritico === "number" &&
-            p.stock <= p.stockCritico) ||
-          p.activo === false
-      ),
+    () => productos.filter((p) => p.stock <= 5), // Stock <= 5 como crítico
     [productos]
   );
 
   // Top 3 productos más vendidos
   const top3 = useMemo(() => {
     const contador = new Map(); // id -> {nombre, cantidad}
-    for (const ped of pedidos) {
-      for (const item of ped.items || []) {
-        const prev = contador.get(item.id) || { nombre: item.nombre, cantidad: 0 };
+    
+    for (const pedido of pedidos) {
+      for (const item of pedido.items || []) {
+        const prev = contador.get(item.producto_id) || { 
+          nombre: item.nombre, 
+          cantidad: 0 
+        };
         prev.cantidad += item.cantidad || 1;
-        contador.set(item.id, prev);
+        contador.set(item.producto_id, prev);
       }
     }
+    
     const arr = Array.from(contador.entries()).map(([id, v]) => ({
       id,
       nombre: v.nombre,
       cantidad: v.cantidad,
     }));
+    
     arr.sort((a, b) => b.cantidad - a.cantidad);
     return arr.slice(0, 3);
   }, [pedidos]);
 
-
   const maxCantidad = Math.max(1, ...top3.map((t) => t.cantidad));
+
+  if (cargando) {
+    return (
+      <section className="admin-reportes">
+        <Titulo texto="📊 Reportes Generales del Sistema" />
+        <p>Cargando datos para reportes...</p>
+      </section>
+    );
+  }
 
   return (
     <section className="admin-reportes">
@@ -85,11 +112,11 @@ export default function AdminReportes() {
         </div>
       </div>
 
-      {/* Productos en riesgo / inactivos */}
+      {/* Productos con stock crítico */}
       <div className="panel">
-        <h3>⚠️ Productos con stock crítico o inactivos</h3>
+        <h3>⚠️ Productos con stock crítico (≤ 5 unidades)</h3>
         {criticos.length === 0 ? (
-          <p>Todo OK: no hay productos en estado crítico.</p>
+          <p>Todo OK: no hay productos con stock crítico.</p>
         ) : (
           <div className="tabla-contenedor">
             <table className="tabla-usuarios">
@@ -97,7 +124,7 @@ export default function AdminReportes() {
                 <tr>
                   <th>Nombre</th>
                   <th>Stock</th>
-                  <th>Crítico</th>
+                  <th>Categoría</th>
                   <th>Estado</th>
                 </tr>
               </thead>
@@ -105,9 +132,14 @@ export default function AdminReportes() {
                 {criticos.map((p) => (
                   <tr key={p.id}>
                     <td>{p.nombre}</td>
-                    <td>{p.stock ?? "-"}</td>
-                    <td>{p.stockCritico ?? "-"}</td>
-                    <td>{p.activo === false ? "Inactivo" : "Activo"}</td>
+                    <td style={{ 
+                      color: p.stock === 0 ? '#ff5050' : '#ffa500',
+                      fontWeight: 'bold' 
+                    }}>
+                      {p.stock}
+                    </td>
+                    <td>{p.categoria}</td>
+                    <td>{p.stock === 0 ? 'SIN STOCK' : 'STOCK BAJO'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -141,6 +173,20 @@ export default function AdminReportes() {
           </div>
         )}
       </div>
+
+      {/* Información adicional */}
+      <div className="panel">
+        <h3>📈 Información Adicional</h3>
+        <div className="info-adicional">
+          <p><strong>Pedidos por estado:</strong></p>
+          <ul>
+            <li>Pendientes: {pedidos.filter(p => p.estado === 'pendiente').length}</li>
+            <li>Confirmados: {pedidos.filter(p => p.estado === 'confirmado').length}</li>
+            <li>Enviados: {pedidos.filter(p => p.estado === 'enviado').length}</li>
+            <li>Entregados: {pedidos.filter(p => p.estado === 'entregado').length}</li>
+          </ul>
+        </div>
+      </div>
     </section>
   );
-} 
+}

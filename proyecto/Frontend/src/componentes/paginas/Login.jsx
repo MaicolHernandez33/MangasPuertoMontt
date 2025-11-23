@@ -4,76 +4,98 @@ import FormularioBase from "../organismos/FormularioBase";
 export default function Login({ cambiarPagina }) {
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
+  const [cargando, setCargando] = useState(false);
 
-  const iniciarSesion = (e) => {
+  const iniciarSesion = async (e) => {
     e.preventDefault();
-    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    setCargando(true);
 
-    // Caso especial: Admin por defecto
-    if (correo === "admin@tienda.cl" && password === "admin123") {
-      const adminUser = {
-        nombre: "Administrador",
-        correo: "admin@tienda.cl",
-        password: "admin123",
-        rol: "admin",
-      };
+    try {
+      // Caso especial: Admin por defecto
+      if (correo === "admin@tienda.cl" && password === "admin123") {
+        const adminUser = {
+          id: 1, // ID fijo para el admin
+          nombre: "Administrador",
+          correo: "admin@tienda.cl",
+          rol: "admin",
+        };
 
-      localStorage.setItem("usuarioActivo", JSON.stringify(adminUser));
-      window.dispatchEvent(new Event("storage"));
+        localStorage.setItem("usuarioActivo", JSON.stringify(adminUser));
+        window.dispatchEvent(new Event("storage"));
 
-      if (!usuarios.some((u) => u.correo === "admin@tienda.cl")) {
-        usuarios.push(adminUser);
-        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+        alert("👑 Bienvenido Administrador Principal");
+        cambiarPagina("admin");
+        return;
       }
 
-      alert("👑 Bienvenido Administrador Principal");
-      cambiarPagina("admin");
-      return;
-    }
+      // Login contra la API
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          correo: correo.trim().toLowerCase(),
+          password: password
+        }),
+      });
 
-    // Buscar usuario válido
-    const usuarioValido = usuarios.find(
-      (u) => u.correo === correo.trim().toLowerCase() && u.password === password
-    );
+      const data = await response.json();
 
-    if (usuarioValido) {
-      localStorage.setItem("usuarioActivo", JSON.stringify(usuarioValido));
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+
+      const usuario = data.usuario;
+
+      // ✅ Solo guardamos usuario activo (necesario para navbar)
+      localStorage.setItem("usuarioActivo", JSON.stringify(usuario));
       window.dispatchEvent(new Event("storage"));
 
-      // Merge de carrito anónimo con carrito del usuario
-      const anon = JSON.parse(localStorage.getItem("carrito_anonimo") || "[]");
-      const keyUser = `carrito_${usuarioValido.correo}`;
-      const curr = JSON.parse(localStorage.getItem(keyUser) || "[]");
+      // ✅ Merge de carrito anónimo con BD
+      await mergeCarritosBD(usuario.id);
 
-      const combinados = mergeCarritos(curr, anon);
-      localStorage.setItem(keyUser, JSON.stringify(combinados));
-      localStorage.removeItem("carrito_anonimo");
-
-      if (usuarioValido.rol === "admin") {
-        alert(`👑 Bienvenido Administrador ${usuarioValido.nombre}`);
+      if (usuario.rol === "admin") {
+        alert(`👑 Bienvenido Administrador ${usuario.nombre}`);
         cambiarPagina("admin");
       } else {
-        alert(`✅ Bienvenido/a, ${usuarioValido.nombre}`);
+        alert(`✅ Bienvenido/a, ${usuario.nombre}`);
         cambiarPagina("inicio");
       }
-    } else {
-      alert("❌ Correo o contraseña incorrectos.");
+
+    } catch (error) {
+      alert(`❌ Error: ${error.message}`);
+    } finally {
+      setCargando(false);
     }
   };
 
-  // Función para combinar carritos
-  const mergeCarritos = (a, b) => {
-    const mapa = new Map();
-    for (const it of [...a, ...b]) {
-      const key = it.id;
-      const prev = mapa.get(key);
-      if (prev) {
-        mapa.set(key, { ...prev, cantidad: (prev.cantidad || 1) + (it.cantidad || 1) });
-      } else {
-        mapa.set(key, { ...it, cantidad: it.cantidad || 1 });
+  // ✅ Función simplificada para mergear carrito
+  const mergeCarritosBD = async (usuarioId) => {
+    try {
+      const carritoLocal = JSON.parse(localStorage.getItem("carrito_anonimo") || "[]");
+      if (carritoLocal.length === 0) return;
+
+      // Agregar cada item a la BD
+      for (const item of carritoLocal) {
+        await fetch('http://localhost:5000/api/carrito', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'usuario-id': usuarioId.toString()
+          },
+          body: JSON.stringify({
+            producto_id: item.id,
+            cantidad: item.cantidad || 1
+          }),
+        });
       }
+
+      localStorage.removeItem("carrito_anonimo");
+
+    } catch (error) {
+      console.error("Error mergeando carritos:", error);
     }
-    return [...mapa.values()];
   };
 
   const camposLogin = [
@@ -87,7 +109,8 @@ export default function Login({ cambiarPagina }) {
       onSubmit={iniciarSesion}
       campos={camposLogin}
       titulo="🔑 Iniciar Sesión"
-      botonTexto="Iniciar Sesión"
+      botonTexto={cargando ? "Iniciando sesión..." : "Iniciar Sesión"}
+      deshabilitado={cargando}
     >
       <div style={{ marginTop: "20px", textAlign: "center" }}>
         <p style={{ color: "#ccc" }}>
@@ -103,6 +126,7 @@ export default function Login({ cambiarPagina }) {
               cursor: "pointer",
               textDecoration: "underline",
             }}
+            disabled={cargando}
           >
             ¡Regístrate aquí!
           </button>

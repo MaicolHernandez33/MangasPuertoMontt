@@ -6,10 +6,28 @@ export default function Productos() {
   const [productos, setProductos] = useState([]);
   const [filtroCategoria, setFiltroCategoria] = useState("todos");
   const [orden, setOrden] = useState("ninguno");
+  const [cargando, setCargando] = useState(true);
 
+  //  Cargar productos desde la API
   useEffect(() => {
-    const guardados = JSON.parse(localStorage.getItem("productos")) || [];
-    setProductos(guardados.filter((p) => p.activo !== false));
+    const cargarProductos = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/productos');
+        if (response.ok) {
+          const data = await response.json();
+          // Filtrar productos con stock > 0 (como si fueran "activos")
+          const productosActivos = data.productos.filter(p => p.stock > 0);
+          setProductos(productosActivos);
+        }
+      } catch (error) {
+        console.error("Error cargando productos:", error);
+        setProductos([]); // En caso de error, mostrar lista vacía
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    cargarProductos();
   }, []);
 
   const productosFiltrados = productos
@@ -20,6 +38,15 @@ export default function Productos() {
       return 0;
     });
 
+  if (cargando) {
+    return (
+      <section className="productos">
+        <Titulo texto="Catálogo de Productos" />
+        <p style={{ color: "#fff", textAlign: "center" }}>Cargando productos...</p>
+      </section>
+    );
+  }
+
   return (
     <section className="productos">
       <Titulo texto="Catálogo de Productos" />
@@ -27,10 +54,13 @@ export default function Productos() {
       <div className="filtros">
         <select value={filtroCategoria} onChange={(e) => setFiltroCategoria(e.target.value)}>
           <option value="todos">Todos</option>
-          <option value="manga">Mangas</option>
-          <option value="comic">Cómics</option>
-          <option value="figura">Figuras</option>
-          <option value="otro">Otros</option>
+          <option value="Shonen">Shonen</option>
+          <option value="Shojo">Shojo</option>
+          <option value="Seinen">Seinen</option>
+          <option value="Acción">Acción</option>
+          <option value="Aventura">Aventura</option>
+          <option value="Drama">Drama</option>
+          <option value="Comedia">Comedia</option>
         </select>
 
         <select value={orden} onChange={(e) => setOrden(e.target.value)}>

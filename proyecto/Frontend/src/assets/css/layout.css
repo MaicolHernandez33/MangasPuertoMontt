@@ -213,3 +213,42 @@ main.contenido {
   max-width: 1100px;
   margin: 0 auto;
 }
+
+.submenu {
+  position: relative;
+}
+
+.submenu-items {
+  display: none; /* oculto por defecto */
+  position: absolute;
+  top: 100%;  /* justo debajo del botón */
+  left: 0;
+  background-color: #111; 
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  min-width: 150px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  border-radius: 6px;
+  z-index: 1000;
+}
+
+.submenu-items.activo {
+  display: block;
+}
+
+.submenu-items li button {
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  background: none;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.submenu-items li button:hover {
+  background-color: #ff5050;
+  color: white;
+}

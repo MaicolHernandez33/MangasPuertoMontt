@@ -12,6 +12,7 @@ export default function Inicio() {
   const [bannerActual, setBannerActual] = useState(0);
   const [mangas, setMangas] = useState([]);
   const [comics, setComics] = useState([]);
+  const [cargando, setCargando] = useState(true);
 
   // Cambio automático de banner
   useEffect(() => {
@@ -21,24 +22,55 @@ export default function Inicio() {
     return () => clearInterval(intervalo);
   }, []);
 
-  // Cargar productos guardados y separarlos
+  //  Cargar productos desde la API
   useEffect(() => {
-    const guardados = JSON.parse(localStorage.getItem("productos")) || [];
+    const cargarProductos = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/productos');
+        if (response.ok) {
+          const data = await response.json();
+          const todosProductos = data.productos || [];
+          
+          // Separar por categoría (usando la categoría de la BD)
+          const mangasFiltrados = todosProductos.filter((p) => 
+            p.categoria === "Shonen" || p.categoria === "Shojo" || p.categoria === "Seinen"
+          );
+          const comicsFiltrados = todosProductos.filter((p) => 
+            p.categoria === "Acción" || p.categoria === "Aventura" || p.categoria === "Comedia" || p.categoria === "Drama"
+          );
 
-    // Si los productos tienen campo "tipo", filtramos
-    const mangasFiltrados = guardados.filter((p) => p.tipo === "manga");
-    const comicsFiltrados = guardados.filter((p) => p.tipo === "comic");
+          // Si no hay suficientes por categoría, dividir aleatoriamente
+          if (mangasFiltrados.length === 0 && comicsFiltrados.length === 0) {
+            const mitad = Math.ceil(todosProductos.length / 2);
+            setMangas(todosProductos.slice(0, mitad));
+            setComics(todosProductos.slice(mitad));
+          } else {
+            setMangas(mangasFiltrados.slice(0, 4)); // Mostrar máximo 4 mangas
+            setComics(comicsFiltrados.slice(0, 4)); // Mostrar máximo 4 cómics
+          }
+        }
+      } catch (error) {
+        console.error("Error cargando productos para inicio:", error);
+        setMangas([]);
+        setComics([]);
+      } finally {
+        setCargando(false);
+      }
+    };
 
-    // Si aún no tienes ese campo, mostramos la mitad arriba y mitad abajo
-    if (mangasFiltrados.length === 0 && comicsFiltrados.length === 0) {
-      const mitad = Math.ceil(guardados.length / 2);
-      setMangas(guardados.slice(0, mitad));
-      setComics(guardados.slice(mitad));
-    } else {
-      setMangas(mangasFiltrados);
-      setComics(comicsFiltrados);
-    }
+    cargarProductos();
   }, []);
+
+  if (cargando) {
+    return (
+      <section className="inicio">
+        <div className="hero-bienvenida">
+          <h1>Bienvenido a Tienda Mangas PuertoMontt</h1>
+          <p>Cargando productos destacados...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="inicio">
@@ -79,7 +111,7 @@ export default function Inicio() {
 
       {/* === MANGAS RECOMENDADOS === */}
       <div className="recomendados">
-        <Titulo texto="Mangas Recomendados" />
+        <Titulo texto="📚 Mangas Recomendados" />
         {mangas.length > 0 ? (
           <div className="grilla-productos">
             {mangas.map((p) => (
@@ -87,13 +119,13 @@ export default function Inicio() {
             ))}
           </div>
         ) : (
-          <p>No hay mangas recomendados aún.</p>
+          <p>No hay mangas recomendados disponibles.</p>
         )}
       </div>
 
       {/* === CÓMICS RECOMENDADOS === */}
       <div className="recomendados">
-        <Titulo texto="Cómics Recomendados" />
+        <Titulo texto="🎭 Cómics Recomendados" />
         {comics.length > 0 ? (
           <div className="grilla-productos">
             {comics.map((p) => (
@@ -101,8 +133,15 @@ export default function Inicio() {
             ))}
           </div>
         ) : (
-          <p>No hay cómics recomendados aún.</p>
+          <p>No hay cómics recomendados disponibles.</p>
         )}
+      </div>
+
+ 
+      <div className="cta-final">
+        <Titulo texto="¡Explora nuestro catálogo completo!" />
+        <p>Descubre todos nuestros productos, ofertas especiales y nuevas llegadas.</p>
+
       </div>
     </section>
   );

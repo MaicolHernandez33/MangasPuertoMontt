@@ -7,9 +7,11 @@ export default function Registro({ cambiarPagina }) {
   const [password, setPassword] = useState("");
   const [confirmar, setConfirmar] = useState("");
   const [celular, setCelular] = useState("");
+  const [cargando, setCargando] = useState(false);
 
-  const registrarUsuario = (e) => {
+  const registrarUsuario = async (e) => {
     e.preventDefault();
+    setCargando(true);
 
     // Limpiar espacios
     const nombreTrim = nombre.trim();
@@ -17,9 +19,10 @@ export default function Registro({ cambiarPagina }) {
     const passTrim = password.trim();
     const confirmarTrim = confirmar.trim();
 
-    // Validaciones básicas
+    // Validaciones básicas 
     if (!nombreTrim || !correoTrim || !passTrim || !confirmarTrim) {
       alert("⚠️ Por favor completa todos los campos obligatorios.");
+      setCargando(false);
       return;
     }
 
@@ -27,51 +30,64 @@ export default function Registro({ cambiarPagina }) {
     const dominioPermitido = /@(?:duoc\.cl|profesor\.duoc\.cl|gmail\.com)$/i.test(correoTrim);
     if (!dominioPermitido) {
       alert("⚠️ Solo se permiten correos @duoc.cl, @profesor.duoc.cl o @gmail.com");
+      setCargando(false);
       return;
     }
 
-    // Validar fuerza de contraseña
+    // Validar contraseña
     const okPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/.test(passTrim);
     if (!okPass) {
       alert("⚠️ La contraseña debe tener al menos 6 caracteres, con mayúscula, minúscula y número.");
+      setCargando(false);
       return;
     }
 
     // Confirmar contraseñas
     if (passTrim !== confirmarTrim) {
       alert("❌ Las contraseñas no coinciden.");
+      setCargando(false);
       return;
     }
 
-    // Crear nuevo usuario
-    const nuevoUsuario = {
-      nombre: nombreTrim,
-      correo: correoTrim,
-      password: passTrim,
-      celular: celular.trim(),
-      rol: "usuario",
-    };
+    try {
+      // Enviar registro a la API
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nombre: nombreTrim,
+          correo: correoTrim,
+          password: passTrim,
+          celular: celular.trim() || null
+        }),
+      });
 
-    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+      const data = await response.json();
 
-    // Verificar duplicado
-    const existe = usuarios.some((u) => u.correo === correoTrim);
-    if (existe) {
-      alert("⚠️ Este correo ya está registrado. Intenta con otro.");
-      return;
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+
+      // Registro exitoso
+      alert("Registro exitoso. ¡Ya puedes iniciar sesión!");
+      
+      // Limpiar formulario
+      setNombre("");
+      setCorreo("");
+      setPassword("");
+      setConfirmar("");
+      setCelular("");
+      
+      // Redirigir a login
+      cambiarPagina("login");
+
+    } catch (error) {
+      alert(`❌ Error: ${error.message}`);
+    } finally {
+      setCargando(false);
     }
-
-    usuarios.push(nuevoUsuario);
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
-    window.dispatchEvent(new Event("storage")); // Actualiza navbar
-
-    alert("✅ Registro exitoso. ¡Ya puedes iniciar sesión!");
-    setNombre("");
-    setCorreo("");
-    setPassword("");
-    setConfirmar("");
-    setCelular("");
-    cambiarPagina("login");
   };
 
   const camposRegistro = [
@@ -88,7 +104,8 @@ export default function Registro({ cambiarPagina }) {
       onSubmit={registrarUsuario}
       campos={camposRegistro}
       titulo="✍️ Crear cuenta"
-      botonTexto="Registrarse"
+      botonTexto={cargando ? "Registrando..." : "Registrarse"}
+      deshabilitado={cargando}
     >
       <div style={{ marginTop: "20px", textAlign: "center" }}>
         <p style={{ color: "#ccc" }}>
@@ -104,6 +121,7 @@ export default function Registro({ cambiarPagina }) {
               cursor: "pointer",
               textDecoration: "underline",
             }}
+            disabled={cargando}
           >
             ¡Inicia sesión!
           </button>

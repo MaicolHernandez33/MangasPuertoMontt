@@ -5,25 +5,45 @@ import Boton from "../atomos/Boton";
 export default function PerfilUsuario({ cambiarPagina }) {
   const [usuario, setUsuario] = useState(null);
   const [compras, setCompras] = useState([]);
+  const [cargando, setCargando] = useState(false);
 
   useEffect(() => {
-    //Cargar usuario activo
-    const activo = JSON.parse(localStorage.getItem("usuarioActivo"));
-    if (!activo) {
-      alert("⚠️ Debes iniciar sesión para acceder al perfil.");
-      cambiarPagina?.("login");
-      return;
-    }
+    const cargarDatos = async () => {
+      const activo = JSON.parse(localStorage.getItem("usuarioActivo"));
+      if (!activo) {
+        alert("⚠️ Debes iniciar sesión para acceder al perfil.");
+        cambiarPagina?.("login");
+        return;
+      }
 
-    setUsuario(activo);
+      setUsuario(activo);
+      await cargarCompras(activo.id);
+    };
 
-    //Cargar historial de compras (por correo)
-    const key = `compras_${activo.correo}`;
-    const historial = JSON.parse(localStorage.getItem(key)) || [];
-    setCompras(historial);
+    cargarDatos();
   }, [cambiarPagina]);
 
-  // Cerrar sesión
+  // ✅ Cargar compras desde la BD
+  const cargarCompras = async (usuarioId) => {
+    setCargando(true);
+    try {
+      const response = await fetch('http://localhost:5000/api/pedidos', {
+        headers: {
+          'usuario-id': usuarioId.toString()
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setCompras(data.pedidos || []);
+      }
+    } catch (error) {
+      console.error("Error cargando compras:", error);
+    } finally {
+      setCargando(false);
+    }
+  };
+
   const cerrarSesion = () => {
     if (confirm("¿Deseas cerrar sesión?")) {
       localStorage.removeItem("usuarioActivo");
@@ -58,20 +78,23 @@ export default function PerfilUsuario({ cambiarPagina }) {
         <div className="perfil-compras">
           <Titulo texto="🧾 Historial de Compras" />
 
-          {compras.length === 0 ? (
+          {cargando ? (
+            <p>Cargando compras...</p>
+          ) : compras.length === 0 ? (
             <p>No tienes compras registradas aún.</p>
           ) : (
             <div className="compras-lista">
-              {compras.map((compra, index) => (
-                <div key={index} className="compra-item">
-                  <h4>🛒 Compra #{index + 1}</h4>
-                  <p><strong>Fecha:</strong> {compra.fecha}</p>
-                  <p><strong>Total:</strong> ${compra.total.toLocaleString("es-CL")}</p>
+              {compras.map((compra) => (
+                <div key={compra.id} className="compra-item">
+                  <h4>🛒 Pedido #{compra.id}</h4>
+                  <p><strong>Fecha:</strong> {new Date(compra.fecha_pedido).toLocaleString("es-CL")}</p>
+                  <p><strong>Total:</strong> ${parseFloat(compra.total).toLocaleString("es-CL")}</p>
+                  <p><strong>Estado:</strong> {compra.estado}</p>
 
                   <ul>
-                    {compra.items.map((item) => (
-                      <li key={item.id}>
-                        {item.nombre}  ${item.precio.toLocaleString("es-CL")}
+                    {compra.items?.map((item, index) => (
+                      <li key={index}>
+                        {item.nombre} - ${parseFloat(item.precio).toLocaleString("es-CL")} x {item.cantidad}
                       </li>
                     ))}
                   </ul>

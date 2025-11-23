@@ -30,9 +30,14 @@
   font-size: 1.1rem;
 }
 
+
 .tarjeta-producto .precio {
-  font-weight: bold;
-  color: #ff5050;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+  width: 100%;
+  text-align: center;
 }
 
 .tarjeta-producto .tipo {
@@ -82,6 +87,7 @@
   background-color: #ff5050;
   color: #fff;
 }
+
 
 /* === RECOMENDADOS === */
 .recomendados {
@@ -451,4 +457,38 @@
 .bar-fill {
   height: 10px;
   background: #ff5050;
+}
+
+.tarjeta-producto {
+  position: relative;
+  padding: 1rem;
+  border-radius: 10px;
+  background: #1c1c1c;
+  color: #fff;
+}
+
+.badge-descuento {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #e53935;
+  color: #fff;
+  font-weight: bold;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.precio {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; 
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.precio-original {
+  text-decoration: line-through;
+  color: #aaa;
+  font-size: 1rem;
 }

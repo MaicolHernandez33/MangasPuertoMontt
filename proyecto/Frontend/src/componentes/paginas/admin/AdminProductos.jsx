@@ -11,25 +11,33 @@ export default function AdminProductos() {
   const [categoria, setCategoria] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [stock, setStock] = useState("");
-  const [stockCritico, setStockCritico] = useState("");
-  const [activo, setActivo] = useState(true);
+  const [autor, setAutor] = useState("");
+  const [tipo, setTipo] = useState(""); 
+  const [descuento, setDescuento] = useState(""); 
   const [modoEdicion, setModoEdicion] = useState(false);
   const [idEditar, setIdEditar] = useState(null);
+  const [cargando, setCargando] = useState(false);
 
-  // 🔹 Cargar productos
-  useEffect(() => {
-    const guardados = JSON.parse(localStorage.getItem("productos")) || [];
-    setProductos(guardados);
-  }, []);
-
-  const guardarProductos = (lista) => {
-    setProductos(lista);
-    localStorage.setItem("productos", JSON.stringify(lista));
+  // Cargar productos desde la BD
+  const cargarProductos = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/productos');
+      if (response.ok) {
+        const data = await response.json();
+        setProductos(data.productos || []);
+      }
+    } catch (error) {
+      console.error("Error cargando productos:", error);
+    }
   };
 
-  // 🔹 Validaciones y guardado
-  const guardarProducto = () => {
-    if (!nombre || !precio || !imagen || !categoria || !descripcion) {
+  useEffect(() => {
+    cargarProductos();
+  }, []);
+
+  //  Guardar producto en la BD
+  const guardarProducto = async () => {
+    if (!nombre || !precio || !imagen || !categoria || !descripcion || !stock || !tipo) {
       alert("⚠️ Completa todos los campos obligatorios.");
       return;
     }
@@ -44,33 +52,75 @@ export default function AdminProductos() {
       return;
     }
 
-    const urlValida = /^(https?:\/\/|\/img\/).+/i.test(imagen);
-    if (!urlValida) {
-      alert("⚠️ Ingresa una URL válida para la imagen.");
+    if (parseFloat(descuento) < 0 || parseFloat(descuento) > 100) {
+      alert("⚠️ Descuento inválido (0-100%).");
       return;
     }
 
-    const nuevoProducto = {
-      id: modoEdicion ? idEditar : Date.now(),
-      nombre,
-      precio: parseFloat(precio),
-      imagen,
-      categoria,
-      descripcion,
-      stock: parseInt(stock) || 0,
-      stockCritico: parseInt(stockCritico) || 0,
-      activo,
-    };
+    setCargando(true);
 
-    const actualizados = modoEdicion
-      ? productos.map((p) => (p.id === idEditar ? nuevoProducto : p))
-      : [...productos, nuevoProducto];
+    try {
+      const productoData = {
+        nombre,
+        precio: parseFloat(precio),
+        imagen,
+        categoria,
+        descripcion,
+        stock: parseInt(stock),
+        autor: autor || "Desconocido",
+        tipo,
+        descuento: parseFloat(descuento) || 0
+      };
 
-    guardarProductos(actualizados);
-    alert(modoEdicion ? "✏️ Producto actualizado." : "✅ Producto agregado.");
+      let response;
+      
+      if (modoEdicion) {
+        // Actualizar producto existente
+        response = await fetch(`http://localhost:5000/api/admin/productos/${idEditar}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(productoData)
+        });
+      } else {
+        //  Crear nuevo producto
+        response = await fetch('http://localhost:5000/api/admin/productos', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(productoData)
+        });
+      }
 
-    limpiarCampos();
-    setModoEdicion(false);
+      if (response.ok) {
+        alert(modoEdicion ? "✏️ Producto actualizado." : "✅ Producto agregado.");
+        await cargarProductos(); // Recargar lista
+        limpiarCampos();
+      } else {
+        const error = await response.json();
+        throw new Error(error.error);
+      }
+    } catch (error) {
+      alert(`❌ Error: ${error.message}`);
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  //  Eliminar producto de la BD
+  const eliminarProducto = async (id) => {
+    if (!confirm("¿Eliminar este producto?")) return;
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/admin/productos/${id}`, { method: 'DELETE' });
+      if (response.ok) {
+        alert("🗑️ Producto eliminado.");
+        await cargarProductos();
+      } else {
+        const error = await response.json();
+        throw new Error(error.error);
+      }
+    } catch (error) {
+      alert(`❌ Error: ${error.message}`);
+    }
   };
 
   const editarProducto = (p) => {
@@ -80,19 +130,12 @@ export default function AdminProductos() {
     setCategoria(p.categoria);
     setDescripcion(p.descripcion);
     setStock(p.stock);
-    setStockCritico(p.stockCritico);
-    setActivo(p.activo);
+    setAutor(p.autor || "");
+    setTipo(p.tipo || "manga");
+    setDescuento(p.descuento || 0);
     setModoEdicion(true);
     setIdEditar(p.id);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const eliminarProducto = (id) => {
-    if (confirm("¿Eliminar este producto?")) {
-      const filtrados = productos.filter((p) => p.id !== id);
-      guardarProductos(filtrados);
-      alert("🗑️ Producto eliminado.");
-    }
   };
 
   const limpiarCampos = () => {
@@ -102,8 +145,11 @@ export default function AdminProductos() {
     setCategoria("");
     setDescripcion("");
     setStock("");
-    setStockCritico("");
-    setActivo(true);
+    setAutor("");
+    setTipo("");
+    setDescuento("");
+    setModoEdicion(false);
+    setIdEditar(null);
   };
 
   return (
@@ -115,25 +161,30 @@ export default function AdminProductos() {
         <CampoTexto placeholder="Nombre del producto" valor={nombre} onChange={setNombre} />
         <CampoTexto tipo="number" placeholder="Precio (CLP)" valor={precio} onChange={setPrecio} />
         <CampoTexto placeholder="URL o ruta de la imagen" valor={imagen} onChange={setImagen} />
+        <CampoTexto placeholder="Autor" valor={autor} onChange={setAutor} />
 
-        <select
-          value={categoria}
-          onChange={(e) => setCategoria(e.target.value)}
-          className="campo-texto"
-        >
+        <select value={categoria} onChange={e => setCategoria(e.target.value)} className="campo-texto">
           <option value="">Seleccionar categoría</option>
-          <option value="manga">Manga</option>
-          <option value="comic">Cómic</option>
-          <option value="figura">Figura</option>
-          <option value="otro">Otro</option>
+          <option value="Shonen">Shonen</option>
+          <option value="Shojo">Shojo</option>
+          <option value="Seinen">Seinen</option>
+          <option value="Acción">Acción</option>
+          <option value="Aventura">Aventura</option>
+          <option value="Drama">Drama</option>
+          <option value="Comedia">Comedia</option>
         </select>
 
-        <CampoTexto tipo="number" placeholder="Stock disponible" valor={stock} onChange={setStock} />
-        <CampoTexto tipo="number" placeholder="Stock crítico" valor={stockCritico} onChange={setStockCritico} />
+        {/* NUEVO: Tipo */}
+        <select value={tipo} onChange={e => setTipo(e.target.value)} className="campo-texto">
+          <option value="">Seleccionar tipo</option>
+          <option value="manga">Manga</option>
+          <option value="comic">Comic</option>
+        </select>
 
-        <label style={{ color: "white", marginBottom: "8px" }}>
-          <input type="checkbox" checked={activo} onChange={() => setActivo(!activo)} /> Producto activo
-        </label>
+        {/* NUEVO: Descuento */}
+        <CampoTexto tipo="number" placeholder="Descuento (%)" valor={descuento} onChange={setDescuento} />
+
+        <CampoTexto tipo="number" placeholder="Stock disponible" valor={stock} onChange={setStock} />
 
         <textarea
           placeholder="Descripción del producto"
@@ -144,10 +195,11 @@ export default function AdminProductos() {
         ></textarea>
 
         <Boton
-          texto={modoEdicion ? "💾 Guardar Cambios" : "Agregar Producto"}
+          texto={cargando ? "Guardando..." : (modoEdicion ? "💾 Guardar Cambios" : "Agregar Producto")}
           onClick={guardarProducto}
+          disabled={cargando}
         />
-        {modoEdicion && <Boton texto="❌ Cancelar" onClick={limpiarCampos} />}
+        {modoEdicion && <Boton texto="❌ Cancelar" onClick={limpiarCampos} disabled={cargando} />}
       </div>
 
       <hr />
@@ -159,24 +211,19 @@ export default function AdminProductos() {
       ) : (
         <div className="grid-productos">
           {productos.map((p) => (
-            <article
-              key={p.id}
-              className="tarjeta-producto"
-              style={{
-                opacity: p.activo ? 1 : 0.5,
-                border: p.stock < p.stockCritico ? "2px solid red" : "1px solid #444",
-              }}
-            >
+            <article key={p.id} className="tarjeta-producto">
               <img src={p.imagen} alt={p.nombre} />
               <h4>{p.nombre}</h4>
-              <p className="precio">${p.precio.toLocaleString("es-CL")}</p>
+              <p className="precio">
+                ${parseFloat(p.precio).toLocaleString("es-CL")}
+                {p.descuento > 0 && <span> (-{p.descuento}%)</span>}
+              </p>
               <p>📦 Stock: {p.stock}</p>
-              <p>⚠️ Crítico: {p.stockCritico}</p>
+              <p>✍️ Autor: {p.autor}</p>
               <p>🏷️ {p.categoria}</p>
+              <p>🎯 Tipo: {p.tipo}</p>
               <p className="descripcion">
-                {p.descripcion.length > 60
-                  ? p.descripcion.substring(0, 60) + "..."
-                  : p.descripcion}
+                {p.descripcion?.length > 60 ? p.descripcion.substring(0, 60) + "..." : p.descripcion}
               </p>
 
               <div className="acciones-admin">
