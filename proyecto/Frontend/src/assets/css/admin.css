@@ -34,23 +34,6 @@
   z-index: 998;
 }
 
-/* Menú lateral */
-.admin-menu {
-  width: 250px;
-  background: rgba(0, 0, 0, 0.9);
-  border-right: 2px solid rgba(255, 80, 80, 0.4);
-  color: rgb(97, 91, 134);
-  padding: 30px 15px;
-  position: fixed;
-  height: 100vh;
-  overflow-y: auto;
-  z-index: 999;
-  transition: transform 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.4);
-}
 
 .admin-menu h2 {
   text-align: center;
@@ -424,5 +407,149 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* === ADMIN PANEL RESPONSIVE FIX === */
+
+/* Botón hamburguesa - Solo visible en móviles */
+.menu-hamburguesa {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1001;
+  background: #333;
+  color: white;
+  border: none;
+  padding: 12px 15px;
+  border-radius: 5px;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+/* Overlay para móviles */
+.menu-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 998;
+}
+
+/* Menú lateral responsive */
+.admin-menu {
+  width: 250px;
+  background: rgba(0, 0, 0, 0.95);
+  border-right: 2px solid rgba(255, 80, 80, 0.4);
+  color: white;
+  padding: 30px 15px;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 999;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .menu-hamburguesa {
+    display: block !important;
+  }
+  
+  .menu-overlay {
+    display: block !important;
+  }
+  
+  .admin-menu {
+    transform: translateX(-100%);
+    width: 280px;
+  }
+  
+  .admin-menu.abierto {
+    transform: translateX(0) !important;
+  }
+  
+  .admin-contenido {
+    margin-left: 0 !important;
+    width: 100% !important;
+    border-radius: 0 !important;
+    padding: 70px 15px 20px 15px !important;
+  }
+  
+  /* Asegurar que el contenido sea responsive */
+  .admin-reportes,
+  .admin-productos,
+  .admin-usuarios,
+  .admin-pedidos,
+  .admin-perfil {
+    padding: 20px 10px !important;
+  }
+  
+  /* Fix para las cards en móviles */
+  .reporte-grid {
+    grid-template-columns: 1fr !important;
+    gap: 15px !important;
+  }
+  
+  .reporte-card {
+    padding: 20px 15px !important;
+    text-align: center !important;
+  }
+  
+  .reporte-card h3 {
+    font-size: 1rem !important;
+  }
+  
+  .reporte-card p {
+    font-size: 1.5rem !important;
+  }
+  
+  /* Fix para tablas en móviles */
+  .tabla-contenedor {
+    overflow-x: auto !important;
+    font-size: 0.8rem !important;
+  }
+  
+  .tabla-usuarios,
+  .tabla-pedidos {
+    min-width: 600px !important;
+  }
+  
+  /* Fix para las barras de top productos */
+  .bars {
+    width: 100% !important;
+  }
+  
+  .bar-item {
+    margin-bottom: 15px !important;
+  }
+  
+  .bar-label {
+    font-size: 0.9rem !important;
+  }
+}
+
+/* Para tablets */
+@media (max-width: 1024px) {
+  .admin-menu {
+    width: 220px;
+  }
+  
+  .admin-contenido {
+    margin-left: 220px;
+    padding: 25px;
+  }
+  
+  .reporte-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
