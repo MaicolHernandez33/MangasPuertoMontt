@@ -1,15 +1,15 @@
-# 📚 MangasPuertoMontt - Tienda Online de Mangas y Cómics (EVA 2)
+# 📚 MangasPuertoMontt - Tienda Online de Mangas y Cómics
 
-¡Bienvenido/a a **MangasPuertoMontt**  🚀  
-En esta segunda entrega, la tienda fue **migrada a React** siguiendo la **metodología Atomic Design**, incorporando **Bootstrap** para el diseño responsivo y pruebas unitarias con **Jasmine + Karma**.  
+¡Bienvenido/a a **MangasPuertoMontt** 🚀  
+En esta entrega final, la tienda evolucionó a una **aplicación Full Stack** con backend en Node.js, base de datos PostgreSQL en Neon y frontend en React con Atomic Design.
 
 ---
 
 ## 👨‍💻 Integrante del proyecto
 
-| Nombre           | Rol / Responsabilidad principal                                     |
-|------------------|---------------------------------------------------------------------|
-| Maicol Hernández | Desarrollo completo (Migración a React, Atomic Design, Testing)     |
+| Nombre           | Rol / Responsabilidad principal                                       |
+|------------------|-----------------------------------------------------------------------|
+| Maicol Hernández | Desarrollo Full Stack (Frontend React + Backend Node.js + PostgreSQL) |
 
 ---
 
