@@ -11,8 +11,7 @@ import "./assets/css/admin.css";
 import Inicio from "./Componentes/Paginas/Inicio";
 import CatalogoCompleto from "./Componentes/Paginas/CatalogoCompleto";
 import Mangas from "./Componentes/Paginas/Mangas";
-import Comics from "./Componentes/Paginas/Comics";
-import Ofertas from "./Componentes/Paginas/Ofertas"; 
+import Comics from "./Componentes/Paginas/Comics"; 
 import Registro from "./Componentes/Paginas/Registro";
 import Login from "./Componentes/Paginas/Login";
 import Contacto from "./Componentes/Paginas/Contacto"; 
@@ -21,6 +20,7 @@ import Novedades from "./Componentes/Paginas/Novedades";
 import Nosotros from "./Componentes/Paginas/Nosotros";
 import PerfilUsuario from "./Componentes/Paginas/PerfilUsuario";
 import AdminPanel from "./Componentes/Paginas/admin/AdminPanel";
+import Ofertas from "./Componentes/Paginas/Ofertas"; 
 
 function App() {
 
