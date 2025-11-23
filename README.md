@@ -1,6 +1,6 @@
 # 📚 MangasPuertoMontt - Tienda Online de Mangas y Cómics (EVA 2)
 
-¡Bienvenido/a a **MangasPuertoMontt** versión **EVA 2** 🚀  
+¡Bienvenido/a a **MangasPuertoMontt**  🚀  
 En esta segunda entrega, la tienda fue **migrada a React** siguiendo la **metodología Atomic Design**, incorporando **Bootstrap** para el diseño responsivo y pruebas unitarias con **Jasmine + Karma**.  
 
 ---
@@ -21,38 +21,37 @@ En esta segunda entrega, la tienda fue **migrada a React** siguiendo la **metodo
 
 ## ⚙️ Tecnologías utilizadas
 
-- ⚛️ **Framework**: React + Vite  
-- 🎨 **Estilos**: Bootstrap 5 + CSS propio  
+- 🚀 **Frontend**: React + Vite (localhost:5173)
+- ⚡ **Backend**: Node.js + Express (localhost:5000)
 - 🧩 **Arquitectura**: Atomic Design (átomos, moléculas, organismos, plantillas, páginas)  
-- 💾 **Simulación de BD**: LocalStorage del navegador como sistema de persistencia temporal
+- 🗄️ **Base de datos**: PostgreSQL (Neon.tech)
 - 🛠️ **Testing**: Jasmine + Karma (pruebas unitarias de componentes)  
 - 📦 **Control de versiones**: GitHub  
 
 ---
 
-## 📌 Funcionalidades principales
+## 🚀 Funcionalidades Principales
 
-- **Migración a React**:
-  - Cada vista de la EVA1 convertida en **componentes reutilizables**.  
-  - División en **átomos, moléculas, organismos, plantillas y páginas**.  
+### **Para Usuarios**
+- 👤 **Registro y autenticación** con validación de correos institucionales
+- 🛍️ **Catálogo de productos** con filtros por categoría y ordenamiento
+- 🛒 **Carrito de compras** persistente en base de datos
+- 📦 **Sistema de pedidos** con confirmación y seguimiento
+- 👤 **Perfil de usuario** con historial de compras
 
-- **Nuevas vistas agregadas**:
-  - **Categorías** → productos filtrados por tipo (Mangas, Cómics, Ofertas).  
-  - **Checkout / Compra** → formulario con dirección, envío y pago.  
-  - **Compra exitosa / Compra fallida** → mensajes según resultado.  
-  - **Panel de administración** → administración de usuarios y productos.  
+### **Para Administradores**
+- 👑 **Panel de administración** completo
+- 📊 **Gestión de productos** (CRUD completo)
+- 👥 **Gestión de usuarios** y roles
+- 🧾 **Administración de pedidos** y estados
+- 📈 **Reportes y estadísticas** en tiempo real
 
-- **Interactividad mejorada**:
-  - Manejo de **estado** con Hooks (`useState`, `useEffect`).  
-  - **Persistencia** con LocalStorage para carrito y usuarios.  
-  - **Filtros de búsqueda** y validaciones de formularios.  
-
-- **Pruebas unitarias**:
-  - Se validó el correcto funcionamiento de los componentes
-  - Validación de props recibidas.
-  - Cambios de estado (formularios, carrito).
-  - Simulación de eventos de usuario (clicks, inputs).
-  - Se utilizo Jasmine + Karma.
+### **Características Técnicas**
+- 🔄 **Persistencia real** en base de datos PostgreSQL
+- 🛡️ **Validaciones** tanto en frontend como backend
+- ⚡ **API RESTful** con 15 endpoints
+- 🎯 **Arquitectura escalable** y mantenible
+- 📱 **Diseño responsive** con Bootstrap
 
 ---
 
