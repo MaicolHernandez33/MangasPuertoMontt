@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import TarjetaProducto from "../Moleculas/TarjetaProducto";
 import Titulo from "../Atomos/Titulo";
-import { API_BASE_URL } from "../config"; 
+import { API_BASE_URL } from "../../config"; 
 
 export default function Productos() {
   const [productos, setProductos] = useState([]);

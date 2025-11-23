@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Titulo from "../atomos/Titulo";
 import Boton from "../atomos/Boton";
-import { API_BASE_URL } from "../config"; 
+import { API_BASE_URL } from "../../config"; 
 
 export default function PerfilUsuario({ cambiarPagina }) {
   const [usuario, setUsuario] = useState(null);

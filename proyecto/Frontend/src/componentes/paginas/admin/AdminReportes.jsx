@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Titulo from "../../atomos/Titulo";
-import { API_BASE_URL } from "../../config"; 
+import { API_BASE_URL } from "../../../config"; 
 export default function AdminReportes() {
   const [usuarios, setUsuarios] = useState([]);
   const [productos, setProductos] = useState([]);

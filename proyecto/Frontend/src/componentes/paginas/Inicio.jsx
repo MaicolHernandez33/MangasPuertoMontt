@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Titulo from "../atomos/Titulo";
 import TarjetaProducto from "../moleculas/TarjetaProducto";
-import { API_BASE_URL } from "../config"; 
+import { API_BASE_URL } from "../../config"; 
 
 export default function Inicio() {
   const banners = [
