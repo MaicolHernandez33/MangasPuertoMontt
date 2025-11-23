@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Titulo from "../atomos/Titulo";
-import Boton from "../atomos/Boton";
+import Titulo from "../Atomos/Titulo";
+import Boton from "../Atomos/Boton";
 
 export default function ConfirmacionCompra() {
   const [compra, setCompra] = useState(null);

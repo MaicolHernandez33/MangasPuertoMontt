@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Titulo from "../../atomos_temp/Titulo";
-import Boton from "../../atomos_temp/Boton";
+import Titulo from "../../Atomos/Titulo";
+import Boton from "../../Atomos/Boton";
 
 export default function AdminPedidos() {
   const [pedidos, setPedidos] = useState([]);

@@ -1,4 +1,4 @@
-import Titulo from "../atomos_temp/Titulo";
+import Titulo from "../Atomos/Titulo";
 
 export default function Novedades() {
   const novedades = [
