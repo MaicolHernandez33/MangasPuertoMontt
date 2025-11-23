@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import TarjetaProducto from "../moleculas/TarjetaProducto";
+import TarjetaProducto from "../Moleculas/TarjetaProducto";
 import Titulo from "../atomos/Titulo";
 
 export default function CatalogoCompleto() {

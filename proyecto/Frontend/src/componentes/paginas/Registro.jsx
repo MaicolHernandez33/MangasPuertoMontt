@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FormularioBase from "../organismos/FormularioBase";
+import FormularioBase from "../Organismos/FormularioBase";
 
 export default function Registro({ cambiarPagina }) {
   const [nombre, setNombre] = useState("");

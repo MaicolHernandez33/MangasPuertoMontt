@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Titulo from "../atomos/Titulo";
-import TarjetaProducto from "../moleculas/TarjetaProducto";
+import TarjetaProducto from "../Moleculas/TarjetaProducto";
 
 export default function Inicio() {
   const banners = [

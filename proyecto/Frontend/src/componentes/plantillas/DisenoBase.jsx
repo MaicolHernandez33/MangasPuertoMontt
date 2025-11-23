@@ -1,5 +1,5 @@
-import BarraNavegacion from "../organismos/BarraNavegacion";
-import Footer from "../organismos/Footer";
+import BarraNavegacion from "../Organismos/BarraNavegacion";
+import Footer from "../Organismos/Footer";
 
 export default function DisenoBase({ children, cambiarPagina }) {
   return (
