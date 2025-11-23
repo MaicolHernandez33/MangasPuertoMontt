@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Titulo from "../atomos/Titulo";
-import Boton from "../atomos/Boton";
+import Titulo from "../atomos_temp/Titulo";
+import Boton from "../atomos_temp/Boton";
 
 export default function Carrito() {
   const [carrito, setCarrito] = useState([]);

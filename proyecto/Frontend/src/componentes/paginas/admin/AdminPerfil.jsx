@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Titulo from "../../atomos/Titulo";
+import Titulo from "../../atomos_temp/Titulo";
 
 export default function AdminPerfil() {
   const [admin, setAdmin] = useState({});

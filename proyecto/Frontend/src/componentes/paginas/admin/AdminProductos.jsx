@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import Titulo from "../../atomos/Titulo";
-import CampoTexto from "../../atomos/CampoTexto";
-import Boton from "../../atomos/Boton";
+import Titulo from "../../atomos_temp/Titulo";
+import CampoTexto from "../../atomos_temp/CampoTexto";
+import Boton from "../../atomos_temp/Boton";
 
 export default function AdminProductos() {
   const [productos, setProductos] = useState([]);
