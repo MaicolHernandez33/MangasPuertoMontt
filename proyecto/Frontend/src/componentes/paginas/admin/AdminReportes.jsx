@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import Titulo from "../../Atomos/Titulo";
+import Titulo from "../../atomos/Titulo";
 
 export default function AdminReportes() {
   const [usuarios, setUsuarios] = useState([]);

@@ -1,7 +1,7 @@
 import React from "react";
-import CampoTexto from "../Atomos/CampoTexto";
-import Boton from "../Atomos/Boton";
-import Titulo from "../Atomos/Titulo";
+import CampoTexto from "../atomos/CampoTexto";
+import Boton from "../atomos/Boton";
+import Titulo from "../atomos/Titulo";
 
 export default function FormularioBase({
   tipo,

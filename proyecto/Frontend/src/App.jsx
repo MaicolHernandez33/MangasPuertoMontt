@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DisenoBase from "./Componentes/Plantillas/DisenoBase";
+import DisenoBase from "./componentes/plantillas/DisenoBase";
 
 // Importar estilos globales
 import "./assets/css/estiloBase.css";
@@ -8,19 +8,19 @@ import "./assets/css/components.css";
 import "./assets/css/admin.css";
 
 // Páginas
-import Inicio from "./Componentes/Paginas/Inicio";
-import CatalogoCompleto from "./Componentes/Paginas/CatalogoCompleto";
-import Mangas from "./Componentes/Paginas/Mangas";
-import Comics from "./Componentes/Paginas/Comics"; 
-import Registro from "./Componentes/Paginas/Registro";
-import Login from "./Componentes/Paginas/Login";
-import Contacto from "./Componentes/Paginas/Contacto"; 
-import Carrito from "./Componentes/Paginas/Carrito";
-import Novedades from "./Componentes/Paginas/Novedades";
-import Nosotros from "./Componentes/Paginas/Nosotros";
-import PerfilUsuario from "./Componentes/Paginas/PerfilUsuario";
-import AdminPanel from "./Componentes/Paginas/admin/AdminPanel";
-import Ofertas from "./Componentes/Paginas/Ofertas"; 
+import Inicio from "./componentes/paginas/Inicio";
+import CatalogoCompleto from "./componentes/paginas/CatalogoCompleto";
+import Mangas from "./componentes/paginas/Mangas";
+import Comics from "./componentes/paginas/Comics"; 
+import Registro from "./componentes/paginas/Registro";
+import Login from "./componentes/paginas/Login";
+import Contacto from "./componentes/paginas/Contacto"; 
+import Carrito from "./componentes/paginas/Carrito";
+import Novedades from "./componentes/paginas/Novedades";
+import Nosotros from "./componentes/paginas/Nosotros";
+import PerfilUsuario from "./componentes/paginas/PerfilUsuario";
+import AdminPanel from "./componentes/paginas/admin/AdminPanel";
+import Ofertas from "./componentes/paginas/Ofertas"; 
 
 function App() {
 

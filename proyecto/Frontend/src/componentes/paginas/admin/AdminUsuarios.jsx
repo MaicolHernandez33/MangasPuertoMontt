@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Titulo from "../../Atomos/Titulo";
-import Boton from "../../Atomos/Boton";
+import Titulo from "../../atomos/Titulo";
+import Boton from "../../atomos/Boton";
 
 export default function AdminUsuarios() {
   const [usuarios, setUsuarios] = useState([]);

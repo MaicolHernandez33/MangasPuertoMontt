@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Titulo from "../Atomos/Titulo";
+import Titulo from "../atomos/Titulo";
 
 export default function Contacto() {
   const [form, setForm] = useState({ nombre: "", correo: "", mensaje: "" });

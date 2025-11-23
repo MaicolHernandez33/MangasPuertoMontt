@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import TarjetaProducto from "../Moleculas/TarjetaProducto";
-import Titulo from "../Atomos/Titulo";
+import TarjetaProducto from "../moleculas/TarjetaProducto";
+import Titulo from "../atomos/Titulo";
 
 export default function Mangas() {
   const [productos, setProductos] = useState([]);

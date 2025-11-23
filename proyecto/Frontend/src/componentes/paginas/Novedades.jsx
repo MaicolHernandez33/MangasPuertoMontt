@@ -1,4 +1,4 @@
-import Titulo from "../Atomos/Titulo";
+import Titulo from "../atomos/Titulo";
 
 export default function Novedades() {
   const novedades = [

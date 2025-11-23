@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Boton from "../Atomos/Boton";
+import Boton from "../atomos/Boton";
 
 export default function TarjetaProducto({ producto }) {
   const [verDetalle, setVerDetalle] = useState(false);
