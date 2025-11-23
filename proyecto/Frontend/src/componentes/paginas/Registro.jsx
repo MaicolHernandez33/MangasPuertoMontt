@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import FormularioBase from "../organismos/FormularioBase";
+import { API_BASE_URL } from "../config"; 
 
 export default function Registro({ cambiarPagina }) {
   const [nombre, setNombre] = useState("");
@@ -51,7 +52,7 @@ export default function Registro({ cambiarPagina }) {
 
     try {
       // Enviar registro a la API
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const response = await fetch(`${API_BASE_URL}/api/auth/register`, { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

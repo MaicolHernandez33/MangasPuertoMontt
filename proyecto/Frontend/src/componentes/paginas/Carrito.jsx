@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Titulo from "../atomos/Titulo";
 import Boton from "../atomos/Boton";
+import { API_BASE_URL } from "../config"; 
 
 export default function Carrito() {
   const [carrito, setCarrito] = useState([]);
@@ -18,7 +19,7 @@ export default function Carrito() {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/carrito', {
+      const response = await fetch(`${API_BASE_URL}/api/carrito`, { 
         headers: {
           'usuario-id': usuarioActivo.id.toString()
         }
@@ -53,7 +54,7 @@ export default function Carrito() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/carrito/${itemId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/carrito/${itemId}`, { 
         method: 'DELETE',
         headers: {
           'usuario-id': usuarioActivo.id.toString()
@@ -86,7 +87,7 @@ export default function Carrito() {
     try {
       // Eliminar cada item individualmente 
       for (const item of carrito) {
-        await fetch(`http://localhost:5000/api/carrito/${item.item_id}`, {
+        await fetch(`${API_BASE_URL}/api/carrito/${item.item_id}`, { 
           method: 'DELETE',
           headers: {
             'usuario-id': usuarioActivo.id.toString()
@@ -114,7 +115,7 @@ export default function Carrito() {
     setCargando(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/pedidos', {
+      const response = await fetch(`${API_BASE_URL}/api/pedidos`, { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

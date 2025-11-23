@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import Titulo from "../../atomos/Titulo";
 import Boton from "../../atomos/Boton";
+import { API_BASE_URL } from "../../config"; 
 
 export default function AdminPedidos() {
   const [pedidos, setPedidos] = useState([]);
   const [cargando, setCargando] = useState(true);
 
-  // ✅ Cargar pedidos desde la API
+  //  Cargar pedidos desde la API
   const cargarPedidos = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/admin/pedidos');
+      const response = await fetch(`${API_BASE_URL}/api/admin/pedidos`); 
       if (response.ok) {
         const data = await response.json();
         setPedidos(data.pedidos || []);
@@ -26,11 +27,11 @@ export default function AdminPedidos() {
     cargarPedidos();
   }, []);
 
-  // ✅ Cambiar estado del pedido
+  //  Cambiar estado del pedido
   const cambiarEstadoPedido = async (pedidoId, nuevoEstado) => {
     try {
       // Nota: Necesitaríamos agregar este endpoint en el backend
-      const response = await fetch(`http://localhost:5000/api/admin/pedidos/${pedidoId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/pedidos/${pedidoId}`, { 
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -50,13 +51,13 @@ export default function AdminPedidos() {
     }
   };
 
-  // ✅ Eliminar un pedido (si decides implementarlo)
+  //  Eliminar un pedido (si decides implementarlo)
   const eliminarPedido = async (id) => {
     if (!confirm("¿Deseas eliminar este pedido?")) return;
 
     try {
       // Nota: Necesitaríamos agregar este endpoint en el backend
-      const response = await fetch(`http://localhost:5000/api/admin/pedidos/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/pedidos/${id}`, { 
         method: 'DELETE'
       });
 

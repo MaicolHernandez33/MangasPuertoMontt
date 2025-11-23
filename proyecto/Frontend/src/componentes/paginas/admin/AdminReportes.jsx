@@ -1,28 +1,28 @@
 import { useEffect, useMemo, useState } from "react";
 import Titulo from "../../atomos/Titulo";
-
+import { API_BASE_URL } from "../../config"; 
 export default function AdminReportes() {
   const [usuarios, setUsuarios] = useState([]);
   const [productos, setProductos] = useState([]);
   const [pedidos, setPedidos] = useState([]);
   const [cargando, setCargando] = useState(true);
 
-  // ✅ Cargar datos desde la API
+  //  Cargar datos desde la API
   useEffect(() => {
     const cargarDatos = async () => {
       try {
         // Cargar usuarios
-        const usuariosResponse = await fetch('http://localhost:5000/api/admin/usuarios');
+        const usuariosResponse = await fetch(`${API_BASE_URL}/api/admin/usuarios`); 
         const usuariosData = await usuariosResponse.json();
         setUsuarios(usuariosData.usuarios || []);
 
         // Cargar productos
-        const productosResponse = await fetch('http://localhost:5000/api/productos');
+        const productosResponse = await fetch(`${API_BASE_URL}/api/productos`); 
         const productosData = await productosResponse.json();
         setProductos(productosData.productos || []);
 
         // Cargar pedidos
-        const pedidosResponse = await fetch('http://localhost:5000/api/admin/pedidos');
+        const pedidosResponse = await fetch(`${API_BASE_URL}/api/admin/pedidos`); 
         const pedidosData = await pedidosResponse.json();
         setPedidos(pedidosData.pedidos || []);
 

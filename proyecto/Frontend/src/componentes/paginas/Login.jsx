@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import FormularioBase from "../organismos/FormularioBase";
+import { API_BASE_URL } from "../config"; 
 
 export default function Login({ cambiarPagina }) {
   const [correo, setCorreo] = useState("");
@@ -29,7 +30,7 @@ export default function Login({ cambiarPagina }) {
       }
 
       // Login contra la API
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,11 +49,11 @@ export default function Login({ cambiarPagina }) {
 
       const usuario = data.usuario;
 
-      // ✅ Solo guardamos usuario activo (necesario para navbar)
+      //  Solo guardamos usuario activo (necesario para navbar)
       localStorage.setItem("usuarioActivo", JSON.stringify(usuario));
       window.dispatchEvent(new Event("storage"));
 
-      // ✅ Merge de carrito anónimo con BD
+      //  Merge de carrito anónimo con BD
       await mergeCarritosBD(usuario.id);
 
       if (usuario.rol === "admin") {
@@ -70,7 +71,7 @@ export default function Login({ cambiarPagina }) {
     }
   };
 
-  // ✅ Función simplificada para mergear carrito
+  //  Función simplificada para mergear carrito
   const mergeCarritosBD = async (usuarioId) => {
     try {
       const carritoLocal = JSON.parse(localStorage.getItem("carrito_anonimo") || "[]");
@@ -78,7 +79,7 @@ export default function Login({ cambiarPagina }) {
 
       // Agregar cada item a la BD
       for (const item of carritoLocal) {
-        await fetch('http://localhost:5000/api/carrito', {
+        await fetch(`${API_BASE_URL}/api/carrito`, { 
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

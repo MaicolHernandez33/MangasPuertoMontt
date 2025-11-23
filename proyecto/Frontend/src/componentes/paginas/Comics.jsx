@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import TarjetaProducto from "../moleculas/TarjetaProducto";
 import Titulo from "../atomos/Titulo";
+import { API_BASE_URL } from "../config"; 
 
 export default function Comics() {
   const [productos, setProductos] = useState([]);
@@ -9,7 +10,7 @@ export default function Comics() {
   useEffect(() => {
     const cargarProductos = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/productos');
+        const response = await fetch(`${API_BASE_URL}/api/productos`); 
         if (response.ok) {
           const data = await response.json();
           const comics = data.productos.filter(p => 

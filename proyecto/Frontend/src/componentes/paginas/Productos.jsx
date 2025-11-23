@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import TarjetaProducto from "../Moleculas/TarjetaProducto";
 import Titulo from "../Atomos/Titulo";
+import { API_BASE_URL } from "../config"; 
 
 export default function Productos() {
   const [productos, setProductos] = useState([]);
@@ -12,7 +13,7 @@ export default function Productos() {
   useEffect(() => {
     const cargarProductos = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/productos');
+        const response = await fetch(`${API_BASE_URL}/api/productos`); 
         if (response.ok) {
           const data = await response.json();
           // Filtrar productos con stock > 0 (como si fueran "activos")

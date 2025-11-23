@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Titulo from "../atomos/Titulo";
 import Boton from "../atomos/Boton";
+import { API_BASE_URL } from "../config"; 
 
 export default function PerfilUsuario({ cambiarPagina }) {
   const [usuario, setUsuario] = useState(null);
@@ -23,11 +24,11 @@ export default function PerfilUsuario({ cambiarPagina }) {
     cargarDatos();
   }, [cambiarPagina]);
 
-  // ✅ Cargar compras desde la BD
+  //  Cargar compras desde la BD
   const cargarCompras = async (usuarioId) => {
     setCargando(true);
     try {
-      const response = await fetch('http://localhost:5000/api/pedidos', {
+      const response = await fetch(`${API_BASE_URL}/api/pedidos`, { 
         headers: {
           'usuario-id': usuarioId.toString()
         }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Titulo from "../atomos/Titulo";
 import TarjetaProducto from "../moleculas/TarjetaProducto";
+import { API_BASE_URL } from "../config"; 
 
 export default function Inicio() {
   const banners = [
@@ -26,7 +27,7 @@ export default function Inicio() {
   useEffect(() => {
     const cargarProductos = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/productos');
+        const response = await fetch(`${API_BASE_URL}/api/productos`); 
         if (response.ok) {
           const data = await response.json();
           const todosProductos = data.productos || [];

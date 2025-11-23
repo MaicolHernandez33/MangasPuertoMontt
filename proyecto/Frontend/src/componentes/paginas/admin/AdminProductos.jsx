@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Titulo from "../../atomos/Titulo";
 import CampoTexto from "../../atomos/CampoTexto";
 import Boton from "../../atomos/Boton";
+import { API_BASE_URL } from "../../config"; 
 
 export default function AdminProductos() {
   const [productos, setProductos] = useState([]);
@@ -21,7 +22,7 @@ export default function AdminProductos() {
   // Cargar productos desde la BD
   const cargarProductos = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/productos');
+      const response = await fetch(`${API_BASE_URL}/api/productos`);
       if (response.ok) {
         const data = await response.json();
         setProductos(data.productos || []);
@@ -76,14 +77,14 @@ export default function AdminProductos() {
       
       if (modoEdicion) {
         // Actualizar producto existente
-        response = await fetch(`http://localhost:5000/api/admin/productos/${idEditar}`, {
+        response = await fetch(`${API_BASE_URL}/api/admin/productos/${idEditar}`, { 
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(productoData)
         });
       } else {
         //  Crear nuevo producto
-        response = await fetch('http://localhost:5000/api/admin/productos', {
+        response = await fetch(`${API_BASE_URL}/api/admin/productos`, { 
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(productoData)
@@ -110,7 +111,9 @@ export default function AdminProductos() {
     if (!confirm("¿Eliminar este producto?")) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/productos/${id}`, { method: 'DELETE' });
+      const response = await fetch(`${API_BASE_URL}/api/admin/productos/${id}`, { 
+        method: 'DELETE' 
+      });
       if (response.ok) {
         alert("🗑️ Producto eliminado.");
         await cargarProductos();

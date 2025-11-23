@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Titulo from "../../atomos/Titulo";
 import Boton from "../../atomos/Boton";
+import { API_BASE_URL } from "../../config"; 
 
 export default function AdminUsuarios() {
   const [usuarios, setUsuarios] = useState([]);
@@ -15,12 +16,12 @@ export default function AdminUsuarios() {
     rol: "usuario"
   });
 
-  // ✅ Cargar usuarios desde la API
+  //  Cargar usuarios desde la API
   const cargarUsuarios = async () => {
     setCargando(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:5000/api/admin/usuarios');
+      const response = await fetch(`${API_BASE_URL}/api/admin/usuarios`);
       
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`);
@@ -40,7 +41,7 @@ export default function AdminUsuarios() {
     cargarUsuarios();
   }, []);
 
-  // ✅ Manejar cambios en el formulario
+  //  Manejar cambios en el formulario
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNuevoUsuario(prev => ({
@@ -49,7 +50,7 @@ export default function AdminUsuarios() {
     }));
   };
 
-  // ✅ Agregar nuevo usuario
+  //  Agregar nuevo usuario
   const agregarUsuario = async (e) => {
     e.preventDefault();
     
@@ -63,7 +64,7 @@ export default function AdminUsuarios() {
     setError(null);
     
     try {
-      const response = await fetch('http://localhost:5000/api/admin/usuarios', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/usuarios`, { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -78,7 +79,7 @@ export default function AdminUsuarios() {
 
       const usuarioCreado = await response.json();
       
-      alert("✅ Usuario creado exitosamente!");
+      alert(" Usuario creado exitosamente!");
       
       // Limpiar formulario y cerrar
       setNuevoUsuario({
@@ -100,14 +101,14 @@ export default function AdminUsuarios() {
     }
   };
 
-  // ✅ Función genérica para modificar usuario
+  //  Función genérica para modificar usuario
   const modificarUsuario = async (usuarioId, datos, accion) => {
     if (!confirm(`¿Seguro que deseas ${accion} este usuario?`)) return;
 
     setCargando(true);
     setError(null);
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/usuarios/${usuarioId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/usuarios/${usuarioId}`, { 
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -120,7 +121,7 @@ export default function AdminUsuarios() {
         throw new Error(errorData.error || `Error ${response.status}`);
       }
 
-      alert(`✅ Usuario ${accion} correctamente.`);
+      alert(` Usuario ${accion} correctamente.`);
       await cargarUsuarios(); // Recargar lista
     } catch (error) {
       setError(`Error al ${accion} usuario: ${error.message}`);
@@ -129,7 +130,7 @@ export default function AdminUsuarios() {
     }
   };
 
-  // ✅ Eliminar usuario
+  //  Eliminar usuario
   const eliminarUsuario = async (usuarioId, usuarioCorreo) => {
     if (usuarioCorreo === "admin@tienda.cl") {
       alert("⚠️ No se puede eliminar al administrador principal.");
@@ -141,7 +142,7 @@ export default function AdminUsuarios() {
     setCargando(true);
     setError(null);
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/usuarios/${usuarioId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/usuarios/${usuarioId}`, { 
         method: 'DELETE'
       });
 
@@ -159,7 +160,7 @@ export default function AdminUsuarios() {
     }
   };
 
-  // ✅ Promover usuario a administrador
+  // Promover usuario a administrador
   const promoverAdmin = (usuarioId, usuarioCorreo) => {
     if (usuarioCorreo === "admin@tienda.cl") {
       alert("⚠️ Este usuario ya es administrador principal.");
@@ -168,7 +169,7 @@ export default function AdminUsuarios() {
     modificarUsuario(usuarioId, { rol: 'admin' }, 'promover a administrador');
   };
 
-  // ✅ Degradar administrador a usuario normal
+  // Degradar administrador a usuario normal
   const degradarUsuario = (usuarioId, usuarioCorreo) => {
     if (usuarioCorreo === "admin@tienda.cl") {
       alert("⚠️ No se puede degradar al administrador principal.");

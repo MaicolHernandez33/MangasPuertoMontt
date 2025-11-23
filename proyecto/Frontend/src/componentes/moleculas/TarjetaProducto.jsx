@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Boton from "../atomos/Boton";
+import { API_BASE_URL } from "../config"; 
 
 export default function TarjetaProducto({ producto }) {
   const [verDetalle, setVerDetalle] = useState(false);
@@ -12,7 +13,7 @@ export default function TarjetaProducto({ producto }) {
       const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
       
       if (usuarioActivo) {
-        const response = await fetch('http://localhost:5000/api/carrito', {
+        const response = await fetch(`${API_BASE_URL}/api/carrito`, { 
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -48,7 +49,7 @@ export default function TarjetaProducto({ producto }) {
     }
   };
 
-  // ✅ Calcular precio con descuento
+  //  Calcular precio con descuento
   const tieneDescuento = producto.descuento && producto.descuento > 0;
   const precioFinal = tieneDescuento 
     ? producto.precio * (1 - producto.descuento / 100) 
