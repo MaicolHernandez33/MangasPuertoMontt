@@ -1,20 +1,20 @@
 const express = require('express');
+const bcrypt = require('bcryptjs'); 
 const pool = require('../config/database');
-
 
 const router = express.Router();
 
-//  POST /api/admin/usuarios - Crear usuario desde admin 
+// POST /api/admin/usuarios - Crear usuario desde admin 
 router.post('/usuarios', async (req, res) => {
   try {
     const { nombre, correo, celular, password, rol } = req.body;
 
-    // Validaciones
+    // Validaciones 
     if (!nombre || !correo || !password) {
       return res.status(400).json({ error: 'Nombre, correo y contraseña son obligatorios' });
     }
 
-    // Verificar si el usuario ya existe
+    // Verificar si el usuario ya existe 
     const usuarioExistente = await pool.query(
       'SELECT * FROM usuarios WHERE correo = $1',
       [correo]
@@ -24,12 +24,15 @@ router.post('/usuarios', async (req, res) => {
       return res.status(400).json({ error: 'El correo ya está registrado' });
     }
 
-    //  Guardar contraseña en texto plano (TEMPORAL)
+    //  ENCRIPTAR LA CONTRASEÑA
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Guardar contraseña ENCRIPTADA
     const nuevoUsuario = await pool.query(
       `INSERT INTO usuarios (nombre, correo, celular, password, rol) 
        VALUES ($1, $2, $3, $4, $5) 
        RETURNING id, nombre, correo, celular, rol, creado_en`,
-      [nombre, correo, celular || null, password, rol || 'usuario'] // ← password en texto
+      [nombre, correo, celular || null, hashedPassword, rol || 'usuario'] 
     );
 
     res.status(201).json({

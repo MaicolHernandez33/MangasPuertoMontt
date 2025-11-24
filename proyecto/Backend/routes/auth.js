@@ -34,10 +34,11 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: 'Este correo ya está registrado' });
     }
 
-    // Hash password
+    // ENCRIPTA LA CONTRASEña: Convierte "textoPlano" -> "codigoSeguroIrreversible"
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Insertar usuario
+    // VALUES ($1, $2, $3, $4, $5)  -> Se hace que los datos del usuario sean tratados solo como valores, no como código ejecutable
     const nuevoUsuario = await pool.query(
       `INSERT INTO usuarios (nombre, correo, password, celular, rol) 
        VALUES ($1, $2, $3, $4, $5) 
@@ -73,7 +74,7 @@ router.post('/login', async (req, res) => {
 
     const usuario = result.rows[0];
 
-    // ✅ COMPARACIÓN CORRECTA CON BCRYPT
+    //  COMPARACIÓN CORRECTA CON BCRYPT
     const passwordValido = await bcrypt.compare(password, usuario.password);
     
     if (!passwordValido) {
