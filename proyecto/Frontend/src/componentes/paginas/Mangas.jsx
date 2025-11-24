@@ -14,7 +14,7 @@ export default function Mangas() {
         if (response.ok) {
           const data = await response.json();
           const mangas = data.productos.filter(p => 
-            ["Shonen", "Shojo", "Seinen"].includes(p.categoria) && p.stock > 0
+            p.tipo === "manga" && p.stock > 0  
           );
           setProductos(mangas);
         }

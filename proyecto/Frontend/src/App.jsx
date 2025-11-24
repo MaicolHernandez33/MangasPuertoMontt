@@ -22,6 +22,7 @@ import Nosotros from "./componentes/paginas/Nosotros";
 import PerfilUsuario from "./componentes/paginas/PerfilUsuario";
 import AdminPanel from "./componentes/paginas/admin/AdminPanel";
 import Ofertas from "./componentes/paginas/Ofertas"; 
+import Libros from "./componentes/paginas/Libros";
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
       case "productos": return <CatalogoCompleto />;
       case "mangas": return <Mangas />;
       case "comics": return <Comics />;
+      case "libros": return <Libros />;
       case "ofertas": return <Ofertas />;
       case "registro": return <Registro cambiarPagina={cambiarPagina} />;
       case "login": return <Login cambiarPagina={cambiarPagina} />;

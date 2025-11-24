@@ -182,6 +182,7 @@ export default function AdminProductos() {
           <option value="">Seleccionar tipo</option>
           <option value="manga">Manga</option>
           <option value="comic">Comic</option>
+          <option value="libro">Libro</option>
         </select>
 
         {/* NUEVO: Descuento */}

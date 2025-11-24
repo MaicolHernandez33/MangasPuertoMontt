@@ -3,7 +3,7 @@ import TarjetaProducto from "../moleculas/TarjetaProducto";
 import Titulo from "../atomos/Titulo";
 import { API_BASE_URL } from "../../config"; 
 
-export default function Comics() {
+export default function Libros() {
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
 
@@ -13,13 +13,13 @@ export default function Comics() {
         const response = await fetch(`${API_BASE_URL}/api/productos`); 
         if (response.ok) {
           const data = await response.json();
-          const comics = data.productos.filter(p => 
-            p.tipo === "comic" && p.stock > 0  
+          const libros = data.productos.filter(p => 
+            p.tipo === "libro" && p.stock > 0  
           );
-          setProductos(comics);
+          setProductos(libros);
         }
       } catch (error) {
-        console.error("Error cargando comics:", error);
+        console.error("Error cargando libros:", error);
         setProductos([]);
       } finally {
         setCargando(false);
@@ -29,16 +29,16 @@ export default function Comics() {
     cargarProductos();
   }, []);
 
-  if (cargando) return <p style={{ color:"#fff", textAlign:"center" }}>Cargando comics...</p>;
+  if (cargando) return <p style={{ color:"#fff", textAlign:"center" }}>Cargando libros...</p>;
 
   return (
     <section className="productos">
-      <Titulo texto="🎭 Cómics Disponibles" />
+      <Titulo texto="Libros Disponibles" />
       <div className="grilla-productos">
         {productos.length > 0 ? (
           productos.map(p => <TarjetaProducto key={p.id} producto={p} />)
         ) : (
-          <p>No hay cómics disponibles.</p>
+          <p>No hay libros disponibles.</p>
         )}
       </div>
     </section>

@@ -8,7 +8,7 @@ export default function CatalogoCompleto() {
   const [cargando, setCargando] = useState(true);
 
   // Filtros
-  const [tipoFiltro, setTipoFiltro] = useState(""); // "manga" | "comic" | ""
+  const [tipoFiltro, setTipoFiltro] = useState(""); // "manga" | "comic" | "libro" | ""
   const [ordenPrecio, setOrdenPrecio] = useState(""); // "asc" | "desc"
   const [soloOfertas, setSoloOfertas] = useState(false);
 
@@ -33,9 +33,10 @@ export default function CatalogoCompleto() {
 
   // Aplicar filtros
   let productosFiltrados = productos.filter((p) => {
-    // Filtrar por tipo
-    if (tipoFiltro === "manga" && !["Shonen", "Shojo", "Seinen"].includes(p.categoria)) return false;
-    if (tipoFiltro === "comic" && !["Acción", "Aventura", "Drama", "Comedia"].includes(p.categoria)) return false;
+    // Filtrar por tipo (ahora usando el campo 'tipo' en lugar de 'categoria')
+    if (tipoFiltro === "manga" && p.tipo !== "manga") return false;
+    if (tipoFiltro === "comic" && p.tipo !== "comic") return false;
+    if (tipoFiltro === "libro" && p.tipo !== "libro") return false;
 
     // Filtrar solo ofertas
     if (soloOfertas && (!p.descuento || p.descuento <= 0)) return false;
@@ -64,6 +65,7 @@ export default function CatalogoCompleto() {
             <option value="">Todos</option>
             <option value="manga">Mangas</option>
             <option value="comic">Cómics</option>
+            <option value="libro">Libros</option> 
           </select>
         </div>
 

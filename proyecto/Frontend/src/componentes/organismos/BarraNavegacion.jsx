@@ -48,6 +48,7 @@ export default function BarraNavegacion({ cambiarPagina }) {
             <ul className={`submenu-items ${submenuActivo ? "activo" : ""}`}>
               <li><button onClick={() => navegar("mangas")}> Mangas</button></li>
               <li><button onClick={() => navegar("comics")}> Cómics</button></li>
+              <li><button onClick={() => navegar("libros")}> Libros</button></li>
               <li><button onClick={() => navegar("ofertas")}> Ofertas</button></li>
               <li><button onClick={() => navegar("productos")}> Todo el Catálogo</button></li>
             </ul>
