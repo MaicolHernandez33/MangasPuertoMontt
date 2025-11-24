@@ -310,7 +310,7 @@
 .admin-reportes {
   text-align: center;
   padding: 50px 20px;
-  color: #333;
+  color: white;
 }
 
 .reporte-grid {
@@ -553,3 +553,4 @@
     grid-template-columns: repeat(2, 1fr) !important;
   }
 }
+
